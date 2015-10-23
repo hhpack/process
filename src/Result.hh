@@ -20,4 +20,12 @@ final class Result
         );
     }
 
+    public static function emptyResult() : Result
+    {
+        return new Result(
+            new BufferedOutput(),
+            new BufferedOutput()
+        );
+    }
+
 }

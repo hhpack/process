@@ -38,4 +38,24 @@ final class ProcessStatus
         return new ProcessStatus($status);
     }
 
+    public static function fromResource(resource $process) : ProcessStatus
+    {
+        $status = proc_get_status($process);
+        return new ProcessStatus($status);
+    }
+
+    public static function initialStatus() : ProcessStatus
+    {
+        return new ProcessStatus(shape(
+            'command' => '',
+            'pid' => 0,
+            'running' => false,
+            'signaled' => false,
+            'stopped' => false,
+            'exitcode' => -1,
+            'termsig' => 0,
+            'stopsig' => 0
+        ));
+    }
+
 }

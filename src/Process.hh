@@ -2,6 +2,8 @@
 
 namespace hhpack\process;
 
+use RuntimeException;
+
 final class Process
 {
 
@@ -11,13 +13,15 @@ final class Process
         1 => [ 'pipe', 'w' ],
         2 => [ 'pipe', 'w' ]
     ];
-    private ?PipeManager $pipeManager = null;
-    private ?ProcessStatus $status = null;
+    private PipeManager $pipeManager;
+    private ProcessStatus $status;
 
     public function __construct(
         private string $command
     )
     {
+        $this->pipeManager = new NullPipeManager();
+        $this->status = ProcessStatus::initialStatus();
     }
 
     public function execute() : int
@@ -36,26 +40,20 @@ final class Process
             $pipeHandles
         );
 
-        $this->pipeManager = PipeManager::fromArray($pipeHandles);
+        $this->pipeManager = DefaultPipeManager::fromArray($pipeHandles);
         $this->captureStatus();
     }
 
     private function stop() : int
     {
-        if ($this->pipeManager === null) {
-            return -1;
-        }
-        $this->pipeManager->closeAll();
+        $this->pipeManager->close();
         return proc_close($this->process);
     }
 
     private function wait() : int
     {
-        if ($this->pipeManager === null) {
-            return -1;
-        }
         $this->captureStatus();
-        $this->pipeManager->readAll();
+        $this->pipeManager->read();
 
         return $this->stop();
     }
@@ -67,8 +65,15 @@ final class Process
 
     private function captureStatus() : void
     {
-        $status = proc_get_status($this->process);
-        $this->status = ProcessStatus::fromCapturedStatus($status);
+        if ($this->process === null) {
+            throw new RuntimeException();
+        }
+        $this->status = ProcessStatus::fromResource($this->process);
+    }
+
+    public function __destruct()
+    {
+        $this->stop();
     }
 
 }
