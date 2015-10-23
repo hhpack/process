@@ -33,6 +33,11 @@ final class ProcessStatus
         return $this->running;
     }
 
+    public function getExitCode() : int
+    {
+        return $this->exitcode;
+    }
+
     public static function fromCapturedStatus(CapturedProcessStatus $status) : ProcessStatus
     {
         return new ProcessStatus($status);

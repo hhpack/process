@@ -47,13 +47,17 @@ final class Process
     private function stop() : int
     {
         $this->pipeManager->close();
-        return proc_close($this->process);
+        proc_close($this->process);
+        return $this->getExitCode();
     }
 
     private function wait() : int
     {
-        $this->captureStatus();
-        $this->pipeManager->read();
+        do {
+            $this->captureStatus();
+            $this->pipeManager->read();
+            $this->captureStatus();
+        } while($this->isAlive());
 
         return $this->stop();
     }
@@ -63,17 +67,17 @@ final class Process
         return $this->status->isAlive();
     }
 
+    private function getExitCode() : int
+    {
+        return $this->status->getExitCode();
+    }
+
     private function captureStatus() : void
     {
         if ($this->process === null) {
             throw new RuntimeException();
         }
         $this->status = ProcessStatus::fromResource($this->process);
-    }
-
-    public function __destruct()
-    {
-        $this->stop();
     }
 
 }
