@@ -12,6 +12,7 @@ final class Process
         2 => [ 'pipe', 'w' ]
     ];
     private ?PipeManager $pipeManager = null;
+    private ?ProcessStatus $status = null;
 
     public function __construct(
         private string $command
@@ -36,6 +37,7 @@ final class Process
         );
 
         $this->pipeManager = PipeManager::fromArray($pipeHandles);
+        $this->captureStatus();
     }
 
     private function stop() : int
@@ -52,13 +54,21 @@ final class Process
         if ($this->pipeManager === null) {
             return -1;
         }
+        $this->captureStatus();
         $this->pipeManager->readAll();
+
         return $this->stop();
     }
 
-    public function isRunning() : bool
+    public function isAlive() : bool
     {
-        return $this->pipeManager !== null;
+        return $this->status->isAlive();
+    }
+
+    private function captureStatus() : void
+    {
+        $status = proc_get_status($this->process);
+        $this->status = ProcessStatus::fromCapturedStatus($status);
     }
 
 }
