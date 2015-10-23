@@ -39,6 +39,9 @@ final class DefaultPipeManager implements PipeManager
         $pipes = [ $this->stdin, $this->stdout, $this->stderr ];
 
         foreach ($pipes as $pipe) {
+            if ($pipe->opened() === false) {
+                continue;
+            }
             $pipe->close();
         }
     }
