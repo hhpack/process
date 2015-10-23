@@ -2,6 +2,8 @@
 
 namespace hhpack\process;
 
+use RuntimeException;
+
 final class WritablePipe implements WritableStream
 {
 
