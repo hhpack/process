@@ -12,6 +12,11 @@ async function main() : Awaitable<void>
 
     $result = await $process->run();
     $result->display();
+
+    $process = new Process('hh_client check');
+
+    $result = await $process->run();
+    $result->display();
 }
 
 main();
