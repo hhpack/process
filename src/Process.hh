@@ -33,7 +33,7 @@ final class Process
         $this->status = ProcessStatus::initialStatus();
     }
 
-    public function execute() : Awaitable<ProcessResult>
+    public function run() : Awaitable<ProcessResult>
     {
         $this->start();
         return $this->wait();
