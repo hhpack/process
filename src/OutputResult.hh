@@ -11,7 +11,7 @@
 
 namespace hhpack\process;
 
-final class OutputResult
+final class OutputResult implements Displayable
 {
 
     public function __construct(
@@ -34,6 +34,20 @@ final class OutputResult
         return new OutputResult(
             new BufferedOutput(),
             new BufferedOutput()
+        );
+    }
+
+    public function display() : void
+    {
+        fwrite(STDOUT, (string) $this);
+    }
+
+    public function __toString() : string
+    {
+        return sprintf(
+            "STDOUT: \n%s\n\nSTDERR: \n%s",
+            (string) $this->stdout,
+            (string) $this->stderr
         );
     }
 

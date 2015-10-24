@@ -9,8 +9,9 @@ use hhpack\process\Process;
 async function main() : Awaitable<void>
 {
     $process = new Process('hh_client restart');
+
     $result = await $process->run();
-    var_dump($result);
+    $result->display();
 }
 
 main();

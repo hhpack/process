@@ -11,7 +11,7 @@
 
 namespace hhpack\process;
 
-final class ProcessResult
+final class ProcessResult implements Displayable
 {
 
     public function __construct(
@@ -19,6 +19,20 @@ final class ProcessResult
         private OutputResult $output
     )
     {
+    }
+
+    public function display() : void
+    {
+        fwrite(STDOUT, (string) $this);
+    }
+
+    public function __toString() : string
+    {
+        return sprintf(
+            "EXIT_CODE: %s\n\n%s\n",
+            (string) $this->status->getExitCode(),
+            (string) $this->output
+        );
     }
 
 }
