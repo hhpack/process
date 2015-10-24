@@ -33,7 +33,7 @@ final class Process
         $this->status = ProcessStatus::initialStatus();
     }
 
-    public function execute() : int
+    public function execute() : Awaitable<ProcessResult>
     {
         $this->start();
         return $this->wait();
@@ -53,14 +53,18 @@ final class Process
         $this->captureStatus();
     }
 
-    private function stop() : int
+    private function stop() : ProcessResult
     {
         $this->pipeManager->close();
         proc_close($this->process);
-        return $this->getExitCode();
+
+        return new ProcessResult(
+            $this->status,
+            $this->pipeManager->getOutputResult()
+        );
     }
 
-    private function wait() : int
+    public async function wait() : Awaitable<ProcessResult>
     {
         do {
             $this->captureStatus();

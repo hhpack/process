@@ -16,8 +16,7 @@ final class ProcessResult
 
     public function __construct(
         private ProcessStatus $status,
-        private BufferedOutput $stdout,
-        private BufferedOutput $stderr
+        private OutputResult $output
     )
     {
     }
