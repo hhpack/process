@@ -22,6 +22,26 @@ final class Process
     {
     }
 
+    public function getPid() : int
+    {
+        return $this->context->getPid();
+    }
+
+    public function getCommand() : string
+    {
+        return $this->context->getCommand();
+    }
+
+    public function getWorkingDirectory() : string
+    {
+        return $this->context->getWorkingDirectory();
+    }
+
+    public function getEnvironmentVariables() : ImmMap<string, string>
+    {
+        return $this->context->getEnvironmentVariables();
+    }
+
     public async function run() : Awaitable<ProcessResult>
     {
         return await $this->context->run();

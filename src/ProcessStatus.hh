@@ -37,6 +37,11 @@ final class ProcessStatus
         $this->stopsig = $status['stopsig'];
     }
 
+    public function getPid() : int
+    {
+        return $this->pid;
+    }
+
     public function isAlive() : bool
     {
         return $this->running;

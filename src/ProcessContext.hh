@@ -16,9 +16,32 @@ use RuntimeException;
 abstract class ProcessContext implements Context
 {
 
+    protected string $command;
+    protected string $workingDirectory;
+    protected ImmMap<string, string> $enviromentVariables;
     protected ?resource $process;
     protected PipeManager $pipeManager;
     protected ProcessStatus $status;
+
+    public function getPid() : int
+    {
+        return $this->status->getPid();
+    }
+
+    public function getCommand() : string
+    {
+        return $this->command;
+    }
+
+    public function getWorkingDirectory() : string
+    {
+        return $this->workingDirectory;
+    }
+
+    public function getEnvironmentVariables() : ImmMap<string, string>
+    {
+        return $this->enviromentVariables;
+    }
 
     // FIXME SIGTERM, SIGKILL
     public function stop() : ProcessResult

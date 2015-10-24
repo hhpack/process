@@ -22,9 +22,14 @@ final class GeneralContext extends ProcessContext implements Context
     ];
 
     public function __construct(
-        private string $command
+        string $command,
+        string $cwd = (string) getcwd(),
+        ?KeyedTraversable<string, string> $env = null
     )
     {
+        $this->command = $command;
+        $this->workingDirectory = $cwd;
+        $this->enviromentVariables = new ImmMap($env);
         $this->pipeManager = new NullPipeManager();
         $this->status = ProcessStatus::initialStatus();
     }
