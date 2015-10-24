@@ -22,9 +22,9 @@ final class NullPipeManager implements PipeManager
     {
     }
 
-    public function getResult() : Result
+    public function getOutputResult() : OutputResult
     {
-        return Result::emptyResult();
+        return OutputResult::emptyResult();
     }
 
 }

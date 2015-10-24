@@ -15,5 +15,5 @@ interface PipeManager
 {
     public function read() : void;
     public function close() : void;
-    public function getResult() : Result;
+    public function getOutputResult() : OutputResult;
 }

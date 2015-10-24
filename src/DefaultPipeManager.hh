@@ -55,9 +55,9 @@ final class DefaultPipeManager implements PipeManager
         }
     }
 
-    public function getResult() : Result
+    public function getOutputResult() : OutputResult
     {
-        return Result::fromOutputs(shape(
+        return OutputResult::fromOutputs(shape(
             'stdout' => $this->stdout->getOutput(),
             'stderr' => $this->stderr->getOutput()
         ));

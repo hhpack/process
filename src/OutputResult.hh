@@ -11,7 +11,7 @@
 
 namespace hhpack\process;
 
-final class Result
+final class OutputResult
 {
 
     public function __construct(
@@ -21,17 +21,17 @@ final class Result
     {
     }
 
-    public static function fromOutputs(Outputs $outputs) : Result
+    public static function fromOutputs(Outputs $outputs) : OutputResult
     {
-        return new Result(
+        return new OutputResult(
             $outputs['stdout'],
             $outputs['stderr']
         );
     }
 
-    public static function emptyResult() : Result
+    public static function emptyResult() : OutputResult
     {
-        return new Result(
+        return new OutputResult(
             new BufferedOutput(),
             new BufferedOutput()
         );
