@@ -15,6 +15,7 @@ interface Context
 {
     public function start() : void;
     public function stop() : ProcessResult;
-    public async function wait() : Awaitable<ProcessResult>;
+    public function wait() : Awaitable<ProcessResult>;
+    public function run() : Awaitable<ProcessResult>;
     public function isAlive() : bool;
 }

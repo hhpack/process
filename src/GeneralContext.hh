@@ -29,10 +29,10 @@ final class GeneralContext extends ProcessContext implements Context
         $this->status = ProcessStatus::initialStatus();
     }
 
-    public function run() : Awaitable<ProcessResult>
+    public async function run() : Awaitable<ProcessResult>
     {
         $this->start();
-        return $this->wait();
+        return await $this->wait();
     }
 
     public function start() : void

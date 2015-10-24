@@ -16,81 +16,35 @@ use RuntimeException;
 final class Process
 {
 
-    private ?resource $process;
-    private array<int, array<string>> $descriptors = [
-        0 => [ 'pipe', 'r' ],
-        1 => [ 'pipe', 'w' ],
-        2 => [ 'pipe', 'w' ]
-    ];
-    private PipeManager $pipeManager;
-    private ProcessStatus $status;
-
     public function __construct(
-        private string $command
+        private Context $context
     )
     {
-        $this->pipeManager = new NullPipeManager();
-        $this->status = ProcessStatus::initialStatus();
     }
 
-    public function run() : Awaitable<ProcessResult>
+    public async function run() : Awaitable<ProcessResult>
     {
-        $this->start();
-        return $this->wait();
+        return await $this->context->run();
     }
 
-    private function start() : void
+    public function start() : void
     {
-        $pipeHandles = [];
-
-        $this->process = proc_open(
-            $this->command,
-            $this->descriptors,
-            $pipeHandles
-        );
-
-        $this->pipeManager = DefaultPipeManager::fromArray($pipeHandles);
-        $this->captureStatus();
+        $this->context->start();
     }
 
-    private function stop() : ProcessResult
+    public function stop() : ProcessResult
     {
-        $this->pipeManager->close();
-        proc_close($this->process);
-
-        return new ProcessResult(
-            $this->status,
-            $this->pipeManager->getOutputResult()
-        );
+        return $this->context->stop();
     }
 
     public async function wait() : Awaitable<ProcessResult>
     {
-        do {
-            $this->captureStatus();
-            $this->pipeManager->read();
-            $this->captureStatus();
-        } while($this->isAlive());
-
-        return $this->stop();
+        return await $this->context->wait();
     }
 
     public function isAlive() : bool
     {
-        return $this->status->isAlive();
-    }
-
-    private function getExitCode() : int
-    {
-        return $this->status->getExitCode();
-    }
-
-    private function captureStatus() : void
-    {
-        if ($this->process === null) {
-            throw new RuntimeException();
-        }
-        $this->status = ProcessStatus::fromResource($this->process);
+        return $this->context->isAlive();
     }
 
 }
