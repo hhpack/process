@@ -13,6 +13,7 @@ namespace hhpack\process;
 
 interface Stream
 {
-    public function opened() : bool;
+    public function isOpened() : bool;
+    public function isClosed() : bool;
     public function close() : void;
 }

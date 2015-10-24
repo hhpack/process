@@ -31,9 +31,14 @@ final class ReadablePipe implements ReadableStream
         return feof($this->handle);
     }
 
-    public function opened() : bool
+    public function isOpened() : bool
     {
         return $this->opened;
+    }
+
+    public function isClosed() : bool
+    {
+        return $this->isOpened() === false;
     }
 
     public function read(int $length) : void

@@ -24,9 +24,14 @@ final class WritablePipe implements WritableStream
     {
     }
 
-    public function opened() : bool
+    public function isOpened() : bool
     {
         return $this->opened;
+    }
+
+    public function isClosed() : bool
+    {
+        return $this->isOpened() === false;
     }
 
     public function write(string $output) : int
