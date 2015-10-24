@@ -11,6 +11,7 @@
 
 namespace hhpack\process;
 
-interface WritableStream extends Stream, Writable<int>
+interface Writable<T>
 {
+    public function write(string $output) : T;
 }

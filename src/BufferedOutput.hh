@@ -11,7 +11,7 @@
 
 namespace hhpack\process;
 
-final class BufferedOutput
+final class BufferedOutput implements Writable<int>
 {
 
     public function __construct(
@@ -20,9 +20,15 @@ final class BufferedOutput
     {
     }
 
-    public function append(string $chunk) : void
+    public function append(string $output) : int
     {
-        $this->output .= $chunk;
+        return $this->write($output);
+    }
+
+    public function write(string $output) : int
+    {
+        $this->output .= $output;
+        return strlen($output);
     }
 
     public function __toString() : string
