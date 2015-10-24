@@ -37,7 +37,7 @@ final class Process
         return $this->context->getWorkingDirectory();
     }
 
-    public function getEnvironmentVariables() : ImmMap<string, string>
+    public function getEnvironmentVariables() : EnviromentVariables
     {
         return $this->context->getEnvironmentVariables();
     }

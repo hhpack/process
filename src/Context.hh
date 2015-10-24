@@ -16,7 +16,7 @@ interface Context
     public function getPid() : int;
     public function getCommand() : string;
     public function getWorkingDirectory() : string;
-    public function getEnvironmentVariables() : ImmMap<string, string>; // XXX value is string?
+    public function getEnvironmentVariables() : EnviromentVariables; // XXX value is string?
     public function start() : void;
     public function stop() : ProcessResult;
     public function wait() : Awaitable<ProcessResult>;

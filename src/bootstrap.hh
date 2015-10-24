@@ -11,6 +11,8 @@
 
 namespace hhpack\process
 {
+    type EnviromentVariables = ImmMap<string, string>;
+
     type Outputs = shape(
         'stdout' => BufferedOutput,
         'stderr' => BufferedOutput

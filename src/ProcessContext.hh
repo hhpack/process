@@ -18,7 +18,7 @@ abstract class ProcessContext implements Context
 
     protected string $command;
     protected string $workingDirectory;
-    protected ImmMap<string, string> $enviromentVariables;
+    protected EnviromentVariables $enviromentVariables;
     protected ?resource $process;
     protected PipeManager $pipeManager;
     protected ProcessStatus $status;
@@ -38,7 +38,7 @@ abstract class ProcessContext implements Context
         return $this->workingDirectory;
     }
 
-    public function getEnvironmentVariables() : ImmMap<string, string>
+    public function getEnvironmentVariables() : EnviromentVariables
     {
         return $this->enviromentVariables;
     }
