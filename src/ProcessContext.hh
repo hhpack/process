@@ -94,4 +94,9 @@ abstract class ProcessContext implements Context
         $this->status = ProcessStatus::fromResource($this->process);
     }
 
+    public function __destruct()
+    {
+        $this->close();
+    }
+
 }

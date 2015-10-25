@@ -83,4 +83,9 @@ final class PipeRegistry implements PipeManager
         return $streams->toImmVector();
     }
 
+    public function __destruct()
+    {
+        $this->close();
+    }
+
 }
