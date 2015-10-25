@@ -15,7 +15,7 @@ final class ProcessStatus
 {
 
     private string $command;
-    private int $pid;
+    private ?int $pid;
     private bool $running;
     private bool $signaled;
     private bool $stopped;
@@ -37,7 +37,7 @@ final class ProcessStatus
         $this->stopsig = $status['stopsig'];
     }
 
-    public function getPid() : int
+    public function getPid() : ?int
     {
         return $this->pid;
     }
@@ -67,7 +67,7 @@ final class ProcessStatus
     {
         return new ProcessStatus(shape(
             'command' => '',
-            'pid' => 0,
+            'pid' => null,
             'running' => false,
             'signaled' => false,
             'stopped' => false,

@@ -22,7 +22,7 @@ final class Process
     {
     }
 
-    public function getPid() : int
+    public function getPid() : ?int
     {
         return $this->context->getPid();
     }

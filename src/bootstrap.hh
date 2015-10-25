@@ -20,7 +20,7 @@ namespace hhpack\process
 
     type CapturedProcessStatus = shape(
         'command' => string,
-        'pid' => int,
+        'pid' => ?int,
         'running' => bool,
         'signaled' => bool,
         'stopped' => bool,

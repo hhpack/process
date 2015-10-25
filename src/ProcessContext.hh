@@ -23,7 +23,7 @@ abstract class ProcessContext implements Context
     protected PipeManager $pipeManager;
     protected ProcessStatus $status;
 
-    public function getPid() : int
+    public function getPid() : ?int
     {
         return $this->status->getPid();
     }

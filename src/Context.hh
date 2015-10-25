@@ -13,7 +13,7 @@ namespace hhpack\process;
 
 interface Context
 {
-    public function getPid() : int;
+    public function getPid() : ?int;
     public function getCommand() : string;
     public function getWorkingDirectory() : string;
     public function getEnvironmentVariables() : EnviromentVariables; // XXX value is string?
