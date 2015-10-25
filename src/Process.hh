@@ -67,4 +67,10 @@ final class Process
         return $this->context->isAlive();
     }
 
+    public static async function exec(string $command, string $cwd = (string) getcwd(), ?environment $env = null) : Awaitable<ProcessResult>
+    {
+        $process = new Process(new GeneralContext($command, $cwd, $env));
+        return await $process->run();
+    }
+
 }

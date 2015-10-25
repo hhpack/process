@@ -20,7 +20,7 @@ final class GeneralContext extends ProcessContext implements Context
     public function __construct(
         string $command,
         string $cwd = (string) getcwd(),
-        ?KeyedTraversable<string, string> $env = null
+        ?environment $env = null
     )
     {
         $this->command = $command;

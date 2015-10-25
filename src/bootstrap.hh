@@ -11,6 +11,7 @@
 
 namespace hhpack\process
 {
+    type environment = KeyedTraversable<string, string>;
     type EnviromentVariables = ImmMap<string, string>;
 
     type Outputs = shape(
