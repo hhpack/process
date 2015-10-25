@@ -21,7 +21,7 @@ final class DescriptorRegistry
     {
     }
 
-    public function createPipeRegistry(array<int, resource> $pipeHandles) : PipeRegistry
+    public function createPipeManager(array<int, resource> $pipeHandles) : PipeManager
     {
         $readablePipes = Vector {};
         $writablePipes = Vector {};

@@ -11,7 +11,7 @@
 
 namespace hhpack\process;
 
-final class PipeRegistry
+final class PipeRegistry implements PipeManager
 {
 
     public function __construct(

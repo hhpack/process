@@ -51,9 +51,7 @@ final class GeneralContext extends ProcessContext implements Context
             $pipeHandles
         );
 
-        $pipes = $this->descriptors->createPipeRegistry($pipeHandles);
-
-        $this->pipeManager = new DefaultPipeManager($pipes);
+        $this->pipeManager = $this->descriptors->createPipeManager($pipeHandles);
         $this->captureStatus();
     }
 
