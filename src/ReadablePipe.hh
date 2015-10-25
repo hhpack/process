@@ -69,15 +69,4 @@ final class ReadablePipe implements ReadableStream
         $this->opened = false;
     }
 
-    public static function nullPipe(PipeType $type) : ReadablePipe
-    {
-        $handle = fopen('/dev/null', 'w');
-
-        if (is_resource($handle) === false) {
-            throw new RuntimeException();
-        }
-
-        return new ReadablePipe($type, $handle);
-    }
-
 }

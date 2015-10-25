@@ -11,8 +11,6 @@
 
 namespace hhpack\process;
 
-use RuntimeException;
-
 abstract class ProcessContext implements Context
 {
 
@@ -91,7 +89,7 @@ abstract class ProcessContext implements Context
     protected function captureStatus() : void
     {
         if ($this->process === null) {
-            throw new RuntimeException();
+            return;
         }
         $this->status = ProcessStatus::fromResource($this->process);
     }

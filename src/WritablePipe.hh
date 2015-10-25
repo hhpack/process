@@ -46,15 +46,4 @@ final class WritablePipe implements WritableStream
         $this->opened = false;
     }
 
-    public static function nullPipe(PipeType $type) : WritablePipe
-    {
-        $handle = fopen('/dev/null', 'r');
-
-        if (is_resource($handle) === false) {
-            throw new RuntimeException();
-        }
-
-        return new WritablePipe($type, $handle);
-    }
-
 }

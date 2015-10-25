@@ -11,8 +11,6 @@
 
 namespace hhpack\process;
 
-use RuntimeException;
-
 final class Descriptor implements DescriptorSpecification
 {
 
