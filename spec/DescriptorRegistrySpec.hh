@@ -3,16 +3,16 @@
 namespace hhpack\process\spec;
 
 use hhpack\process\PipeType;
-use hhpack\process\FileDescriptor;
-use hhpack\process\FileDescriptorRegistry;
+use hhpack\process\Descriptor;
+use hhpack\process\DescriptorRegistry;
 
-describe(FileDescriptorRegistry::class, function () {
+describe(DescriptorRegistry::class, function () {
   describe('toArray()', function () {
     beforeEach(function () {
-      $this->registry = FileDescriptorRegistry::fromArray([
-        new FileDescriptor(PipeType::Stdin, [ 'pipe', 'r' ]),
-        new FileDescriptor(PipeType::Stdout, [ 'pipe', 'w' ]),
-        new FileDescriptor(PipeType::Stderr, [ 'pipe', 'w' ])
+      $this->registry = DescriptorRegistry::fromArray([
+        new Descriptor(PipeType::Stdin, [ 'pipe', 'r' ]),
+        new Descriptor(PipeType::Stdout, [ 'pipe', 'w' ]),
+        new Descriptor(PipeType::Stderr, [ 'pipe', 'w' ])
       ]);
     });
     it('returns array value', function() {

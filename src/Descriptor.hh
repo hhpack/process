@@ -13,7 +13,7 @@ namespace hhpack\process;
 
 use RuntimeException;
 
-final class FileDescriptor implements DescriptorSpecification
+final class Descriptor implements DescriptorSpecification
 {
 
     private DescriptorType $descriptorType;

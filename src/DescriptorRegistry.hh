@@ -12,7 +12,7 @@
 namespace hhpack\process;
 
 
-final class FileDescriptorRegistry
+final class DescriptorRegistry
 {
 
     public function __construct(
@@ -29,7 +29,7 @@ final class FileDescriptorRegistry
         return $result->toArray();
     }
 
-    public static function fromArray(Traversable<DescriptorSpecification> $descriptors) : FileDescriptorRegistry
+    public static function fromArray(Traversable<DescriptorSpecification> $descriptors) : DescriptorRegistry
     {
         $registry = Map {};
 
@@ -37,7 +37,7 @@ final class FileDescriptorRegistry
             $registry->set($descriptor->getPipeType(), $descriptor);
         }
 
-        return new FileDescriptorRegistry( $registry->toImmMap() );
+        return new DescriptorRegistry( $registry->toImmMap() );
     }
 
 }
