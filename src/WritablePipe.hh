@@ -1,5 +1,14 @@
 <?hh // strict
 
+/**
+ * This file is part of hhpack\process package.
+ *
+ * (c) Noritaka Horio <holy.shared.design@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace hhpack\process;
 
 use RuntimeException;
@@ -10,14 +19,20 @@ final class WritablePipe implements WritableStream
     private bool $opened = true;
 
     public function __construct(
+        private PipeType $type,
         private resource $handle
     )
     {
     }
 
-    public function opened() : bool
+    public function isOpened() : bool
     {
         return $this->opened;
+    }
+
+    public function isClosed() : bool
+    {
+        return $this->isOpened() === false;
     }
 
     public function write(string $output) : int
@@ -29,16 +44,6 @@ final class WritablePipe implements WritableStream
     {
         fclose($this->handle);
         $this->opened = false;
-    }
-
-    public static function nullPipe() : WritablePipe
-    {
-        $handle = fopen('/dev/null', 'w');
-
-        if (is_resource($handle) === false) {
-            throw new RuntimeException();
-        }
-        return new WritablePipe($handle);
     }
 
 }

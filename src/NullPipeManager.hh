@@ -11,7 +11,20 @@
 
 namespace hhpack\process;
 
-interface ReadableStream extends Stream, Readable
+final class NullPipeManager implements PipeManager
 {
-    public function getOutput() : BufferedOutput;
+
+    public function read() : void
+    {
+    }
+
+    public function close() : void
+    {
+    }
+
+    public function getOutputResult() : OutputResult
+    {
+        return OutputResult::emptyResult();
+    }
+
 }

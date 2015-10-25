@@ -11,7 +11,8 @@
 
 namespace hhpack\process;
 
-interface ReadableStream extends Stream, Readable
+enum DescriptorType : int
 {
-    public function getOutput() : BufferedOutput;
+    Read = 0;
+    Write = 1;
 }

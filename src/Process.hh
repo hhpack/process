@@ -1,64 +1,76 @@
 <?hh // strict
 
+/**
+ * This file is part of hhpack\process package.
+ *
+ * (c) Noritaka Horio <holy.shared.design@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace hhpack\process;
+
+use RuntimeException;
 
 final class Process
 {
 
-    private ?resource $process;
-    private array<int, array<string>> $descriptors = [
-        0 => [ 'pipe', 'r' ],
-        1 => [ 'pipe', 'w' ],
-        2 => [ 'pipe', 'w' ]
-    ];
-    private ?PipeManager $pipeManager = null;
-
     public function __construct(
-        private string $command
+        private Context $context
     )
     {
     }
 
-    public function execute() : int
+    public function getPid() : ?int
     {
-        $this->start();
-        return $this->wait();
+        return $this->context->getPid();
     }
 
-    private function start() : void
+    public function getCommand() : string
     {
-        $pipeHandles = [];
-
-        $this->process = proc_open(
-            $this->command,
-            $this->descriptors,
-            $pipeHandles
-        );
-
-        $this->pipeManager = PipeManager::fromArray($pipeHandles);
+        return $this->context->getCommand();
     }
 
-    private function stop() : int
+    public function getWorkingDirectory() : string
     {
-        if ($this->pipeManager === null) {
-            return -1;
-        }
-        $this->pipeManager->closeAll();
-        return proc_close($this->process);
+        return $this->context->getWorkingDirectory();
     }
 
-    private function wait() : int
+    public function getEnvironmentVariables() : EnviromentVariables
     {
-        if ($this->pipeManager === null) {
-            return -1;
-        }
-        $this->pipeManager->readAll();
-        return $this->stop();
+        return $this->context->getEnvironmentVariables();
     }
 
-    public function isRunning() : bool
+    public async function run() : Awaitable<ProcessResult>
     {
-        return $this->pipeManager !== null;
+        return await $this->context->run();
+    }
+
+    public function start() : void
+    {
+        $this->context->start();
+    }
+
+    public async function stop() : Awaitable<ProcessResult>
+    {
+        return await $this->context->stop();
+    }
+
+    public async function wait() : Awaitable<ProcessResult>
+    {
+        return await $this->context->wait();
+    }
+
+    public function isAlive() : bool
+    {
+        return $this->context->isAlive();
+    }
+
+    public static async function exec(string $command, string $cwd = (string) getcwd(), ?environment $env = null) : Awaitable<ProcessResult>
+    {
+        $process = new Process(new GeneralContext($command, $cwd, $env));
+        return await $process->run();
     }
 
 }
