@@ -11,6 +11,7 @@
 
 namespace hhpack\process;
 
+use RuntimeException;
 
 final class GeneralContext extends ProcessContext implements Context
 {
@@ -50,6 +51,10 @@ final class GeneralContext extends ProcessContext implements Context
             $this->descriptors->toArray(),
             $pipeHandles
         );
+
+        if (is_resource($this->process) === false) {
+            throw new RuntimeException('Failed to start of process');
+        }
 
         $this->pipeManager = $this->descriptors->createPipeManager($pipeHandles);
         $this->captureStatus();
