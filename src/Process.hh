@@ -52,9 +52,9 @@ final class Process
         $this->context->start();
     }
 
-    public function stop() : ProcessResult
+    public async function stop() : Awaitable<ProcessResult>
     {
-        return $this->context->stop();
+        return await $this->context->stop();
     }
 
     public async function wait() : Awaitable<ProcessResult>

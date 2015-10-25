@@ -43,9 +43,21 @@ abstract class ProcessContext implements Context
         return $this->enviromentVariables;
     }
 
-    // FIXME SIGTERM, SIGKILL
-    public function stop() : ProcessResult
+    public async function stop() : Awaitable<ProcessResult>
     {
+        $this->captureStatus();
+
+        if ($this->isAlive() === false) {
+            return $this->close();
+        }
+
+        proc_terminate($this->process);
+
+        while($this->isAlive()) {
+            usleep(1000);
+            $this->captureStatus();
+        }
+
         return $this->close();
     }
 

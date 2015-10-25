@@ -18,7 +18,7 @@ interface Context
     public function getWorkingDirectory() : string;
     public function getEnvironmentVariables() : EnviromentVariables; // XXX value is string?
     public function start() : void;
-    public function stop() : ProcessResult;
+    public function stop() : Awaitable<ProcessResult>;
     public function wait() : Awaitable<ProcessResult>;
     public function run() : Awaitable<ProcessResult>;
     public function isAlive() : bool;
