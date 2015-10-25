@@ -15,11 +15,7 @@ namespace hhpack\process;
 final class GeneralContext extends ProcessContext implements Context
 {
 
-    private array<int, array<string>> $descriptors = [
-        0 => [ 'pipe', 'r' ],
-        1 => [ 'pipe', 'w' ],
-        2 => [ 'pipe', 'w' ]
-    ];
+    private DescriptorRegistry $descriptors;
 
     public function __construct(
         string $command,
@@ -31,6 +27,11 @@ final class GeneralContext extends ProcessContext implements Context
         $this->workingDirectory = $cwd;
         $this->enviromentVariables = new ImmMap($env);
         $this->pipeManager = new NullPipeManager();
+        $this->descriptors = DescriptorRegistry::fromArray([
+            new Descriptor(PipeType::Stdin, [ 'pipe', 'r' ]),
+            new Descriptor(PipeType::Stdout, [ 'pipe', 'w' ]),
+            new Descriptor(PipeType::Stderr, [ 'pipe', 'w' ])
+        ]);
         $this->status = ProcessStatus::initialStatus();
     }
 
@@ -46,7 +47,7 @@ final class GeneralContext extends ProcessContext implements Context
 
         $this->process = proc_open(
             $this->command,
-            $this->descriptors,
+            $this->descriptors->toArray(),
             $pipeHandles
         );
 
