@@ -19,6 +19,7 @@ final class WritablePipe implements WritableStream
     private bool $opened = true;
 
     public function __construct(
+        private PipeType $type,
         private resource $handle
     )
     {
@@ -45,14 +46,15 @@ final class WritablePipe implements WritableStream
         $this->opened = false;
     }
 
-    public static function nullPipe() : WritablePipe
+    public static function nullPipe(PipeType $type) : WritablePipe
     {
-        $handle = fopen('/dev/null', 'w');
+        $handle = fopen('/dev/null', 'r');
 
         if (is_resource($handle) === false) {
             throw new RuntimeException();
         }
-        return new WritablePipe($handle);
+
+        return new WritablePipe($type, $handle);
     }
 
 }

@@ -21,6 +21,26 @@ final class DescriptorRegistry
     {
     }
 
+    public function createPipeRegistry(array<int, resource> $pipeHandles) : PipeRegistry
+    {
+        $readablePipes = Vector {};
+        $writablePipes = Vector {};
+
+        foreach ($pipeHandles as $type => $pipeHandle) {
+            $pipeType = PipeType::assert($type);
+
+            if ($pipeType === PipeType::Stdin) {
+                $writablePipes->add(new WritablePipe($pipeType, $pipeHandle));
+            } else if ($pipeType === PipeType::Stdout) {
+                $readablePipes->add(new ReadablePipe($pipeType, $pipeHandle));
+            } else if ($pipeType === PipeType::Stderr) {
+                $readablePipes->add(new ReadablePipe($pipeType, $pipeHandle));
+            }
+        }
+
+        return new PipeRegistry($readablePipes, $writablePipes);
+    }
+
     public function toArray() : array<int, array<string>>
     {
         $result = $this->registry->mapWithKey(($type, $descriptor) ==> {

@@ -20,6 +20,7 @@ final class ReadablePipe implements ReadableStream
     private BufferedOutput $bufferedOutput;
 
     public function __construct(
+        private PipeType $type,
         private resource $handle
     )
     {
@@ -52,20 +53,31 @@ final class ReadablePipe implements ReadableStream
         return $this->bufferedOutput;
     }
 
+    public function isStdout() : bool
+    {
+        return $this->type === PipeType::Stdout;
+    }
+
+    public function isStderr() : bool
+    {
+        return $this->type === PipeType::Stderr;
+    }
+
     public function close() : void
     {
         fclose($this->handle);
         $this->opened = false;
     }
 
-    public static function nullPipe() : ReadablePipe
+    public static function nullPipe(PipeType $type) : ReadablePipe
     {
-        $handle = fopen('/dev/null', 'r');
+        $handle = fopen('/dev/null', 'w');
 
         if (is_resource($handle) === false) {
             throw new RuntimeException();
         }
-        return new ReadablePipe($handle);
+
+        return new ReadablePipe($type, $handle);
     }
 
 }
