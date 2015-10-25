@@ -11,7 +11,6 @@
 
 namespace hhpack\process;
 
-use RuntimeException;
 
 final class FileDescriptorRegistry
 {
@@ -20,6 +19,14 @@ final class FileDescriptorRegistry
         private ImmMap<PipeType, DescriptorSpecification> $registry
     )
     {
+    }
+
+    public function toArray() : array<int, array<string>>
+    {
+        $result = $this->registry->mapWithKey(($type, $descriptor) ==> {
+            return $descriptor->getPipeValues();
+        });
+        return $result->toArray();
     }
 
     public static function fromArray(Traversable<DescriptorSpecification> $descriptors) : FileDescriptorRegistry
