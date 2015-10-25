@@ -16,18 +16,14 @@ use RuntimeException;
 final class FileDescriptor implements DescriptorSpecification
 {
 
-    private DescriptorType $descriptorType = DescriptorType::Read;
+    private DescriptorType $descriptorType;
 
     public function __construct(
         private PipeType $pipeType,
         private array<string> $pipeValues
     )
     {
-        $lastIndex = count($pipeValues) - 1;
-
-        if ($pipeValues[$lastIndex] === 'r') {
-            $this->descriptorType = DescriptorType::Write;
-        }
+        $this->resolveDescriptorType($pipeValues);
     }
 
     // STDIN, STDOUT, STDERR
@@ -50,6 +46,18 @@ final class FileDescriptor implements DescriptorSpecification
     public function getPipeValues() : array<string>
     {
         return $this->pipeValues;
+    }
+
+    private function resolveDescriptorType(array<string> $pipeValues) : void
+    {
+        $descriptorType = DescriptorType::Read;
+        $lastIndex = count($pipeValues) - 1;
+
+        if ($pipeValues[$lastIndex] === 'r') {
+            $descriptorType = DescriptorType::Write;
+        }
+
+        $this->descriptorType = $descriptorType;
     }
 
 }
