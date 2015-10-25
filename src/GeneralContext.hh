@@ -46,10 +46,15 @@ final class GeneralContext extends ProcessContext implements Context
     {
         $pipeHandles = [];
 
+        $environment = $this->getEnvironmentVariables();
+        $environment = $environment->isEmpty() ? null : $environment->toArray();
+
         $this->process = proc_open(
             $this->command,
             $this->descriptors->toArray(),
-            $pipeHandles
+            $pipeHandles,
+            $this->getWorkingDirectory(),
+            $environment
         );
 
         if (is_resource($this->process) === false) {
