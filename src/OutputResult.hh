@@ -21,6 +21,16 @@ final class OutputResult implements Displayable
     {
     }
 
+    public function getStdout() : BufferedOutput
+    {
+        return $this->stdout;
+    }
+
+    public function getStderr() : BufferedOutput
+    {
+        return $this->stderr;
+    }
+
     public static function fromOutputs(Outputs $outputs) : OutputResult
     {
         return new OutputResult(
