@@ -11,7 +11,7 @@
 
 namespace hhpack\process;
 
-interface ReadableStream extends Stream, Readable
+interface Writable<T>
 {
-    public function getOutput() : BufferedOutput;
+    public function write(string $output) : T;
 }

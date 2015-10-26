@@ -1,84 +1,19 @@
 <?hh // strict
 
+/**
+ * This file is part of hhpack\process package.
+ *
+ * (c) Noritaka Horio <holy.shared.design@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace hhpack\process;
 
-final class PipeManager
+interface PipeManager
 {
-    private WritablePipe $stdin;
-    private ReadablePipe $stdout;
-    private ReadablePipe $stderr;
-
-    public function __construct(
-        array<PipeType, resource> $pipeHandles
-    )
-    {
-        $this->devNull();
-        $this->applyHandles($pipeHandles);
-    }
-
-    private function devNull() : void
-    {
-        $this->stdin = WritablePipe::nullPipe();
-        $this->stdout = ReadablePipe::nullPipe();
-        $this->stderr = ReadablePipe::nullPipe();
-    }
-
-    public function readAll() : void
-    {
-        $pipes = [ $this->stdout, $this->stderr ];
-
-        foreach ($pipes as $pipe) {
-            while ($pipe->eof() === false) {
-                $pipe->read(4096);
-            }
-        }
-    }
-
-    public function closeAll() : void
-    {
-        $pipes = [ $this->stdin, $this->stdout, $this->stderr ];
-
-        foreach ($pipes as $pipe) {
-            $pipe->close();
-        }
-    }
-
-    public function getResult() : Result
-    {
-        return Result::fromOutputs(shape(
-            'stdout' => $this->stdout->getOutput(),
-            'stderr' => $this->stderr->getOutput()
-        ));
-    }
-
-    private function applyHandles(array<PipeType, resource> $pipeHandles) : void
-    {
-        foreach ($pipeHandles as $type => $pipeHandle) {
-            if ($type === PipeType::Stdin) {
-                $this->stdin = new WritablePipe($pipeHandle);
-            } else if ($type === PipeType::Stdout) {
-                $this->stdout = new ReadablePipe($pipeHandle);
-            } else if ($type === PipeType::Stderr) {
-                $this->stderr = new ReadablePipe($pipeHandle);
-            }
-        }
-    }
-
-    public static function fromResources(array<PipeType, resource> $pipeHandles) : PipeManager
-    {
-        return new PipeManager($pipeHandles);
-    }
-
-    public static function fromArray(array<int, resource> $pipeHandles) : PipeManager
-    {
-        $handles = [];
-
-        foreach ($pipeHandles as $type => $pipeHandle) {
-            $pipeType = PipeType::assert($type);
-            $handles[$pipeType] = $pipeHandle;
-        }
-
-        return new PipeManager($handles);
-    }
-
+    public function read() : void;
+    public function close() : void;
+    public function getOutputResult() : OutputResult;
 }

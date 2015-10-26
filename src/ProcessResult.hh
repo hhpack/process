@@ -11,29 +11,28 @@
 
 namespace hhpack\process;
 
-final class BufferedOutput implements Writable<int>
+final class ProcessResult implements Displayable
 {
 
     public function __construct(
-        private string $output = ''
+        private ProcessStatus $status,
+        private OutputResult $output
     )
     {
     }
 
-    public function append(string $output) : int
+    public function display() : void
     {
-        return $this->write($output);
-    }
-
-    public function write(string $output) : int
-    {
-        $this->output .= $output;
-        return strlen($output);
+        fwrite(STDOUT, (string) $this);
     }
 
     public function __toString() : string
     {
-        return $this->output;
+        return sprintf(
+            "EXIT_CODE: %s\n\n%s\n",
+            (string) $this->status->getExitCode(),
+            (string) $this->output
+        );
     }
 
 }

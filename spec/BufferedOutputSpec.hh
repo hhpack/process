@@ -9,7 +9,7 @@ describe(BufferedOutput::class, function () {
     $this->output = new BufferedOutput();
   });
   describe('append()', function () {
-    it('', function() {
+    it('append text', function() {
       $this->output->append('text');
       expect((string) $this->output)->toBe('text');
     });

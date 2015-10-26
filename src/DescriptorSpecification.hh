@@ -11,7 +11,10 @@
 
 namespace hhpack\process;
 
-interface ReadableStream extends Stream, Readable
+interface DescriptorSpecification
 {
-    public function getOutput() : BufferedOutput;
+    public function getPipeType() : PipeType;
+    public function getPipeValues() : array<string>;
+    public function isReadDescriptor() : bool;
+    public function isWriteDescriptor() : bool;
 }

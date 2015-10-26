@@ -11,7 +11,7 @@
 
 namespace hhpack\process;
 
-interface ReadableStream extends Stream, Readable
+interface Displayable
 {
-    public function getOutput() : BufferedOutput;
+    public function display() : void;
 }
