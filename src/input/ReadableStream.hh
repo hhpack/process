@@ -13,7 +13,7 @@ namespace hhpack\process\input;
 
 use hhpack\process\Stream;
 use hhpack\process\Readable;
-use hhpack\process\BufferedOutput;
+use hhpack\process\output\BufferedOutput;
 
 interface ReadableStream extends Stream, Readable
 {

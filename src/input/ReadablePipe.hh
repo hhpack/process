@@ -12,7 +12,7 @@
 namespace hhpack\process\input;
 
 use hhpack\process\PipeType;
-use hhpack\process\BufferedOutput;
+use hhpack\process\output\BufferedOutput;
 
 final class ReadablePipe implements ReadableStream
 {

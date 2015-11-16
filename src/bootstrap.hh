@@ -11,6 +11,8 @@
 
 namespace hhpack\process
 {
+    use hhpack\process\output\BufferedOutput;
+
     type environment = KeyedTraversable<string, string>;
     type EnviromentVariables = ImmMap<string, string>;
 
