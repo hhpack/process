@@ -9,7 +9,11 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process;
+namespace hhpack\process\input;
+
+use hhpack\process\Stream;
+use hhpack\process\Readable;
+use hhpack\process\BufferedOutput;
 
 interface ReadableStream extends Stream, Readable
 {

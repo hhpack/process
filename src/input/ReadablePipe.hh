@@ -9,9 +9,10 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process;
+namespace hhpack\process\input;
 
-use RuntimeException;
+use hhpack\process\PipeType;
+use hhpack\process\BufferedOutput;
 
 final class ReadablePipe implements ReadableStream
 {
