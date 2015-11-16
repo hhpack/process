@@ -31,6 +31,24 @@ final class ProcessBuilder
         ]);
     }
 
+    public function command(string $command) : this
+    {
+        $this->command = $command;
+        return $this;
+    }
+
+    public function workingDirectory(string $cwd) : this
+    {
+        $this->cwd = $cwd;
+        return $this;
+    }
+
+    public function environment(environment $environment) : this
+    {
+        $this->env = $environment;
+        return $this;
+    }
+
     public function start() : ChildProcess
     {
         $pipeHandles = [];
