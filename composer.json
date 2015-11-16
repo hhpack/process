@@ -15,7 +15,7 @@
     "hhvm": ">=3.6"
   },
   "require-dev": {
-    "peridot-php/peridot": "~1.15",
+    "peridot-php/peridot": "~1.16",
     "peridot-php/peridot-dot-reporter": "~1.0",
     "expect/peridot-expect-plugin": "~3.0"
   },
