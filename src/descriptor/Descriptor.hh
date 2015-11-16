@@ -9,7 +9,11 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process;
+namespace hhpack\process\descriptor;
+
+use hhpack\process\PipeType;
+use hhpack\process\DescriptorType;
+use hhpack\process\DescriptorSpecification;
 
 final class Descriptor implements DescriptorSpecification
 {

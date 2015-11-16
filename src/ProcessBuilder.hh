@@ -11,6 +11,8 @@
 
 namespace hhpack\process;
 
+use hhpack\process\descriptor\Descriptor;
+use hhpack\process\descriptor\DescriptorRegistry;
 use RuntimeException;
 
 final class ProcessBuilder
