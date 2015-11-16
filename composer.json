@@ -24,7 +24,8 @@
       "hhpack\\process\\": "src/"
     },
     "files": [
-      "src/bootstrap.hh"
+      "src/bootstrap.hh",
+      "src/shortcut.hh"
     ]
   },
   "autoload-dev": {
