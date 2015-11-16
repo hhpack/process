@@ -11,6 +11,7 @@
 
 namespace hhpack\process;
 
+use hhpack\process\output\WritablePipe;
 
 final class DescriptorRegistry
 {
