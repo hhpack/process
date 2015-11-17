@@ -19,14 +19,13 @@ final class ReadablePipe implements ReadableStream
 {
 
     private bool $opened = true;
-    private Writable<int> $output;
 
     public function __construct(
         private PipeType $type,
-        private resource $handle
+        private resource $handle,
+        private Writable<int> $output = new BufferedOutput()
     )
     {
-        $this->output = new BufferedOutput();
     }
 
     public function eof() : bool
