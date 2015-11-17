@@ -11,6 +11,9 @@
 
 namespace hhpack\process;
 
+use hhpack\process\input\ReadablePipe;
+use hhpack\process\output\WritablePipe;
+
 final class PipeRegistry implements PipeManager
 {
 

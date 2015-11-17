@@ -11,20 +11,8 @@
 
 namespace hhpack\process;
 
-final class NullPipeManager implements PipeManager
+async function exec(string $command, string $cwd = (string) getcwd(), ?environment $env = null) : Awaitable<ProcessResult>
 {
-
-    public function read() : void
-    {
-    }
-
-    public function close() : void
-    {
-    }
-
-    public function getOutputResult() : OutputResult
-    {
-        return OutputResult::emptyResult();
-    }
-
+    $builder = new ProcessBuilder($command, $cwd, $env);
+    return await $builder->start()->wait();
 }

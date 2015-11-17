@@ -9,9 +9,9 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process;
+namespace hhpack\process\output;
 
-use RuntimeException;
+use hhpack\process\PipeType;
 
 final class WritablePipe implements WritableStream
 {

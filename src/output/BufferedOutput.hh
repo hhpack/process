@@ -9,7 +9,9 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process;
+namespace hhpack\process\output;
+
+use hhpack\process\Writable;
 
 final class BufferedOutput implements Writable<int>
 {

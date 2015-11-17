@@ -13,15 +13,15 @@ Start the process, it is an example to wait until the end.
 information of stdout and stderr are output to the buffer.
 
 ```hack
-use hhpack\process\Process;
+use hhpack\process;
 
 async function main() : Awaitable<void>
 {
-    $result = await Process::exec('hh_client restart');
+    $result = await process\exec('hh_client restart');
     $result->getStdout()->display();
     $result->getStderr()->display();
 
-    $result = await Process::exec('hh_client check --json');
+    $result = await process\exec('hh_client check --json');
     $result->display();
 }
 

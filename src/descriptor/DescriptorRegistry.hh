@@ -9,7 +9,14 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process;
+namespace hhpack\process\descriptor;
+
+use hhpack\process\PipeType;
+use hhpack\process\PipeManager;
+use hhpack\process\PipeRegistry;
+use hhpack\process\DescriptorSpecification;
+use hhpack\process\input\ReadablePipe;
+use hhpack\process\output\WritablePipe;
 
 
 final class DescriptorRegistry

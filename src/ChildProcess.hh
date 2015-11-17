@@ -11,34 +11,24 @@
 
 namespace hhpack\process;
 
-abstract class ProcessContext implements Context
+use RuntimeException;
+
+final class ChildProcess
 {
 
-    protected string $command;
-    protected string $workingDirectory;
-    protected EnviromentVariables $enviromentVariables;
-    protected ?resource $process;
-    protected PipeManager $pipeManager;
-    protected ProcessStatus $status;
+    private ProcessStatus $status;
 
-    public function getPid() : ?int
+    public function __construct(
+        private resource $process,
+        private PipeManager $pipeManager
+    )
+    {
+        $this->captureStatus();
+    }
+
+    public function pid() : ?int
     {
         return $this->status->getPid();
-    }
-
-    public function getCommand() : string
-    {
-        return $this->command;
-    }
-
-    public function getWorkingDirectory() : string
-    {
-        return $this->workingDirectory;
-    }
-
-    public function getEnvironmentVariables() : EnviromentVariables
-    {
-        return $this->enviromentVariables;
     }
 
     public async function stop() : Awaitable<ProcessResult>
@@ -86,15 +76,12 @@ abstract class ProcessContext implements Context
         );
     }
 
-    protected function captureStatus() : void
+    private function captureStatus() : void
     {
-        if ($this->process === null) {
-            return;
-        }
         $this->status = ProcessStatus::fromResource($this->process);
     }
 
-    public function __destruct()
+    protected function __destruct()
     {
         $this->close();
     }

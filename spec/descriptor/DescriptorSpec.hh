@@ -3,7 +3,7 @@
 namespace hhpack\process\spec;
 
 use hhpack\process\PipeType;
-use hhpack\process\Descriptor;
+use hhpack\process\descriptor\Descriptor;
 
 describe(Descriptor::class, function () {
   describe('isReadDescriptor()', function () {

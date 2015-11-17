@@ -9,9 +9,11 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process;
+namespace hhpack\process\output;
 
-interface ReadableStream extends Stream, Readable
+use hhpack\process\Stream;
+use hhpack\process\Writable;
+
+interface WritableStream extends Stream, Writable<int>
 {
-    public function getOutput() : BufferedOutput;
 }

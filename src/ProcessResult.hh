@@ -11,6 +11,8 @@
 
 namespace hhpack\process;
 
+use hhpack\process\output\BufferedOutput;
+
 final class ProcessResult implements Displayable
 {
 

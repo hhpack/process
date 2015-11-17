@@ -2,7 +2,7 @@
 
 namespace hhpack\process\spec;
 
-use hhpack\process\BufferedOutput;
+use hhpack\process\output\BufferedOutput;
 
 describe(BufferedOutput::class, function () {
   beforeEach(function () {

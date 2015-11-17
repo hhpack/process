@@ -3,8 +3,8 @@
 namespace hhpack\process\spec;
 
 use hhpack\process\PipeType;
-use hhpack\process\Descriptor;
-use hhpack\process\DescriptorRegistry;
+use hhpack\process\descriptor\Descriptor;
+use hhpack\process\descriptor\DescriptorRegistry;
 
 describe(DescriptorRegistry::class, function () {
   describe('toArray()', function () {
