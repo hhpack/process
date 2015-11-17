@@ -55,6 +55,11 @@ final class ReadablePipe implements ReadableStream
         return $this->output;
     }
 
+    public function pipeTo(Writable<int> $output) : void
+    {
+        $this->output = $output;
+    }
+
     public function isStdout() : bool
     {
         return $this->type === PipeType::Stdout;
