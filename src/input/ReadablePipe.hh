@@ -13,19 +13,20 @@ namespace hhpack\process\input;
 
 use hhpack\process\PipeType;
 use hhpack\process\output\BufferedOutput;
+use hhpack\process\Writable;
 
 final class ReadablePipe implements ReadableStream
 {
 
     private bool $opened = true;
-    private BufferedOutput $bufferedOutput;
+    private Writable<int> $output;
 
     public function __construct(
         private PipeType $type,
         private resource $handle
     )
     {
-        $this->bufferedOutput = new BufferedOutput();
+        $this->output = new BufferedOutput();
     }
 
     public function eof() : bool
@@ -46,12 +47,12 @@ final class ReadablePipe implements ReadableStream
     public function read(int $length) : void
     {
         $chunk = fread($this->handle, $length);
-        $this->bufferedOutput->append($chunk);
+        $this->output->write($chunk);
     }
 
-    public function getOutput() : BufferedOutput
+    public function getOutput() : Writable<int>
     {
-        return $this->bufferedOutput;
+        return $this->output;
     }
 
     public function isStdout() : bool

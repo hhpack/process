@@ -16,6 +16,8 @@ namespace hhpack\process
     type environment = KeyedTraversable<string, string>;
     type EnviromentVariables = ImmMap<string, string>;
 
+    type Output = Writable<int>;
+
     type Outputs = shape(
         'stdout' => BufferedOutput,
         'stderr' => BufferedOutput
