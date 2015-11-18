@@ -15,11 +15,10 @@ use hhpack\process\PipeType;
 use hhpack\process\output\BufferedOutput;
 use hhpack\process\Writable;
 
-final class StringInput implements ReadableStream
+final class InputStringStream implements ReadableStream
 {
 
     private int $position = 0;
-    private int $readedLength = 0;
     private bool $opened = true;
 
     public function __construct(
@@ -31,7 +30,7 @@ final class StringInput implements ReadableStream
 
     public function eof() : bool
     {
-        return strlen($this->input) <= $this->readedLength;
+        return strlen($this->input) <= $this->position;
     }
 
     public function isOpened() : bool
@@ -73,11 +72,11 @@ final class StringInput implements ReadableStream
 
     private function consume(int $length) : string
     {
-        $chunk = substr($this->input, $this->position, $length);
+        // It will be typecast to string If the return value is FALSE
+        $chunk = (string) substr($this->input, $this->position, $length);
         $chunkLength = strlen($chunk);
 
         $this->position += $chunkLength;
-        $this->readedLength += $chunkLength;
 
         return $chunk;
     }
