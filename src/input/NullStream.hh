@@ -9,24 +9,22 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process\output;
+namespace hhpack\process\input;
 
-use hhpack\process\StreamType;
-use hhpack\process\input\NullStream;
-use hhpack\process\input\ReadableStream;
+use hhpack\process\Writable;
 
-
-final class OutputPipeStream implements WritableStream
+final class NullStream implements ReadableStream<int>
 {
 
     private bool $opened = true;
 
-    public function __construct(
-        private StreamType $type,
-        private resource $handle,
-        private ReadableStream<int> $input = new NullStream()
-    )
+    public function __construct()
     {
+    }
+
+    public function eof() : bool
+    {
+        return true;
     }
 
     public function isOpened() : bool
@@ -39,14 +37,16 @@ final class OutputPipeStream implements WritableStream
         return $this->isOpened() === false;
     }
 
-    public function write(string $output) : int
+    public function read(int $length) : void
     {
-        return (int) fwrite($this->handle, $output);
+    }
+
+    public function pipeTo(Writable<int> $output) : void
+    {
     }
 
     public function close() : void
     {
-        fclose($this->handle);
         $this->opened = false;
     }
 

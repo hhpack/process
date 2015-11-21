@@ -11,16 +11,21 @@
 
 namespace hhpack\process\descriptor;
 
+use hhpack\process\Writable;
 use hhpack\process\StreamType;
 use hhpack\process\DescriptorType;
 use hhpack\process\DescriptorSpecification;
+use hhpack\process\output\OutputBufferedStream;
+use hhpack\process\input\ReadableStream;
+use hhpack\process\input\InputPipeStream;
 
 final class ReadDescriptor implements DescriptorSpecification
 {
 
     public function __construct(
         private StreamType $streamType,
-        private array<string> $streamValues
+        private array<string> $streamValues,
+        private Writable<int> $output = new OutputBufferedStream()
     )
     {
     }
@@ -45,6 +50,11 @@ final class ReadDescriptor implements DescriptorSpecification
     public function getStreamValues() : array<string>
     {
         return $this->streamValues;
+    }
+
+    public function createStream(resource $handle) : ReadableStream<int>
+    {
+        return new InputPipeStream($this->streamType, $handle, $this->output);
     }
 
 }
