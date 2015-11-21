@@ -11,17 +11,21 @@
 
 namespace hhpack\process;
 
+use hhpack\process\Writable;
 use hhpack\process\stream\StreamType;
 use hhpack\process\descriptor\ReadDescriptor;
 use hhpack\process\descriptor\WriteDescriptor;
 use hhpack\process\descriptor\DescriptorRegistry;
 use hhpack\process\descriptor\DefaultDescriptorRegistry;
 use hhpack\process\descriptor\DescriptorSpecification;
+use hhpack\process\output\OutputBufferedStream;
 use RuntimeException;
 
 final class ProcessBuilder
 {
 
+    private Writable<int> $output;
+    private Writable<int> $errorOutput;
     private DescriptorRegistry $descriptors;
 
     public function __construct(
@@ -30,6 +34,9 @@ final class ProcessBuilder
         private ?environment $env = null
     )
     {
+        $this->output = new OutputBufferedStream();
+        $this->errorOutput = new OutputBufferedStream();
+
         $this->descriptors = new DefaultDescriptorRegistry(
             new WriteDescriptor(StreamType::Stdin, [ 'pipe', 'r' ]),
             new ReadDescriptor(StreamType::Stdout, [ 'pipe', 'w' ]),
@@ -55,9 +62,27 @@ final class ProcessBuilder
         return $this;
     }
 
+    public function stdout(Writable<int> $output) : this
+    {
+        $this->output = $output;
+        return $this;
+    }
+
+    public function stderr(Writable<int> $output) : this
+    {
+        $this->errorOutput = $output;
+        return $this;
+    }
+
     public function start() : ChildProcess
     {
         $streamHandles = [];
+
+        $descriptors = new DefaultDescriptorRegistry(
+            new WriteDescriptor(StreamType::Stdin, [ 'pipe', 'r' ]),
+            new ReadDescriptor(StreamType::Stdout, [ 'pipe', 'w' ], $this->output),
+            new ReadDescriptor(StreamType::Stderr, [ 'pipe', 'w' ], $this->errorOutput)
+        );
 
         $process = proc_open(
             $this->command,
@@ -71,7 +96,7 @@ final class ProcessBuilder
             throw new RuntimeException('Failed to start of process');
         }
 
-        $streamManager = $this->descriptors->createPipeManager($streamHandles);
+        $streamManager = $descriptors->createPipeManager($streamHandles);
 
         return new ChildProcess($process, $streamManager);
     }
