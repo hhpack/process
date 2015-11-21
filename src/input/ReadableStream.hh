@@ -15,9 +15,7 @@ use hhpack\process\Stream;
 use hhpack\process\Readable;
 use hhpack\process\Writable;
 
-// FIXME Remove getOutput() method
 interface ReadableStream<T> extends Stream, Readable
 {
-    public function getOutput() : Writable<T>;
     public function pipeTo(Writable<T> $output) : void;
 }
