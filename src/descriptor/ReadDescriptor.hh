@@ -17,9 +17,9 @@ use hhpack\process\DescriptorType;
 use hhpack\process\DescriptorSpecification;
 use hhpack\process\output\OutputBufferedStream;
 use hhpack\process\input\ReadableStream;
-use hhpack\process\input\InputPipeStream;
+use hhpack\process\input\ProcessReadStream;
 
-final class ReadDescriptor implements DescriptorSpecification<InputPipeStream>
+final class ReadDescriptor implements DescriptorSpecification<ProcessReadStream>
 {
 
     public function __construct(
@@ -52,9 +52,9 @@ final class ReadDescriptor implements DescriptorSpecification<InputPipeStream>
         return $this->streamValues;
     }
 
-    public function createStreamFromHandle(resource $handle) : InputPipeStream
+    public function createStreamFromHandle(resource $handle) : ProcessReadStream
     {
-        return new InputPipeStream($this->streamType, $handle, $this->output);
+        return new ProcessReadStream($this->streamType, $handle, $this->output);
     }
 
 }

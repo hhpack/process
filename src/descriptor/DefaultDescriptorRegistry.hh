@@ -15,16 +15,16 @@ use hhpack\process\StreamType;
 use hhpack\process\StreamManager;
 use hhpack\process\stream\StreamRegistry;
 use hhpack\process\DescriptorSpecification;
-use hhpack\process\input\InputPipeStream;
-use hhpack\process\output\OutputPipeStream;
+use hhpack\process\input\ProcessReadStream;
+use hhpack\process\output\ProcessWriteStream;
 
 final class DefaultDescriptorRegistry implements DescriptorRegistry
 {
 
     public function __construct(
-        private DescriptorSpecification<OutputPipeStream> $stdin,
-        private DescriptorSpecification<InputPipeStream> $stdout,
-        private DescriptorSpecification<InputPipeStream> $stderr
+        private DescriptorSpecification<ProcessWriteStream> $stdin,
+        private DescriptorSpecification<ProcessReadStream> $stdout,
+        private DescriptorSpecification<ProcessReadStream> $stderr
     )
     {
     }

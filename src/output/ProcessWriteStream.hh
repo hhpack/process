@@ -16,7 +16,7 @@ use hhpack\process\input\NullStream;
 use hhpack\process\input\ReadableStream;
 
 
-final class OutputPipeStream implements WritableStream
+final class ProcessWriteStream implements WritableStream
 {
 
     private bool $opened = true;
