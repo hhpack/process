@@ -16,6 +16,7 @@ use hhpack\process\descriptor\ReadDescriptor;
 use hhpack\process\descriptor\WriteDescriptor;
 use hhpack\process\descriptor\DescriptorRegistry;
 use hhpack\process\descriptor\DefaultDescriptorRegistry;
+use hhpack\process\descriptor\DescriptorSpecification;
 use RuntimeException;
 
 final class ProcessBuilder

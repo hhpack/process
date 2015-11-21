@@ -14,7 +14,6 @@ namespace hhpack\process\descriptor;
 use hhpack\process\StreamType;
 use hhpack\process\StreamManager;
 use hhpack\process\stream\StreamRegistry;
-use hhpack\process\DescriptorSpecification;
 use hhpack\process\input\ProcessReadStream;
 use hhpack\process\output\ProcessWriteStream;
 

@@ -13,7 +13,6 @@ namespace hhpack\process\descriptor;
 
 use hhpack\process\StreamType;
 use hhpack\process\DescriptorType;
-use hhpack\process\DescriptorSpecification;
 use hhpack\process\input\NullStream;
 use hhpack\process\input\ReadableStream;
 use hhpack\process\output\WritableStream;
