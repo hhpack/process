@@ -11,7 +11,7 @@
 
 namespace hhpack\process;
 
-enum PipeType : int
+enum StreamType : int
 {
     Stdin = 0;
     Stdout = 1;

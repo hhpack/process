@@ -11,7 +11,7 @@
 
 namespace hhpack\process\input;
 
-use hhpack\process\PipeType;
+use hhpack\process\StreamType;
 use hhpack\process\output\BufferedOutput;
 use hhpack\process\Writable;
 
@@ -21,7 +21,7 @@ final class ReadablePipe implements ReadableStream
     private bool $opened = true;
 
     public function __construct(
-        private PipeType $type,
+        private StreamType $type,
         private resource $handle,
         private Writable<int> $output = new BufferedOutput()
     )
@@ -61,12 +61,12 @@ final class ReadablePipe implements ReadableStream
 
     public function isStdout() : bool
     {
-        return $this->type === PipeType::Stdout;
+        return $this->type === StreamType::Stdout;
     }
 
     public function isStderr() : bool
     {
-        return $this->type === PipeType::Stderr;
+        return $this->type === StreamType::Stderr;
     }
 
     public function close() : void

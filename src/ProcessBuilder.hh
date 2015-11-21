@@ -27,9 +27,9 @@ final class ProcessBuilder
     )
     {
         $this->descriptors = DescriptorRegistry::fromArray([
-            new Descriptor(PipeType::Stdin, [ 'pipe', 'r' ]),
-            new Descriptor(PipeType::Stdout, [ 'pipe', 'w' ]),
-            new Descriptor(PipeType::Stderr, [ 'pipe', 'w' ])
+            new Descriptor(StreamType::Stdin, [ 'pipe', 'r' ]),
+            new Descriptor(StreamType::Stdout, [ 'pipe', 'w' ]),
+            new Descriptor(StreamType::Stderr, [ 'pipe', 'w' ])
         ]);
     }
 

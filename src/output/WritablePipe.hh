@@ -11,7 +11,7 @@
 
 namespace hhpack\process\output;
 
-use hhpack\process\PipeType;
+use hhpack\process\StreamType;
 
 final class WritablePipe implements WritableStream
 {
@@ -19,7 +19,7 @@ final class WritablePipe implements WritableStream
     private bool $opened = true;
 
     public function __construct(
-        private PipeType $type,
+        private StreamType $type,
         private resource $handle
     )
     {

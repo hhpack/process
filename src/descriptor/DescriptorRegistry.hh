@@ -11,7 +11,7 @@
 
 namespace hhpack\process\descriptor;
 
-use hhpack\process\PipeType;
+use hhpack\process\StreamType;
 use hhpack\process\StreamManager;
 use hhpack\process\stream\StreamRegistry;
 use hhpack\process\DescriptorSpecification;
@@ -23,7 +23,7 @@ final class DescriptorRegistry
 {
 
     public function __construct(
-        private ImmMap<PipeType, DescriptorSpecification> $registry
+        private ImmMap<StreamType, DescriptorSpecification> $registry
     )
     {
     }
@@ -34,13 +34,13 @@ final class DescriptorRegistry
         $writablePipes = Vector {};
 
         foreach ($pipeHandles as $type => $pipeHandle) {
-            $pipeType = PipeType::assert($type);
+            $pipeType = StreamType::assert($type);
 
-            if ($pipeType === PipeType::Stdin) {
+            if ($pipeType === StreamType::Stdin) {
                 $writablePipes->add(new WritablePipe($pipeType, $pipeHandle));
-            } else if ($pipeType === PipeType::Stdout) {
+            } else if ($pipeType === StreamType::Stdout) {
                 $readablePipes->add(new ReadablePipe($pipeType, $pipeHandle));
-            } else if ($pipeType === PipeType::Stderr) {
+            } else if ($pipeType === StreamType::Stderr) {
                 $readablePipes->add(new ReadablePipe($pipeType, $pipeHandle));
             }
         }

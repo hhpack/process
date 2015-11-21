@@ -11,7 +11,7 @@
 
 namespace hhpack\process\descriptor;
 
-use hhpack\process\PipeType;
+use hhpack\process\StreamType;
 use hhpack\process\DescriptorType;
 use hhpack\process\DescriptorSpecification;
 
@@ -21,7 +21,7 @@ final class Descriptor implements DescriptorSpecification
     private DescriptorType $descriptorType;
 
     public function __construct(
-        private PipeType $pipeType,
+        private StreamType $pipeType,
         private array<string> $pipeValues
     )
     {
@@ -29,7 +29,7 @@ final class Descriptor implements DescriptorSpecification
     }
 
     // STDIN, STDOUT, STDERR
-    public function getPipeType() : PipeType
+    public function getPipeType() : StreamType
     {
         return $this->pipeType;
     }
