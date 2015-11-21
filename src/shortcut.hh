@@ -11,8 +11,17 @@
 
 namespace hhpack\process;
 
-async function exec(string $command, string $cwd = (string) getcwd(), ?environment $env = null) : Awaitable<ProcessResult>
+use hhpack\process\output\OutputBufferedStream;
+
+async function exec(
+    string $command,
+    string $cwd = (string) getcwd(),
+    ?environment $env = null,
+    ProcessOptions $options = new ProcessOptions()
+) : Awaitable<ProcessResult>
 {
     $builder = new ProcessBuilder($command, $cwd, $env);
+    $builder->setOptions($options);
+
     return await $builder->start()->wait();
 }

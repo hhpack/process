@@ -74,6 +74,12 @@ final class ProcessBuilder
         return $this;
     }
 
+    public function setOptions(ProcessOptions $options) : this
+    {
+        $options->applyTo($this);
+        return $this;
+    }
+
     public function start() : ChildProcess
     {
         $streamHandles = [];
