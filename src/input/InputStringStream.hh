@@ -14,7 +14,7 @@ namespace hhpack\process\input;
 use hhpack\process\output\OutputBufferedStream;
 use hhpack\process\Writable;
 
-final class InputStringStream implements ReadableStream
+final class InputStringStream implements ReadableStream<int>
 {
 
     private int $position = 0;

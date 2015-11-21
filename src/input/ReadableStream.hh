@@ -14,12 +14,10 @@ namespace hhpack\process\input;
 use hhpack\process\Stream;
 use hhpack\process\Readable;
 use hhpack\process\Writable;
-use hhpack\process\output\BufferedOutput;
 
-// FIXME ReadableStream to ReadableStream<T>
 // FIXME Remove getOutput() method
-interface ReadableStream extends Stream, Readable
+interface ReadableStream<T> extends Stream, Readable
 {
-    public function getOutput() : Writable<int>;
-    public function pipeTo(Writable<int> $output) : void;
+    public function getOutput() : Writable<T>;
+    public function pipeTo(Writable<T> $output) : void;
 }
