@@ -56,7 +56,7 @@ final class DescriptorRegistry
         return $result->toArray();
     }
 
-    public static function fromArray(Traversable<DescriptorSpecification> $descriptors) : DescriptorRegistry
+    public static function fromArray(Traversable<DescriptorSpecification> $descriptors) : this
     {
         $registry = Map {};
 
@@ -64,7 +64,7 @@ final class DescriptorRegistry
             $registry->set($descriptor->getStreamType(), $descriptor);
         }
 
-        return new DescriptorRegistry( $registry->toImmMap() );
+        return new static( $registry->toImmMap() );
     }
 
 }
