@@ -13,7 +13,7 @@ namespace hhpack\process\descriptor;
 
 use hhpack\process\PipeType;
 use hhpack\process\PipeManager;
-use hhpack\process\PipeRegistry;
+use hhpack\process\stream\StreamRegistry;
 use hhpack\process\DescriptorSpecification;
 use hhpack\process\input\ReadablePipe;
 use hhpack\process\output\WritablePipe;
@@ -45,7 +45,7 @@ final class DescriptorRegistry
             }
         }
 
-        return new PipeRegistry($readablePipes, $writablePipes);
+        return new StreamRegistry($readablePipes, $writablePipes);
     }
 
     public function toArray() : array<int, array<string>>
