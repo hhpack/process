@@ -5,12 +5,12 @@ namespace hhpack\process\spec;
 use hhpack\process\StreamType;
 use hhpack\process\descriptor\WriteDescriptor;
 use hhpack\process\descriptor\ReadDescriptor;
-use hhpack\process\descriptor\DescriptorRegistry;
+use hhpack\process\descriptor\DefaultDescriptorRegistry;
 
-describe(DescriptorRegistry::class, function () {
+describe(DefaultDescriptorRegistry::class, function () {
   describe('toArray()', function () {
     beforeEach(function () {
-      $this->registry = new DescriptorRegistry(
+      $this->registry = new DefaultDescriptorRegistry(
         new WriteDescriptor(StreamType::Stdin, [ 'pipe', 'r' ]),
         new ReadDescriptor(StreamType::Stdout, [ 'pipe', 'w' ]),
         new ReadDescriptor(StreamType::Stderr, [ 'pipe', 'w' ])

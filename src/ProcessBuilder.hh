@@ -15,6 +15,7 @@ use hhpack\process\StreamType;
 use hhpack\process\descriptor\ReadDescriptor;
 use hhpack\process\descriptor\WriteDescriptor;
 use hhpack\process\descriptor\DescriptorRegistry;
+use hhpack\process\descriptor\DefaultDescriptorRegistry;
 use RuntimeException;
 
 final class ProcessBuilder
@@ -28,7 +29,7 @@ final class ProcessBuilder
         private ?environment $env = null
     )
     {
-        $this->descriptors = new DescriptorRegistry(
+        $this->descriptors = new DefaultDescriptorRegistry(
             new WriteDescriptor(StreamType::Stdin, [ 'pipe', 'r' ]),
             new ReadDescriptor(StreamType::Stdout, [ 'pipe', 'w' ]),
             new ReadDescriptor(StreamType::Stderr, [ 'pipe', 'w' ])

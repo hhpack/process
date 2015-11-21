@@ -18,44 +18,8 @@ use hhpack\process\DescriptorSpecification;
 use hhpack\process\input\InputPipeStream;
 use hhpack\process\output\OutputPipeStream;
 
-final class DescriptorRegistry
+interface DescriptorRegistry
 {
-
-    public function __construct(
-        private DescriptorSpecification<OutputPipeStream> $stdin,
-        private DescriptorSpecification<InputPipeStream> $stdout,
-        private DescriptorSpecification<InputPipeStream> $stderr
-    )
-    {
-    }
-
-    public function createPipeManager(array<int, resource> $streamHandles) : StreamManager
-    {
-        $readableStreams = Vector {};
-        $writableStreams = Vector {};
-
-        foreach ($streamHandles as $type => $streamHandle) {
-            $streamType = StreamType::assert($type);
-
-            if ($streamType === StreamType::Stdin) {
-                $writableStreams->add( $this->stdin->createStreamFromHandle($streamHandle) );
-            } else if ($streamType === StreamType::Stdout) {
-                $readableStreams->add( $this->stdout->createStreamFromHandle($streamHandle) );
-            } else if ($streamType === StreamType::Stderr) {
-                $readableStreams->add( $this->stderr->createStreamFromHandle($streamHandle) );
-            }
-        }
-
-        return new StreamRegistry($readableStreams, $writableStreams);
-    }
-
-    public function toArray() : array<int, array<string>>
-    {
-        return [
-            $this->stdin->getStreamValues(),
-            $this->stdout->getStreamValues(),
-            $this->stderr->getStreamValues()
-        ];
-    }
-
+    public function createPipeManager(array<int, resource> $streamHandles) : StreamManager;
+    public function toArray() : array<int, array<string>>;
 }
