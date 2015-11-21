@@ -18,12 +18,13 @@ use hhpack\process\DescriptorSpecification;
 use hhpack\process\input\InputPipeStream;
 use hhpack\process\output\OutputPipeStream;
 
-
 final class DescriptorRegistry
 {
 
     public function __construct(
-        private ImmMap<StreamType, DescriptorSpecification> $registry
+        private DescriptorSpecification<OutputPipeStream> $stdin,
+        private DescriptorSpecification<InputPipeStream> $stdout,
+        private DescriptorSpecification<InputPipeStream> $stderr
     )
     {
     }
@@ -37,11 +38,11 @@ final class DescriptorRegistry
             $streamType = StreamType::assert($type);
 
             if ($streamType === StreamType::Stdin) {
-                $writableStreams->add(new OutputPipeStream($streamType, $streamHandle));
+                $writableStreams->add( $this->stdin->createStreamFromHandle($streamHandle) );
             } else if ($streamType === StreamType::Stdout) {
-                $readableStreams->add(new InputPipeStream($streamType, $streamHandle));
+                $readableStreams->add( $this->stdout->createStreamFromHandle($streamHandle) );
             } else if ($streamType === StreamType::Stderr) {
-                $readableStreams->add(new InputPipeStream($streamType, $streamHandle));
+                $readableStreams->add( $this->stderr->createStreamFromHandle($streamHandle) );
             }
         }
 
@@ -50,21 +51,11 @@ final class DescriptorRegistry
 
     public function toArray() : array<int, array<string>>
     {
-        $result = $this->registry->mapWithKey(($type, $descriptor) ==> {
-            return $descriptor->getStreamValues();
-        });
-        return $result->toArray();
-    }
-
-    public static function fromArray(Traversable<DescriptorSpecification> $descriptors) : this
-    {
-        $registry = Map {};
-
-        foreach ($descriptors as $descriptor) {
-            $registry->set($descriptor->getStreamType(), $descriptor);
-        }
-
-        return new static( $registry->toImmMap() );
+        return [
+            $this->stdin->getStreamValues(),
+            $this->stdout->getStreamValues(),
+            $this->stderr->getStreamValues()
+        ];
     }
 
 }

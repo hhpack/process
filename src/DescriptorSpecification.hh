@@ -11,10 +11,11 @@
 
 namespace hhpack\process;
 
-interface DescriptorSpecification
+interface DescriptorSpecification<T>
 {
     public function getStreamType() : StreamType;
     public function getStreamValues() : array<string>;
     public function isReadDescriptor() : bool;
     public function isWriteDescriptor() : bool;
+    public function createStreamFromHandle(resource $handle) : T;
 }

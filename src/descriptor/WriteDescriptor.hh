@@ -19,7 +19,7 @@ use hhpack\process\input\ReadableStream;
 use hhpack\process\output\WritableStream;
 use hhpack\process\output\OutputPipeStream;
 
-final class WriteDescriptor implements DescriptorSpecification
+final class WriteDescriptor implements DescriptorSpecification<OutputPipeStream>
 {
 
     public function __construct(
@@ -52,7 +52,7 @@ final class WriteDescriptor implements DescriptorSpecification
         return $this->streamValues;
     }
 
-    public function createStream(resource $handle) : WritableStream
+    public function createStreamFromHandle(resource $handle) : OutputPipeStream
     {
         return new OutputPipeStream($this->streamType, $handle, $this->input);
     }

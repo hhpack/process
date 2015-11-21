@@ -3,17 +3,18 @@
 namespace hhpack\process\spec;
 
 use hhpack\process\StreamType;
-use hhpack\process\descriptor\Descriptor;
+use hhpack\process\descriptor\WriteDescriptor;
+use hhpack\process\descriptor\ReadDescriptor;
 use hhpack\process\descriptor\DescriptorRegistry;
 
 describe(DescriptorRegistry::class, function () {
   describe('toArray()', function () {
     beforeEach(function () {
-      $this->registry = DescriptorRegistry::fromArray([
-        new Descriptor(StreamType::Stdin, [ 'pipe', 'r' ]),
-        new Descriptor(StreamType::Stdout, [ 'pipe', 'w' ]),
-        new Descriptor(StreamType::Stderr, [ 'pipe', 'w' ])
-      ]);
+      $this->registry = new DescriptorRegistry(
+        new WriteDescriptor(StreamType::Stdin, [ 'pipe', 'r' ]),
+        new ReadDescriptor(StreamType::Stdout, [ 'pipe', 'w' ]),
+        new ReadDescriptor(StreamType::Stderr, [ 'pipe', 'w' ])
+      );
     });
     it('returns array value', function() {
       $result = $this->registry->toArray();

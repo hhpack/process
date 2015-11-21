@@ -11,7 +11,9 @@
 
 namespace hhpack\process;
 
-use hhpack\process\descriptor\Descriptor;
+use hhpack\process\StreamType;
+use hhpack\process\descriptor\ReadDescriptor;
+use hhpack\process\descriptor\WriteDescriptor;
 use hhpack\process\descriptor\DescriptorRegistry;
 use RuntimeException;
 
@@ -26,11 +28,11 @@ final class ProcessBuilder
         private ?environment $env = null
     )
     {
-        $this->descriptors = DescriptorRegistry::fromArray([
-            new Descriptor(StreamType::Stdin, [ 'pipe', 'r' ]),
-            new Descriptor(StreamType::Stdout, [ 'pipe', 'w' ]),
-            new Descriptor(StreamType::Stderr, [ 'pipe', 'w' ])
-        ]);
+        $this->descriptors = new DescriptorRegistry(
+            new WriteDescriptor(StreamType::Stdin, [ 'pipe', 'r' ]),
+            new ReadDescriptor(StreamType::Stdout, [ 'pipe', 'w' ]),
+            new ReadDescriptor(StreamType::Stderr, [ 'pipe', 'w' ])
+        );
     }
 
     public function command(string $command) : this
