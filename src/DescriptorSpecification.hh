@@ -13,8 +13,8 @@ namespace hhpack\process;
 
 interface DescriptorSpecification
 {
-    public function getPipeType() : StreamType;
-    public function getPipeValues() : array<string>;
+    public function getStreamType() : StreamType;
+    public function getStreamValues() : array<string>;
     public function isReadDescriptor() : bool;
     public function isWriteDescriptor() : bool;
 }

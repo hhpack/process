@@ -21,38 +21,38 @@ final class StreamRegistry implements StreamManager
 {
 
     public function __construct(
-        private Vector<ReadablePipe> $readablePipes,
-        private Vector<WritablePipe> $writablePipes
+        private Vector<ReadablePipe> $readableStreams,
+        private Vector<WritablePipe> $writableStreams
     )
     {
     }
 
-    public function readablePipes() : Iterable<ReadablePipe>
+    public function readableStreams() : Iterable<ReadablePipe>
     {
-        return $this->readablePipes->items(); 
+        return $this->readableStreams->items(); 
     }
 
-    public function writablePipes() : Iterable<WritablePipe>
+    public function writableStreams() : Iterable<WritablePipe>
     {
-        return $this->writablePipes->items();
+        return $this->writableStreams->items();
     }
 
     public function read() : void
     {
-        foreach ($this->readablePipes() as $pipe) {
-            while ($pipe->eof() === false) {
-                $pipe->read(4096);
+        foreach ($this->readableStreams() as $stream) {
+            while ($stream->eof() === false) {
+                $stream->read(4096);
             }
         }
     }
 
     public function close() : void
     {
-        foreach ($this->pipes()->items() as $pipe) {
-            if ($pipe->isClosed()) {
+        foreach ($this->streams()->items() as $stream) {
+            if ($stream->isClosed()) {
                 continue;
             }
-            $pipe->close();
+            $stream->close();
         }
     }
 
@@ -60,11 +60,11 @@ final class StreamRegistry implements StreamManager
     {
         $outputs = [];
 
-        foreach ($this->readablePipes() as $pipe) {
-            if ($pipe->isStdout()) {
-                $outputs['stdout'] = $pipe->getOutput();
-            } else if ($pipe->isStderr()) {
-                $outputs['stderr'] = $pipe->getOutput();
+        foreach ($this->readableStreams() as $stream) {
+            if ($stream->isStdout()) {
+                $outputs['stdout'] = $stream->getOutput();
+            } else if ($stream->isStderr()) {
+                $outputs['stderr'] = $stream->getOutput();
             }
         }
 
@@ -75,14 +75,14 @@ final class StreamRegistry implements StreamManager
     }
 
     <<__Memoize>>
-    private function pipes() : ImmVector<Stream>
+    private function streams() : ImmVector<Stream>
     {
         $streams = Vector {};
 
-        foreach ($this->writablePipes() as $stream) {
+        foreach ($this->writableStreams() as $stream) {
             $streams->add($stream);
         }
-        foreach ($this->readablePipes() as $stream) {
+        foreach ($this->readableStreams() as $stream) {
             $streams->add($stream);
         }
 

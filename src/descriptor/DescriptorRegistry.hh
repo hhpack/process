@@ -28,30 +28,30 @@ final class DescriptorRegistry
     {
     }
 
-    public function createPipeManager(array<int, resource> $pipeHandles) : StreamManager
+    public function createPipeManager(array<int, resource> $streamHandles) : StreamManager
     {
-        $readablePipes = Vector {};
-        $writablePipes = Vector {};
+        $readableStreams = Vector {};
+        $writableStreams = Vector {};
 
-        foreach ($pipeHandles as $type => $pipeHandle) {
-            $pipeType = StreamType::assert($type);
+        foreach ($streamHandles as $type => $streamHandle) {
+            $streamType = StreamType::assert($type);
 
-            if ($pipeType === StreamType::Stdin) {
-                $writablePipes->add(new WritablePipe($pipeType, $pipeHandle));
-            } else if ($pipeType === StreamType::Stdout) {
-                $readablePipes->add(new ReadablePipe($pipeType, $pipeHandle));
-            } else if ($pipeType === StreamType::Stderr) {
-                $readablePipes->add(new ReadablePipe($pipeType, $pipeHandle));
+            if ($streamType === StreamType::Stdin) {
+                $writableStreams->add(new WritablePipe($streamType, $streamHandle));
+            } else if ($streamType === StreamType::Stdout) {
+                $readableStreams->add(new ReadablePipe($streamType, $streamHandle));
+            } else if ($streamType === StreamType::Stderr) {
+                $readableStreams->add(new ReadablePipe($streamType, $streamHandle));
             }
         }
 
-        return new StreamRegistry($readablePipes, $writablePipes);
+        return new StreamRegistry($readableStreams, $writableStreams);
     }
 
     public function toArray() : array<int, array<string>>
     {
         $result = $this->registry->mapWithKey(($type, $descriptor) ==> {
-            return $descriptor->getPipeValues();
+            return $descriptor->getStreamValues();
         });
         return $result->toArray();
     }
@@ -61,7 +61,7 @@ final class DescriptorRegistry
         $registry = Map {};
 
         foreach ($descriptors as $descriptor) {
-            $registry->set($descriptor->getPipeType(), $descriptor);
+            $registry->set($descriptor->getStreamType(), $descriptor);
         }
 
         return new DescriptorRegistry( $registry->toImmMap() );

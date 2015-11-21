@@ -53,12 +53,12 @@ final class ProcessBuilder
 
     public function start() : ChildProcess
     {
-        $pipeHandles = [];
+        $streamHandles = [];
 
         $process = proc_open(
             $this->command,
             $this->descriptors->toArray(),
-            $pipeHandles,
+            $streamHandles,
             $this->cwd,
             $this->env
         );
@@ -67,9 +67,9 @@ final class ProcessBuilder
             throw new RuntimeException('Failed to start of process');
         }
 
-        $pipeManager = $this->descriptors->createPipeManager($pipeHandles);
+        $streamManager = $this->descriptors->createPipeManager($streamHandles);
 
-        return new ChildProcess($process, $pipeManager);
+        return new ChildProcess($process, $streamManager);
     }
 
 }

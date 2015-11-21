@@ -21,17 +21,17 @@ final class Descriptor implements DescriptorSpecification
     private DescriptorType $descriptorType;
 
     public function __construct(
-        private StreamType $pipeType,
-        private array<string> $pipeValues
+        private StreamType $streamType,
+        private array<string> $streamValues
     )
     {
-        $this->resolveDescriptorType($pipeValues);
+        $this->resolveDescriptorType($streamValues);
     }
 
     // STDIN, STDOUT, STDERR
-    public function getPipeType() : StreamType
+    public function getStreamType() : StreamType
     {
-        return $this->pipeType;
+        return $this->streamType;
     }
 
     public function isReadDescriptor() : bool
@@ -45,17 +45,17 @@ final class Descriptor implements DescriptorSpecification
     }
 
     // ['pipe', 'r'], ['pipe', 'w']
-    public function getPipeValues() : array<string>
+    public function getStreamValues() : array<string>
     {
-        return $this->pipeValues;
+        return $this->streamValues;
     }
 
-    private function resolveDescriptorType(array<string> $pipeValues) : void
+    private function resolveDescriptorType(array<string> $streamValues) : void
     {
         $descriptorType = DescriptorType::Read;
-        $lastIndex = count($pipeValues) - 1;
+        $lastIndex = count($streamValues) - 1;
 
-        if ($pipeValues[$lastIndex] === 'r') {
+        if ($streamValues[$lastIndex] === 'r') {
             $descriptorType = DescriptorType::Write;
         }
 
