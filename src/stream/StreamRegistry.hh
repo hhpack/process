@@ -14,25 +14,25 @@ namespace hhpack\process\stream;
 use hhpack\process\Stream;
 use hhpack\process\StreamManager;
 use hhpack\process\OutputResult;
-use hhpack\process\input\ReadablePipe;
-use hhpack\process\output\WritablePipe;
+use hhpack\process\input\InputPipeStream;
+use hhpack\process\output\OutputPipeStream;
 
 final class StreamRegistry implements StreamManager
 {
 
     public function __construct(
-        private Vector<ReadablePipe> $readableStreams,
-        private Vector<WritablePipe> $writableStreams
+        private Vector<InputPipeStream> $readableStreams,
+        private Vector<OutputPipeStream> $writableStreams
     )
     {
     }
 
-    public function readableStreams() : Iterable<ReadablePipe>
+    public function readableStreams() : Iterable<InputPipeStream>
     {
         return $this->readableStreams->items(); 
     }
 
-    public function writableStreams() : Iterable<WritablePipe>
+    public function writableStreams() : Iterable<OutputPipeStream>
     {
         return $this->writableStreams->items();
     }

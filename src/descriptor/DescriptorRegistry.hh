@@ -15,8 +15,8 @@ use hhpack\process\StreamType;
 use hhpack\process\StreamManager;
 use hhpack\process\stream\StreamRegistry;
 use hhpack\process\DescriptorSpecification;
-use hhpack\process\input\ReadablePipe;
-use hhpack\process\output\WritablePipe;
+use hhpack\process\input\InputPipeStream;
+use hhpack\process\output\OutputPipeStream;
 
 
 final class DescriptorRegistry
@@ -37,11 +37,11 @@ final class DescriptorRegistry
             $streamType = StreamType::assert($type);
 
             if ($streamType === StreamType::Stdin) {
-                $writableStreams->add(new WritablePipe($streamType, $streamHandle));
+                $writableStreams->add(new OutputPipeStream($streamType, $streamHandle));
             } else if ($streamType === StreamType::Stdout) {
-                $readableStreams->add(new ReadablePipe($streamType, $streamHandle));
+                $readableStreams->add(new InputPipeStream($streamType, $streamHandle));
             } else if ($streamType === StreamType::Stderr) {
-                $readableStreams->add(new ReadablePipe($streamType, $streamHandle));
+                $readableStreams->add(new InputPipeStream($streamType, $streamHandle));
             }
         }
 

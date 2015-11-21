@@ -15,7 +15,7 @@ use hhpack\process\StreamType;
 use hhpack\process\output\BufferedOutput;
 use hhpack\process\Writable;
 
-final class ReadablePipe implements ReadableStream
+final class InputPipeStream implements ReadableStream
 {
 
     private bool $opened = true;

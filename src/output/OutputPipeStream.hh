@@ -13,7 +13,7 @@ namespace hhpack\process\output;
 
 use hhpack\process\StreamType;
 
-final class WritablePipe implements WritableStream
+final class OutputPipeStream implements WritableStream
 {
 
     private bool $opened = true;
