@@ -12,7 +12,7 @@
 namespace hhpack\process\input;
 
 use hhpack\process\StreamType;
-use hhpack\process\output\BufferedOutput;
+use hhpack\process\output\OutputBufferedStream;
 use hhpack\process\Writable;
 
 final class InputPipeStream implements ReadableStream
@@ -23,7 +23,7 @@ final class InputPipeStream implements ReadableStream
     public function __construct(
         private StreamType $type,
         private resource $handle,
-        private Writable<int> $output = new BufferedOutput()
+        private Writable<int> $output = new OutputBufferedStream()
     )
     {
     }

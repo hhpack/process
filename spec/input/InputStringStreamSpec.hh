@@ -3,13 +3,13 @@
 namespace hhpack\process\spec;
 
 use hhpack\process\input\InputStringStream;
-use hhpack\process\output\BufferedOutput;
+use hhpack\process\output\OutputBufferedStream;
 
 describe(InputStringStream::class, function () {
   describe('pipeTo()', function () {
     beforeEach(function () {
       $this->input = new InputStringStream('abcd');
-      $this->output = new BufferedOutput();
+      $this->output = new OutputBufferedStream();
       $this->input->pipeTo($this->output);
     });
     it('outputs the read data to output stream', function() {

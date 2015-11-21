@@ -11,7 +11,7 @@
 
 namespace hhpack\process
 {
-    use hhpack\process\output\BufferedOutput;
+    use hhpack\process\output\OutputBufferedStream;
 
     type environment = KeyedTraversable<string, string>;
     type EnviromentVariables = ImmMap<string, string>;
@@ -19,8 +19,8 @@ namespace hhpack\process
     type Output = Writable<int>;
 
     type Outputs = shape(
-        'stdout' => BufferedOutput,
-        'stderr' => BufferedOutput
+        'stdout' => OutputBufferedStream,
+        'stderr' => OutputBufferedStream
     );
 
     type CapturedProcessStatus = shape(

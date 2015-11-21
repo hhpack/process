@@ -11,7 +11,7 @@
 
 namespace hhpack\process;
 
-use hhpack\process\output\BufferedOutput;
+use hhpack\process\output\OutputBufferedStream;
 
 final class ProcessResult implements Displayable
 {
@@ -28,12 +28,12 @@ final class ProcessResult implements Displayable
         return $this->status->getExitCode();
     }
 
-    public function getStdout() : BufferedOutput
+    public function getStdout() : OutputBufferedStream
     {
         return $this->output->getStdout();
     }
 
-    public function getStderr() : BufferedOutput
+    public function getStderr() : OutputBufferedStream
     {
         return $this->output->getStderr();
     }

@@ -13,7 +13,7 @@ namespace hhpack\process\output;
 
 use hhpack\process\Writable;
 
-final class BufferedOutput implements Writable<int>
+final class OutputBufferedStream implements Writable<int>
 {
 
     public function __construct(

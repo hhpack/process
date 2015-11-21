@@ -11,24 +11,24 @@
 
 namespace hhpack\process;
 
-use hhpack\process\output\BufferedOutput;
+use hhpack\process\output\OutputBufferedStream;
 
 final class OutputResult implements Displayable
 {
 
     public function __construct(
-        private BufferedOutput $stdout,
-        private BufferedOutput $stderr
+        private OutputBufferedStream $stdout,
+        private OutputBufferedStream $stderr
     )
     {
     }
 
-    public function getStdout() : BufferedOutput
+    public function getStdout() : OutputBufferedStream
     {
         return $this->stdout;
     }
 
-    public function getStderr() : BufferedOutput
+    public function getStderr() : OutputBufferedStream
     {
         return $this->stderr;
     }
@@ -44,8 +44,8 @@ final class OutputResult implements Displayable
     public static function emptyResult() : OutputResult
     {
         return new OutputResult(
-            new BufferedOutput(),
-            new BufferedOutput()
+            new OutputBufferedStream(),
+            new OutputBufferedStream()
         );
     }
 

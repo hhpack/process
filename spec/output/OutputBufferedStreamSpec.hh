@@ -2,11 +2,11 @@
 
 namespace hhpack\process\spec;
 
-use hhpack\process\output\BufferedOutput;
+use hhpack\process\output\OutputBufferedStream;
 
-describe(BufferedOutput::class, function () {
+describe(OutputBufferedStream::class, function () {
   beforeEach(function () {
-    $this->output = new BufferedOutput();
+    $this->output = new OutputBufferedStream();
   });
   describe('append()', function () {
     it('append text', function() {
