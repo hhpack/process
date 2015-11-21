@@ -20,7 +20,7 @@ final class ChildProcess
 
     public function __construct(
         private resource $process,
-        private PipeManager $pipeManager
+        private StreamManager $streamManager
     )
     {
         $this->captureStatus();
@@ -53,7 +53,7 @@ final class ChildProcess
     {
         do {
             $this->captureStatus();
-            $this->pipeManager->read();
+            $this->streamManager->read();
             $this->captureStatus();
         } while($this->isAlive());
 
@@ -67,12 +67,12 @@ final class ChildProcess
 
     protected function close() : ProcessResult
     {
-        $this->pipeManager->close();
+        $this->streamManager->close();
         proc_close($this->process);
 
         return new ProcessResult(
             $this->status,
-            $this->pipeManager->getOutputResult()
+            $this->streamManager->getOutputResult()
         );
     }
 

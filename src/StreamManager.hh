@@ -11,7 +11,7 @@
 
 namespace hhpack\process;
 
-interface PipeManager
+interface StreamManager
 {
     public function read() : void;
     public function close() : void;

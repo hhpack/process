@@ -12,7 +12,7 @@
 namespace hhpack\process\descriptor;
 
 use hhpack\process\PipeType;
-use hhpack\process\PipeManager;
+use hhpack\process\StreamManager;
 use hhpack\process\stream\StreamRegistry;
 use hhpack\process\DescriptorSpecification;
 use hhpack\process\input\ReadablePipe;
@@ -28,7 +28,7 @@ final class DescriptorRegistry
     {
     }
 
-    public function createPipeManager(array<int, resource> $pipeHandles) : PipeManager
+    public function createPipeManager(array<int, resource> $pipeHandles) : StreamManager
     {
         $readablePipes = Vector {};
         $writablePipes = Vector {};

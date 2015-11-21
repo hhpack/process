@@ -12,12 +12,12 @@
 namespace hhpack\process\stream;
 
 use hhpack\process\Stream;
-use hhpack\process\PipeManager;
+use hhpack\process\StreamManager;
 use hhpack\process\OutputResult;
 use hhpack\process\input\ReadablePipe;
 use hhpack\process\output\WritablePipe;
 
-final class StreamRegistry implements PipeManager
+final class StreamRegistry implements StreamManager
 {
 
     public function __construct(
