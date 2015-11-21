@@ -12,7 +12,6 @@
 namespace hhpack\process\stream;
 
 use hhpack\process\Stream;
-use hhpack\process\StreamManager;
 use hhpack\process\OutputResult;
 use hhpack\process\input\ProcessReadStream;
 use hhpack\process\output\ProcessWriteStream;

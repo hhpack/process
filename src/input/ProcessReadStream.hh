@@ -11,9 +11,9 @@
 
 namespace hhpack\process\input;
 
-use hhpack\process\StreamType;
-use hhpack\process\output\OutputBufferedStream;
 use hhpack\process\Writable;
+use hhpack\process\output\OutputBufferedStream;
+use hhpack\process\stream\StreamType;
 
 final class ProcessReadStream implements ReadableStream<int>
 {

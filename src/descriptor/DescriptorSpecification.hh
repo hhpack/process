@@ -11,7 +11,7 @@
 
 namespace hhpack\process\descriptor;
 
-use hhpack\process\StreamType;
+use hhpack\process\stream\StreamType;
 
 interface DescriptorSpecification<T>
 {

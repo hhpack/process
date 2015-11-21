@@ -11,8 +11,8 @@
 
 namespace hhpack\process\descriptor;
 
-use hhpack\process\StreamType;
-use hhpack\process\StreamManager;
+use hhpack\process\stream\StreamType;
+use hhpack\process\stream\StreamManager;
 use hhpack\process\stream\StreamRegistry;
 use hhpack\process\input\ProcessReadStream;
 use hhpack\process\output\ProcessWriteStream;

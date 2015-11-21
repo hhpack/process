@@ -12,11 +12,10 @@
 namespace hhpack\process\descriptor;
 
 use hhpack\process\Writable;
-use hhpack\process\StreamType;
-use hhpack\process\DescriptorType;
 use hhpack\process\output\OutputBufferedStream;
 use hhpack\process\input\ReadableStream;
 use hhpack\process\input\ProcessReadStream;
+use hhpack\process\stream\StreamType;
 
 final class ReadDescriptor implements DescriptorSpecification<ProcessReadStream>
 {

@@ -11,10 +11,9 @@
 
 namespace hhpack\process\output;
 
-use hhpack\process\StreamType;
 use hhpack\process\input\NullStream;
 use hhpack\process\input\ReadableStream;
-
+use hhpack\process\stream\StreamType;
 
 final class ProcessWriteStream implements WritableStream
 {

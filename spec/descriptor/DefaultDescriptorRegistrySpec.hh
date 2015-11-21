@@ -2,7 +2,7 @@
 
 namespace hhpack\process\spec;
 
-use hhpack\process\StreamType;
+use hhpack\process\stream\StreamType;
 use hhpack\process\descriptor\WriteDescriptor;
 use hhpack\process\descriptor\ReadDescriptor;
 use hhpack\process\descriptor\DefaultDescriptorRegistry;

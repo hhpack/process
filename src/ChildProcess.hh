@@ -11,6 +11,7 @@
 
 namespace hhpack\process;
 
+use hhpack\process\stream\StreamManager;
 use RuntimeException;
 
 final class ChildProcess
