@@ -33,17 +33,17 @@ final class OutputResult implements Displayable
         return $this->stderr;
     }
 
-    public static function fromOutputs(Outputs $outputs) : OutputResult
+    public static function fromOutputs(Outputs $outputs) : this
     {
-        return new OutputResult(
+        return new static(
             $outputs['stdout'],
             $outputs['stderr']
         );
     }
 
-    public static function emptyResult() : OutputResult
+    public static function emptyResult() : this
     {
-        return new OutputResult(
+        return new static(
             new OutputBufferedStream(),
             new OutputBufferedStream()
         );
