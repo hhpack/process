@@ -28,7 +28,7 @@ final class DefaultDescriptorRegistry implements DescriptorRegistry
     {
     }
 
-    public function createPipeManager(array<int, resource> $streamHandles) : StreamManager
+    public function createStreamManager(array<int, resource> $streamHandles) : StreamManager
     {
         $readableStreams = Vector {};
         $writableStreams = Vector {};

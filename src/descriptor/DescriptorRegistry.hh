@@ -20,6 +20,6 @@ use hhpack\process\output\OutputPipeStream;
 
 interface DescriptorRegistry
 {
-    public function createPipeManager(array<int, resource> $streamHandles) : StreamManager;
+    public function createStreamManager(array<int, resource> $streamHandles) : StreamManager;
     public function toArray() : array<int, array<string>>;
 }
