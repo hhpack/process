@@ -20,10 +20,26 @@ final class ProcessOptions
     private Writable<int> $output;
     private Writable<int> $errorOutput;
 
-    public function __construct()
+    public function __construct(
+        private string $cwd = (string) getcwd(),
+        private ?environment $env = null
+    )
     {
+        $this->cwd = (string) getcwd();
         $this->output = new OutputBufferedStream();
         $this->errorOutput = new OutputBufferedStream();
+    }
+
+    public function workingDirectory(string $cwd) : this
+    {
+        $this->cwd = $cwd;
+        return $this;
+    }
+
+    public function environment(?environment $environment = null) : this
+    {
+        $this->env = $environment;
+        return $this;
     }
 
     public function stdout(Writable<int> $output) : this
@@ -40,6 +56,8 @@ final class ProcessOptions
 
     public function applyTo(ProcessBuilder $bulider) : void
     {
+        $bulider->environment($this->env);
+        $bulider->workingDirectory($this->cwd);
         $bulider->stdout($this->output);
         $bulider->stderr($this->errorOutput);
     }

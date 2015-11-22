@@ -56,7 +56,7 @@ final class ProcessBuilder
         return $this;
     }
 
-    public function environment(environment $environment) : this
+    public function environment(?environment $environment = null) : this
     {
         $this->env = $environment;
         return $this;
