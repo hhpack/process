@@ -12,8 +12,9 @@
 namespace hhpack\process\output;
 
 use hhpack\process\Writable;
+use hhpack\process\Displayable;
 
-final class OutputBufferedStream implements Writable<int>
+final class OutputBufferedStream implements Writable<int>, Displayable
 {
 
     public function __construct(
@@ -22,20 +23,15 @@ final class OutputBufferedStream implements Writable<int>
     {
     }
 
-    public function append(string $output) : int
-    {
-        return $this->write($output);
-    }
-
     public function write(string $output) : int
     {
         $this->output .= $output;
         return strlen($output);
     }
 
-    public function __toString() : string
+    public function display() : void
     {
-        return $this->output;
+        fwrite(STDOUT, $this->output . PHP_EOL);
     }
 
 }

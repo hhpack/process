@@ -15,7 +15,7 @@ use hhpack\process\Writable;
 use hhpack\process\output\NullOutputStream;
 use hhpack\process\output\OutputBufferedStream;
 
-final class OutputResult
+final class OutputResult implements Displayable
 {
 
     public function __construct(
@@ -49,6 +49,21 @@ final class OutputResult
             new NullOutputStream(),
             new NullOutputStream()
         );
+    }
+
+    public function display() : void
+    {
+        $this->displayOutput('stdout: ', $this->stdout);
+        $this->displayOutput('stderr: ', $this->stderr);
+    }
+
+    private function displayOutput(string $header, Output $output) : void
+    {
+        if (!($output instanceof Displayable)) {
+            return;
+        }
+        fwrite(STDOUT, $header);
+        $output->display();
     }
 
 }

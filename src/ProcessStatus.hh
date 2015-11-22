@@ -11,7 +11,7 @@
 
 namespace hhpack\process;
 
-final class ProcessStatus
+final class ProcessStatus implements Displayable
 {
 
     private string $command;
@@ -50,6 +50,11 @@ final class ProcessStatus
     public function exitCode() : int
     {
         return $this->exitcode;
+    }
+
+    public function display() : void
+    {
+        fwrite(STDOUT, 'code: ' . (string) $this->exitcode . PHP_EOL);
     }
 
     public static function fromCapturedStatus(CapturedProcessStatus $status) : ProcessStatus

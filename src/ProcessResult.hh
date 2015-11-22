@@ -11,7 +11,7 @@
 
 namespace hhpack\process;
 
-final class ProcessResult
+final class ProcessResult implements Displayable
 {
 
     public function __construct(
@@ -34,6 +34,12 @@ final class ProcessResult
     public function stderr() : Output
     {
         return $this->output->stderr();
+    }
+
+    public function display() : void
+    {
+        $this->status->display();
+        $this->output->display();
     }
 
 }
