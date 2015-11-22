@@ -18,8 +18,8 @@ use hhpack\process;
 async function main() : Awaitable<void>
 {
     $result = await process\exec('hh_client restart');
-    $result->getStdout()->display();
-    $result->getStderr()->display();
+    $result->stdout()->display();
+    $result->stderr()->display();
 
     $result = await process\exec('hh_client check --json');
     $result->display();
