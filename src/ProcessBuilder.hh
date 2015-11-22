@@ -24,24 +24,27 @@ use RuntimeException;
 final class ProcessBuilder
 {
 
+    private string $cwd;
+    private ?environment $env;
     private Writable<int> $output;
     private Writable<int> $errorOutput;
     private DescriptorRegistry $descriptors;
 
     public function __construct(
         private string $command,
-        private string $cwd = (string) getcwd(),
-        private ?environment $env = null
+        ProcessOptions $options = new ProcessOptions()
     )
     {
+        $this->cwd = (string) getcwd();
+        $this->env = null;
         $this->output = new OutputBufferedStream();
         $this->errorOutput = new OutputBufferedStream();
-
         $this->descriptors = new DefaultDescriptorRegistry(
             new WriteDescriptor(StreamType::Stdin, [ 'pipe', 'r' ]),
             new ReadDescriptor(StreamType::Stdout, [ 'pipe', 'w' ]),
             new ReadDescriptor(StreamType::Stderr, [ 'pipe', 'w' ])
         );
+        $options->applyTo($this);
     }
 
     public function command(string $command) : this
