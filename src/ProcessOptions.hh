@@ -12,7 +12,7 @@
 namespace hhpack\process;
 
 use hhpack\process\Writable;
-use hhpack\process\output\OutputBufferedStream;
+use hhpack\process\output\BufferedOutputStream;
 
 final class ProcessOptions
 {
@@ -26,8 +26,8 @@ final class ProcessOptions
     )
     {
         $this->cwd = (string) getcwd();
-        $this->output = new OutputBufferedStream();
-        $this->errorOutput = new OutputBufferedStream();
+        $this->output = new BufferedOutputStream();
+        $this->errorOutput = new BufferedOutputStream();
     }
 
     public function workingDirectory(string $cwd) : this

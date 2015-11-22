@@ -14,7 +14,7 @@ namespace hhpack\process\output;
 use hhpack\process\Writable;
 use hhpack\process\Displayable;
 
-final class OutputBufferedStream implements Writable<int>, Displayable
+final class BufferedOutputStream implements Writable<int>, Displayable
 {
 
     public function __construct(

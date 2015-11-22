@@ -12,7 +12,7 @@
 namespace hhpack\process\descriptor;
 
 use hhpack\process\Writable;
-use hhpack\process\output\OutputBufferedStream;
+use hhpack\process\output\BufferedOutputStream;
 use hhpack\process\input\ReadableStream;
 use hhpack\process\input\ProcessReadStream;
 use hhpack\process\stream\StreamType;
@@ -23,7 +23,7 @@ final class ReadDescriptor implements DescriptorSpecification<ProcessReadStream>
     public function __construct(
         private StreamType $streamType,
         private array<string> $streamValues,
-        private Writable<int> $output = new OutputBufferedStream()
+        private Writable<int> $output = new BufferedOutputStream()
     )
     {
     }

@@ -18,7 +18,7 @@ use hhpack\process\descriptor\WriteDescriptor;
 use hhpack\process\descriptor\DescriptorRegistry;
 use hhpack\process\descriptor\DefaultDescriptorRegistry;
 use hhpack\process\descriptor\DescriptorSpecification;
-use hhpack\process\output\OutputBufferedStream;
+use hhpack\process\output\BufferedOutputStream;
 use RuntimeException;
 
 final class ProcessBuilder
@@ -37,8 +37,8 @@ final class ProcessBuilder
     {
         $this->cwd = (string) getcwd();
         $this->env = null;
-        $this->output = new OutputBufferedStream();
-        $this->errorOutput = new OutputBufferedStream();
+        $this->output = new BufferedOutputStream();
+        $this->errorOutput = new BufferedOutputStream();
         $this->descriptors = new DefaultDescriptorRegistry(
             new WriteDescriptor(StreamType::Stdin, [ 'pipe', 'r' ]),
             new ReadDescriptor(StreamType::Stdout, [ 'pipe', 'w' ]),
