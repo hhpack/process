@@ -11,7 +11,7 @@
 
 namespace hhpack\process\output;
 
-use hhpack\process\input\NullStream;
+use hhpack\process\input\NullInputStream;
 use hhpack\process\input\ReadableStream;
 use hhpack\process\stream\StreamType;
 
@@ -23,7 +23,7 @@ final class ProcessWriteStream implements WritableStream
     public function __construct(
         private StreamType $type,
         private resource $handle,
-        private ReadableStream<int> $input = new NullStream()
+        private ReadableStream<int> $input = new NullInputStream()
     )
     {
     }

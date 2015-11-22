@@ -11,7 +11,7 @@
 
 namespace hhpack\process\descriptor;
 
-use hhpack\process\input\NullStream;
+use hhpack\process\input\NullInputStream;
 use hhpack\process\input\ReadableStream;
 use hhpack\process\output\WritableStream;
 use hhpack\process\output\ProcessWriteStream;
@@ -23,7 +23,7 @@ final class WriteDescriptor implements DescriptorSpecification<ProcessWriteStrea
     public function __construct(
         private StreamType $streamType,
         private array<string> $streamValues,
-        private ReadableStream<int> $input = new NullStream()
+        private ReadableStream<int> $input = new NullInputStream()
     )
     {
     }

@@ -13,7 +13,7 @@ namespace hhpack\process\input;
 
 use hhpack\process\Writable;
 
-final class NullStream implements ReadableStream<int>
+final class NullInputStream implements ReadableStream<int>
 {
 
     private bool $opened = true;
