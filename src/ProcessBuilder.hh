@@ -81,7 +81,7 @@ final class ProcessBuilder
     {
         $streamHandles = [];
 
-        $descriptors = new DefaultDescriptorRegistry(
+        $this->descriptors = new DefaultDescriptorRegistry(
             new WriteDescriptor(StreamType::Stdin, [ 'pipe', 'r' ]),
             new ReadDescriptor(StreamType::Stdout, [ 'pipe', 'w' ], $this->output),
             new ReadDescriptor(StreamType::Stderr, [ 'pipe', 'w' ], $this->errorOutput)
@@ -99,7 +99,7 @@ final class ProcessBuilder
             throw new RuntimeException('Failed to start of process');
         }
 
-        $streamManager = $descriptors->createPipeManager($streamHandles);
+        $streamManager = $this->descriptors->createPipeManager($streamHandles);
 
         return new ChildProcess($process, $streamManager);
     }
