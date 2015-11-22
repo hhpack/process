@@ -31,7 +31,12 @@ final class OutputBufferedStream implements Writable<int>, Displayable
 
     public function display() : void
     {
-        fwrite(STDOUT, $this->output . PHP_EOL);
+        fwrite(STDOUT, (string) $this . PHP_EOL);
+    }
+
+    public function __toString() : string
+    {
+        return $this->output;
     }
 
 }

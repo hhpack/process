@@ -8,9 +8,9 @@ describe(OutputBufferedStream::class, function () {
   beforeEach(function () {
     $this->output = new OutputBufferedStream();
   });
-  describe('append()', function () {
-    it('append text', function() {
-      $this->output->append('text');
+  describe('write()', function () {
+    it('write text', function() {
+      $this->output->write('text');
       expect((string) $this->output)->toBe('text');
     });
   });
