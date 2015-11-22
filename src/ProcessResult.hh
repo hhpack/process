@@ -11,9 +11,7 @@
 
 namespace hhpack\process;
 
-use hhpack\process\output\OutputBufferedStream;
-
-final class ProcessResult implements Displayable
+final class ProcessResult
 {
 
     public function __construct(
@@ -23,33 +21,19 @@ final class ProcessResult implements Displayable
     {
     }
 
-    public function getExitCode() : int
+    public function exitCode() : int
     {
-        return $this->status->getExitCode();
+        return $this->status->exitCode();
     }
 
-    public function getStdout() : OutputBufferedStream
+    public function stdout() : Output
     {
-        return $this->output->getStdout();
+        return $this->output->stdout();
     }
 
-    public function getStderr() : OutputBufferedStream
+    public function stderr() : Output
     {
-        return $this->output->getStderr();
-    }
-
-    public function display() : void
-    {
-        fwrite(STDOUT, (string) $this);
-    }
-
-    public function __toString() : string
-    {
-        return sprintf(
-            "EXIT_CODE: %s\n\n%s\n",
-            (string) $this->status->getExitCode(),
-            (string) $this->output
-        );
+        return $this->output->stderr();
     }
 
 }

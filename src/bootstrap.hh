@@ -19,8 +19,8 @@ namespace hhpack\process
     type Output = Writable<int>;
 
     type Outputs = shape(
-        'stdout' => OutputBufferedStream,
-        'stderr' => OutputBufferedStream
+        'stdout' => Output,
+        'stderr' => Output
     );
 
     type CapturedProcessStatus = shape(

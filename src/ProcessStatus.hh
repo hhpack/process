@@ -37,7 +37,7 @@ final class ProcessStatus
         $this->stopsig = $status['stopsig'];
     }
 
-    public function getPid() : ?int
+    public function pid() : ?int
     {
         return $this->pid;
     }
@@ -47,7 +47,7 @@ final class ProcessStatus
         return $this->running;
     }
 
-    public function getExitCode() : int
+    public function exitCode() : int
     {
         return $this->exitcode;
     }

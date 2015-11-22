@@ -29,7 +29,7 @@ final class ChildProcess
 
     public function pid() : ?int
     {
-        return $this->status->getPid();
+        return $this->status->pid();
     }
 
     public async function stop() : Awaitable<ProcessResult>
