@@ -13,8 +13,25 @@ namespace hhpack\process\output;
 
 use hhpack\process\Writable;
 
-final class NullOutputStream implements Writable<int>
+final class NullOutputStream implements WritableStream
 {
+
+    private bool $opened = true;
+
+    public function isOpened() : bool
+    {
+        return $this->opened;
+    }
+
+    public function isClosed() : bool
+    {
+        return $this->isOpened() === false;
+    }
+
+    public function close() : void
+    {
+        $this->opened = false;
+    }
 
     public function write(string $output) : int
     {
