@@ -18,6 +18,8 @@ use hhpack\process\descriptor\WriteDescriptor;
 use hhpack\process\descriptor\DescriptorRegistry;
 use hhpack\process\descriptor\DefaultDescriptorRegistry;
 use hhpack\process\descriptor\DescriptorSpecification;
+use hhpack\process\input\ReadableStream;
+use hhpack\process\input\NullInputStream;
 use hhpack\process\output\BufferedOutputStream;
 use RuntimeException;
 
@@ -27,8 +29,9 @@ final class ProcessBuilder
     private string $cwd;
     private Mode $mode;
     private ?environment $env;
-    private Writable<int> $output;
-    private Writable<int> $errorOutput;
+    private ReadableStream<int> $input;
+    private Output $output;
+    private Output $errorOutput;
 
     public function __construct(
         private string $command,
@@ -38,6 +41,7 @@ final class ProcessBuilder
         $this->cwd = (string) getcwd();
         $this->mode = Mode::Normal;
         $this->env = null;
+        $this->input = new NullInputStream();
         $this->output = new BufferedOutputStream();
         $this->errorOutput = new BufferedOutputStream();
         $options->applyTo($this);
@@ -67,13 +71,19 @@ final class ProcessBuilder
         return $this;
     }
 
-    public function stdout(Writable<int> $output) : this
+    public function stdin(ReadableStream<int> $input) : this
+    {
+        $this->input = $input;
+        return $this;
+    }
+
+    public function stdout(Output $output) : this
     {
         $this->output = $output;
         return $this;
     }
 
-    public function stderr(Writable<int> $output) : this
+    public function stderr(Output $output) : this
     {
         $this->errorOutput = $output;
         return $this;
@@ -104,7 +114,7 @@ final class ProcessBuilder
     private function createDescriptors() : DescriptorRegistry
     {
         return new DefaultDescriptorRegistry(
-            new WriteDescriptor(StreamType::Stdin, [ 'pipe', 'r' ]),
+            new WriteDescriptor(StreamType::Stdin, [ 'pipe', 'r' ], $this->input),
             new ReadDescriptor(StreamType::Stdout, [ 'pipe', 'w' ], $this->output),
             new ReadDescriptor(StreamType::Stderr, [ 'pipe', 'w' ], $this->errorOutput)
         );
