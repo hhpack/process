@@ -32,7 +32,7 @@ function fork(
         return trim((string) $value);
     })->toArray();
 
-    $command = 'hhvm ' . trim($script) . ' ' . implode(' ', $arguments);
+    $command = sprintf('hhvm %s %s', trim($script), implode(' ', $arguments));
     $builder = new ProcessBuilder($command, $options);
 
     return $builder->start();
