@@ -21,7 +21,6 @@ final class ProcessWriteStream implements WritableStream
 {
 
     private BufferedOutputStream $bufferedOutput;
-    private bool $opened = true;
 
     public function __construct(
         private StreamType $type,
@@ -35,7 +34,7 @@ final class ProcessWriteStream implements WritableStream
 
     public function isOpened() : bool
     {
-        return $this->opened;
+        return is_resource($this->handle);
     }
 
     public function isClosed() : bool
@@ -57,7 +56,6 @@ final class ProcessWriteStream implements WritableStream
     public function close() : void
     {
         fclose($this->handle);
-        $this->opened = false;
     }
 
     private function readAll() : void

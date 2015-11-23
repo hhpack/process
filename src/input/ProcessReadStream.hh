@@ -18,8 +18,6 @@ use hhpack\process\stream\StreamType;
 final class ProcessReadStream implements ReadableStream<int>
 {
 
-    private bool $opened = true;
-
     public function __construct(
         private StreamType $type,
         private resource $handle,
@@ -35,7 +33,7 @@ final class ProcessReadStream implements ReadableStream<int>
 
     public function isOpened() : bool
     {
-        return $this->opened;
+        return is_resource($this->handle);
     }
 
     public function isClosed() : bool
@@ -72,7 +70,6 @@ final class ProcessReadStream implements ReadableStream<int>
     public function close() : void
     {
         fclose($this->handle);
-        $this->opened = false;
     }
 
 }
