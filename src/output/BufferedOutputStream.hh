@@ -29,6 +29,11 @@ final class BufferedOutputStream implements Writable<int>, Displayable
         return strlen($output);
     }
 
+    public function clear() : void
+    {
+        $this->output = '';
+    }
+
     public function display() : void
     {
         fwrite(STDOUT, (string) $this . PHP_EOL);

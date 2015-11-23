@@ -15,7 +15,23 @@ use hhpack\process\OutputResult;
 
 interface StreamManager
 {
+    /**
+     * Reads the data from the STDOUT/STDERR
+     */
     public function read() : void;
+
+    /**
+     * Write the data into STDIN
+     */
+    public function write() : void;
+
+    /**
+     * Close all the stream
+     */
     public function close() : void;
+
+    /**
+     * Return the result of stream
+     */
     public function getOutputResult() : OutputResult;
 }

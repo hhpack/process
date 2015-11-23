@@ -45,6 +45,13 @@ final class StreamRegistry implements StreamManager
         }
     }
 
+    public function write() : void
+    {
+        foreach ($this->writableStreams() as $stream) {
+            $stream->flush();
+        }
+    }
+
     public function close() : void
     {
         foreach ($this->streams()->items() as $stream) {

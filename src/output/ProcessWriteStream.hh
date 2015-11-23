@@ -12,12 +12,15 @@
 namespace hhpack\process\output;
 
 use hhpack\process\input\NullInputStream;
+use hhpack\process\input\StringInputStream;
 use hhpack\process\input\ReadableStream;
+use hhpack\process\output\BufferedOutputStream;
 use hhpack\process\stream\StreamType;
 
 final class ProcessWriteStream implements WritableStream
 {
 
+    private BufferedOutputStream $bufferedOutput;
     private bool $opened = true;
 
     public function __construct(
@@ -26,6 +29,8 @@ final class ProcessWriteStream implements WritableStream
         private ReadableStream<int> $input = new NullInputStream()
     )
     {
+        $this->bufferedOutput = new BufferedOutputStream();
+        $this->input->pipeTo($this->bufferedOutput);
     }
 
     public function isOpened() : bool
@@ -38,6 +43,12 @@ final class ProcessWriteStream implements WritableStream
         return $this->isOpened() === false;
     }
 
+    public function flush() : void
+    {
+        $this->readAll();
+        $this->writeAll();
+    }
+
     public function write(string $output) : int
     {
         return (int) fwrite($this->handle, $output);
@@ -47,6 +58,24 @@ final class ProcessWriteStream implements WritableStream
     {
         fclose($this->handle);
         $this->opened = false;
+    }
+
+    private function readAll() : void
+    {
+        while ($this->input->eof() === false) {
+            $this->input->read(4096);
+        }
+    }
+
+    private function writeAll() : void
+    {
+        $stream = new StringInputStream((string) $this->bufferedOutput, $this);
+
+        while ($stream->eof() === false) {
+            $stream->read(1024 * 512); //512KB
+        }
+
+        $this->bufferedOutput->clear();
     }
 
 }
