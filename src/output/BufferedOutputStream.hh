@@ -11,16 +11,32 @@
 
 namespace hhpack\process\output;
 
-use hhpack\process\Writable;
 use hhpack\process\Displayable;
 
-final class BufferedOutputStream implements Writable<int>, Displayable
+final class BufferedOutputStream implements WritableStream, Displayable
 {
+
+    private bool $opened = true;
 
     public function __construct(
         private string $output = ''
     )
     {
+    }
+
+    public function isOpened() : bool
+    {
+        return $this->opened;
+    }
+
+    public function isClosed() : bool
+    {
+        return $this->isOpened() === false;
+    }
+
+    public function close() : void
+    {
+        $this->opened = false;
     }
 
     public function write(string $output) : int
