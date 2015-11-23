@@ -16,11 +16,9 @@ use hhpack\process\Writable;
 final class Stdout implements WritableStream
 {
 
-    private bool $opened = true;
-
     public function isOpened() : bool
     {
-        return $this->opened;
+        return is_resource(STDOUT);
     }
 
     public function isClosed() : bool
@@ -30,7 +28,6 @@ final class Stdout implements WritableStream
 
     public function close() : void
     {
-        $this->opened = false;
     }
 
     public function write(string $output) : int
