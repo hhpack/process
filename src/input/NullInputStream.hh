@@ -18,10 +18,6 @@ final class NullInputStream implements ReadableStream<int>
 
     private bool $opened = true;
 
-    public function __construct()
-    {
-    }
-
     public function eof() : bool
     {
         return true;
