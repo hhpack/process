@@ -51,9 +51,9 @@ final class DefaultDescriptorRegistry implements DescriptorRegistry
     public function toArray() : array<int, array<string>>
     {
         return [
-            $this->stdin->getStreamValues(),
-            $this->stdout->getStreamValues(),
-            $this->stderr->getStreamValues()
+            $this->stdin->values(),
+            $this->stdout->values(),
+            $this->stderr->values()
         ];
     }
 

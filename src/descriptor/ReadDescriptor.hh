@@ -16,36 +16,35 @@ use hhpack\process\output\BufferedOutputStream;
 use hhpack\process\input\ReadableStream;
 use hhpack\process\input\ProcessReadStream;
 use hhpack\process\stream\StreamType;
+use LogicException;
 
 final class ReadDescriptor implements DescriptorSpecification<ProcessReadStream>
 {
 
+    private StreamType $streamType;
+
     public function __construct(
-        private StreamType $streamType,
+        StreamType $streamType,
         private array<string> $streamValues,
         private Writable<int> $output = new BufferedOutputStream()
     )
     {
+        $supportedType = ($streamType === StreamType::Stdout || $streamType === StreamType::Stderr);
+
+        if (!$supportedType) {
+            throw new LogicException('Type of stream must be stdout or stderr');
+        }
+        $this->streamType = $streamType;
     }
 
-    // STDIN, STDOUT, STDERR
-    public function getStreamType() : StreamType
+    // STDOUT, STDERR
+    public function type() : StreamType
     {
         return $this->streamType;
     }
 
-    public function isReadDescriptor() : bool
-    {
-        return true;
-    }
-
-    public function isWriteDescriptor() : bool
-    {
-        return false;
-    }
-
     // ['pipe', 'r'], ['pipe', 'w']
-    public function getStreamValues() : array<string>
+    public function values() : array<string>
     {
         return $this->streamValues;
     }

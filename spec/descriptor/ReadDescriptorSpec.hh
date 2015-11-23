@@ -4,23 +4,16 @@ namespace hhpack\process\spec;
 
 use hhpack\process\stream\StreamType;
 use hhpack\process\descriptor\ReadDescriptor;
+use LogicException;
 
 describe(ReadDescriptor::class, function () {
-  describe('isReadDescriptor()', function () {
-    beforeEach(function () {
-      $this->descriptor = new ReadDescriptor(StreamType::Stdout, [ 'pipe', 'w' ]);
-    });
-    it('returns true', function() {
-      expect($this->descriptor->isReadDescriptor())->toBeTrue();
-    });
-  });
-
-  describe('isWriteDescriptor()', function () {
-    beforeEach(function () {
-      $this->descriptor = new ReadDescriptor(StreamType::Stdout, ['pipe', 'w' ]);
-    });
-    it('returns false', function() {
-      expect($this->descriptor->isWriteDescriptor())->toBeFalse();
+  describe('__construct()', function () {
+    context('when unsupport type', function () {
+      it('throw LogicException', function() {
+        expect(function () {
+          $descriptor = new ReadDescriptor(StreamType::Stdin, [ 'pipe', 'r' ]);
+        })->toThrow(LogicException::class);
+      });
     });
   });
 });

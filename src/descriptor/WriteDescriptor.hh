@@ -16,36 +16,33 @@ use hhpack\process\input\ReadableStream;
 use hhpack\process\output\WritableStream;
 use hhpack\process\output\ProcessWriteStream;
 use hhpack\process\stream\StreamType;
+use LogicException;
 
 final class WriteDescriptor implements DescriptorSpecification<ProcessWriteStream>
 {
 
+    private StreamType $streamType;
+
     public function __construct(
-        private StreamType $streamType,
+        StreamType $streamType,
         private array<string> $streamValues,
         private ReadableStream<int> $input = new NullInputStream()
     )
     {
+        if ($streamType !== StreamType::Stdin) {
+            throw new LogicException('Type of stream must be stdin');
+        }
+        $this->streamType = $streamType;
     }
 
-    // STDIN, STDOUT, STDERR
-    public function getStreamType() : StreamType
+    // STDIN
+    public function type() : StreamType
     {
         return $this->streamType;
     }
 
-    public function isReadDescriptor() : bool
-    {
-        return false;
-    }
-
-    public function isWriteDescriptor() : bool
-    {
-        return true;
-    }
-
     // ['pipe', 'r'], ['pipe', 'w']
-    public function getStreamValues() : array<string>
+    public function values() : array<string>
     {
         return $this->streamValues;
     }
