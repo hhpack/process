@@ -21,3 +21,19 @@ async function exec(
     $builder = new ProcessBuilder($command, $options);
     return await $builder->start()->wait();
 }
+
+function fork(
+    string $script,
+    ?Traversable<mixed> $args = [],
+    ProcessOptions $options = new ProcessOptions()
+) : ChildProcess
+{
+    $arguments = ImmSet::fromItems($args)->map(($value) ==> {
+        return trim((string) $value);
+    })->toArray();
+
+    $command = 'hhvm ' . trim($script) . ' ' . implode(' ', $arguments);
+    $builder = new ProcessBuilder($command, $options);
+
+    return $builder->start();
+}

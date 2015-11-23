@@ -68,12 +68,12 @@ final class ProcessStatus implements Displayable
         return new ProcessStatus($status);
     }
 
-    public static function initialStatus() : ProcessStatus
+    public static function initial() : ProcessStatus
     {
         return new ProcessStatus(shape(
             'command' => '',
             'pid' => null,
-            'running' => false,
+            'running' => true,
             'signaled' => false,
             'stopped' => false,
             'exitcode' => -1,

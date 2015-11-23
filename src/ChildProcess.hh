@@ -24,6 +24,7 @@ final class ChildProcess
         private StreamManager $streamManager
     )
     {
+        $this->status = ProcessStatus::initial();
         $this->captureStatus();
     }
 
@@ -80,6 +81,9 @@ final class ChildProcess
 
     private function captureStatus() : void
     {
+        if ($this->status->isAlive() === false) {
+            return;
+        }
         $this->status = ProcessStatus::fromResource($this->process);
     }
 
