@@ -51,7 +51,9 @@ final class StringInputStream implements ReadableStream<int>
             return;
         }
 
-        $this->output->write($chunk);
+        do {
+            $failed = $this->output->write($chunk) <= 0;
+        } while ($failed);
     }
 
     public function getOutput() : Writable<int>
