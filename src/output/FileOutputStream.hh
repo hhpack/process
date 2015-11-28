@@ -11,12 +11,6 @@
 
 namespace hhpack\process\output;
 
-use hhpack\process\input\NullInputStream;
-use hhpack\process\input\StringInputStream;
-use hhpack\process\input\ReadableStream;
-use hhpack\process\output\BufferedOutputStream;
-use hhpack\process\stream\StreamType;
-
 final class FileOutputStream implements WritableStream
 {
 
