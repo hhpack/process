@@ -13,9 +13,7 @@ namespace hhpack\process\input;
 
 use hhpack\process\Stream;
 use hhpack\process\Readable;
-use hhpack\process\Writable;
 
 interface ReadableStream<T> extends Stream, Readable
 {
-    public function pipeTo(Writable<T> $output) : void;
 }

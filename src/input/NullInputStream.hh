@@ -11,8 +11,6 @@
 
 namespace hhpack\process\input;
 
-use hhpack\process\Writable;
-
 final class NullInputStream implements ReadableStream<int>
 {
 
@@ -36,10 +34,6 @@ final class NullInputStream implements ReadableStream<int>
     public function read(int $length = 4096) : string
     {
         return '';
-    }
-
-    public function pipeTo(Writable<int> $output) : void
-    {
     }
 
     public function close() : void

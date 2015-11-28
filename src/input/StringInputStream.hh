@@ -20,8 +20,7 @@ final class StringInputStream implements ReadableStream<int>
     private bool $opened = true;
 
     public function __construct(
-        private string $input,
-        private Writable<int> $output = new BufferedOutputStream()
+        private string $input
     )
     {
     }
@@ -43,17 +42,10 @@ final class StringInputStream implements ReadableStream<int>
 
     public function read(int $length = 4096) : string
     {
-        return $this->input;
-    }
+        $input = $this->input;
+        $this->input = '';
 
-    public function getOutput() : Writable<int>
-    {
-        return $this->output;
-    }
-
-    public function pipeTo(Writable<int> $output) : void
-    {
-        $this->output = $output;
+        return $input;
     }
 
     public function close() : void
