@@ -18,7 +18,7 @@ use hhpack\process\stream\StreamType;
 final class ProcessReadStream implements ReadableStream<int>
 {
 
-    private ResourceStream $stream;
+    private ResourceInputStream $stream;
 
     public function __construct(
         private StreamType $type,
@@ -26,7 +26,7 @@ final class ProcessReadStream implements ReadableStream<int>
         private Writable<int> $output = new BufferedOutputStream()
     )
     {
-        $this->stream = new ResourceStream($handle);
+        $this->stream = new ResourceInputStream($handle);
     }
 
     public function eof() : bool

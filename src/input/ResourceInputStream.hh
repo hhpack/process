@@ -11,7 +11,7 @@
 
 namespace hhpack\process\input;
 
-final class ResourceStream implements ReadableStream<int>
+final class ResourceInputStream implements ReadableStream<int>
 {
 
     public function __construct(

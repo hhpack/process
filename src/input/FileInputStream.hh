@@ -16,14 +16,14 @@ use hhpack\process\Writable;
 final class FileInputStream implements ReadableStream<int>
 {
 
-    private ResourceStream $stream;
+    private ResourceInputStream $stream;
 
     public function __construct(
         private string $path
     )
     {
         $handle = fopen($this->path, 'r');
-        $this->stream = new ResourceStream($handle);
+        $this->stream = new ResourceInputStream($handle);
     }
 
     public function eof() : bool
