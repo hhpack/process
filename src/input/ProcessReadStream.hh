@@ -24,6 +24,7 @@ final class ProcessReadStream implements ReadableStream<int>
         private Writable<int> $output = new BufferedOutputStream()
     )
     {
+        stream_set_blocking($this->handle, 0);
     }
 
     public function eof() : bool
@@ -43,7 +44,12 @@ final class ProcessReadStream implements ReadableStream<int>
 
     public function read(int $length) : void
     {
-        $chunk = fread($this->handle, $length);
+        $chunk = (string) fread($this->handle, $length);
+
+        if ($chunk === '') {
+            return;
+        }
+
         $this->output->write($chunk);
     }
 

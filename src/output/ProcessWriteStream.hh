@@ -30,6 +30,7 @@ final class ProcessWriteStream implements WritableStream
     {
         $this->bufferedOutput = new BufferedOutputStream();
         $this->input->pipeTo($this->bufferedOutput);
+        stream_set_blocking($this->handle, 0);
     }
 
     public function isOpened() : bool

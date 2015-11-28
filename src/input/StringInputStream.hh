@@ -50,7 +50,6 @@ final class StringInputStream implements ReadableStream<int>
             $this->close();
             return;
         }
-
         $this->output->write($chunk);
 /*
 XXX Consider check for errors?
