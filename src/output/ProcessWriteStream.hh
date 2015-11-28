@@ -41,6 +41,21 @@ final class ProcessWriteStream implements WritableStream
         return $this->isOpened() === false;
     }
 
+    public function ready() : bool
+    {
+        $read = [];
+        $write = [ $this->handle ];
+        $expect = null;
+
+        $ng = ($num = stream_select($read, $write, $expect, 0, 200000)) === false;
+
+        if ($ng || $num <= 0) {
+            return false;
+        }
+
+        return true;
+    }
+
     public function flush() : void
     {
         $this->readAll();
@@ -74,6 +89,10 @@ final class ProcessWriteStream implements WritableStream
 
     private function writeAll() : void
     {
+        if ($this->isClosed() || $this->ready() === false) {
+            return;
+        }
+
         while (strlen($this->bufferedInput) > 0) {
             $chunk = substr($this->bufferedInput, 0, 512);
             $writedBytes = $this->write($chunk);

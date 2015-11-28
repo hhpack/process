@@ -42,15 +42,38 @@ final class ProcessReadStream implements ReadableStream<int>
         return $this->isOpened() === false;
     }
 
+    public function ready() : bool
+    {
+        $read = [ $this->handle ];
+        $write = [];
+        $expect = null;
+
+        $ng = ($num = stream_select($read, $write, $expect, 0, 200000)) === false;
+
+        if ($ng || $num <= 0) {
+            return false;
+        }
+
+        return true;
+    }
+
     public function read(int $length = 4096) : string
     {
+        if ($this->ready() === false) {
+            return '';
+        }
+
         $bufferedOutput = '';
 
-        while (($chunk = fread($this->handle, $length)) !== false) {
+        while (($chunk = fread($this->handle, 16384)) !== false) {
             if ((string) $chunk === '') {
                 break;
             }
             $bufferedOutput .= (string) $chunk;
+        }
+
+        if ($this->eof() && strlen($bufferedOutput) <= 0) {
+            $this->close();
         }
 
         $this->output->write($bufferedOutput);
@@ -58,14 +81,9 @@ final class ProcessReadStream implements ReadableStream<int>
         return $bufferedOutput;
     }
 
-    public function getOutput() : Writable<int>
+    public function getOutput() : Output
     {
         return $this->output;
-    }
-
-    public function pipeTo(Writable<int> $output) : void
-    {
-        $this->output = $output;
     }
 
     public function isStdout() : bool

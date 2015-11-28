@@ -55,8 +55,8 @@ final class ChildProcess
     {
         do {
             $this->captureStatus();
-            $this->streamManager->write();
             $this->streamManager->read();
+            $this->streamManager->write();
             $this->captureStatus();
         } while($this->isAlive());
 

@@ -34,3 +34,10 @@ namespace hhpack\process
         'stopsig' => int
     );
 }
+
+namespace hhpack\process\input
+{
+    use hhpack\process\Writable;
+
+    type Output = Writable<int>;
+}
