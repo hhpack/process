@@ -42,7 +42,7 @@ final class ProcessReadStream implements ReadableStream<int>
         return $this->isOpened() === false;
     }
 
-    public function read(int $length = 4096) : void
+    public function read(int $length = 4096) : int
     {
         $bufferedOutput = '';
 
@@ -54,6 +54,8 @@ final class ProcessReadStream implements ReadableStream<int>
         }
 
         $this->output->write($bufferedOutput);
+
+        return strlen($bufferedOutput);
     }
 
     public function getOutput() : Writable<int>

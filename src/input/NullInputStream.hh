@@ -33,8 +33,9 @@ final class NullInputStream implements ReadableStream<int>
         return $this->isOpened() === false;
     }
 
-    public function read(int $length = 4096) : void
+    public function read(int $length = 4096) : int
     {
+        return 0;
     }
 
     public function pipeTo(Writable<int> $output) : void

@@ -17,11 +17,10 @@ use hhpack\process\output\BufferedOutputStream;
 final class StringInputStream implements ReadableStream<int>
 {
 
-    private int $position = 0;
     private bool $opened = true;
 
     public function __construct(
-        private string $input = '',
+        private string $input,
         private Writable<int> $output = new BufferedOutputStream()
     )
     {
@@ -29,7 +28,7 @@ final class StringInputStream implements ReadableStream<int>
 
     public function eof() : bool
     {
-        return strlen($this->input) <= $this->position;
+        return strlen($this->input) <= 0;
     }
 
     public function isOpened() : bool
@@ -42,16 +41,22 @@ final class StringInputStream implements ReadableStream<int>
         return $this->isOpened() === false;
     }
 
-    public function read(int $length = 4096) : void
+    public function read(int $length = 4096) : int
     {
-        $chunk = $this->consume($length);
+        $readBytes = 0;
 
-        if ($chunk === '') {
-            $this->close();
-            return;
+        while (strlen($this->input) > 0) {
+            $chunk = substr($this->input, 0, 512);
+            $writedBytes = $this->output->write($chunk);
+
+            if ($writedBytes <= 0) {
+                break;
+            }
+            $readBytes += $writedBytes;
+            $this->input = substr($this->input, $writedBytes);
         }
 
-        $this->output->write($chunk);
+        return $readBytes;
     }
 
     public function getOutput() : Writable<int>
@@ -67,17 +72,6 @@ final class StringInputStream implements ReadableStream<int>
     public function close() : void
     {
         $this->opened = false;
-    }
-
-    private function consume(int $length) : string
-    {
-        // It will be typecast to string If the return value is FALSE
-        $chunk = (string) substr($this->input, $this->position, $length);
-        $chunkLength = strlen($chunk);
-
-        $this->position += $chunkLength;
-
-        return $chunk;
     }
 
 }
