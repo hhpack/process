@@ -63,23 +63,29 @@ final class ProcessWriteStream implements WritableStream
             return;
         }
 
-        $bufferedInput = new BufferedOutputStream();
+        $chunk = $this->input->read();
 
-        $this->input->pipeTo($bufferedInput);
-        $this->input->read();
+        if ($this->input->eof()) {
+            $this->input->close();
+        }
 
-        $this->bufferedInput .= (string) $bufferedInput;
+        $this->bufferedInput .= $chunk;
     }
 
     private function writeAll() : void
     {
-        $input = new StringInputStream($this->bufferedInput);
-        $input->pipeTo($this);
+        while (strlen($this->bufferedInput) > 0) {
+            $chunk = substr($this->bufferedInput, 0, 512);
+            $writedBytes = $this->write($chunk);
 
-        $length = $input->read();
-        $this->bufferedInput = substr($this->bufferedInput, $length);
+            if ($writedBytes <= 0) {
+                break;
+            }
+            $this->bufferedInput = substr($this->bufferedInput, $writedBytes);
+        }
 
-        if ($input->eof() === false) {
+        if (strlen($this->bufferedInput) > 0
+            || $this->input->isOpened()) {
             return;
         }
 

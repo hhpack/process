@@ -41,22 +41,9 @@ final class StringInputStream implements ReadableStream<int>
         return $this->isOpened() === false;
     }
 
-    public function read(int $length = 4096) : int
+    public function read(int $length = 4096) : string
     {
-        $readBytes = 0;
-
-        while (strlen($this->input) > 0) {
-            $chunk = substr($this->input, 0, 512);
-            $writedBytes = $this->output->write($chunk);
-
-            if ($writedBytes <= 0) {
-                break;
-            }
-            $readBytes += $writedBytes;
-            $this->input = substr($this->input, $writedBytes);
-        }
-
-        return $readBytes;
+        return $this->input;
     }
 
     public function getOutput() : Writable<int>
