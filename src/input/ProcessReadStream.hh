@@ -44,13 +44,16 @@ final class ProcessReadStream implements ReadableStream<int>
 
     public function read(int $length = 4096) : void
     {
-        $chunk = (string) fread($this->handle, $length);
+        $bufferedOutput = '';
 
-        if ($chunk === '') {
-            return;
+        while (($chunk = fread($this->handle, $length)) !== false) {
+            if ((string) $chunk === '') {
+                break;
+            }
+            $bufferedOutput .= (string) $chunk;
         }
 
-        $this->output->write($chunk);
+        $this->output->write($bufferedOutput);
     }
 
     public function getOutput() : Writable<int>

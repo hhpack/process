@@ -39,9 +39,7 @@ final class StreamRegistry implements StreamManager
     public function read() : void
     {
         foreach ($this->readableStreams() as $stream) {
-            while ($stream->eof() === false) {
-                $stream->read(4096);
-            }
+            $stream->read();
         }
     }
 
