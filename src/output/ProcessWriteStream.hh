@@ -56,6 +56,11 @@ final class ProcessWriteStream implements WritableStream
         return true;
     }
 
+    public function notReady() : bool
+    {
+        return $this->ready() === false;
+    }
+
     public function flush() : void
     {
         $this->readAll();
@@ -89,7 +94,7 @@ final class ProcessWriteStream implements WritableStream
 
     private function writeAll() : void
     {
-        if ($this->isClosed() || $this->ready() === false) {
+        if ($this->isClosed() || $this->notReady()) {
             return;
         }
 

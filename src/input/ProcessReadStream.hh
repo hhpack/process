@@ -57,9 +57,14 @@ final class ProcessReadStream implements ReadableStream<int>
         return true;
     }
 
+    public function notReady() : bool
+    {
+        return $this->ready() === false;
+    }
+
     public function read(int $length = 4096) : string
     {
-        if ($this->ready() === false) {
+        if ($this->notReady()) {
             return '';
         }
 
