@@ -20,6 +20,7 @@ use hhpack\process\stream\StreamType;
 final class ProcessWriteStream implements WritableStream
 {
 
+    private ResourceOutputStream $stream; 
     private string $bufferedInput = '';
 
     public function __construct(
@@ -28,37 +29,27 @@ final class ProcessWriteStream implements WritableStream
         private ReadableStream<int> $input = new NullInputStream()
     )
     {
-        stream_set_blocking($this->handle, 0);
+        $this->stream = new ResourceOutputStream($handle);
     }
 
     public function isOpened() : bool
     {
-        return is_resource($this->handle);
+        return $this->stream->isOpened();
     }
 
     public function isClosed() : bool
     {
-        return $this->isOpened() === false;
+        return $this->stream->isClosed();
     }
 
     public function ready() : bool
     {
-        $read = [];
-        $write = [ $this->handle ];
-        $expect = null;
-
-        $ng = ($num = stream_select($read, $write, $expect, 0, 200000)) === false;
-
-        if ($ng || $num <= 0) {
-            return false;
-        }
-
-        return true;
+        return $this->stream->ready();
     }
 
     public function notReady() : bool
     {
-        return $this->ready() === false;
+        return $this->stream->notReady();
     }
 
     public function flush() : void
@@ -69,12 +60,12 @@ final class ProcessWriteStream implements WritableStream
 
     public function write(string $output) : int
     {
-        return (int) fwrite($this->handle, $output);
+        return $this->stream->write($output);
     }
 
     public function close() : void
     {
-        fclose($this->handle);
+        $this->stream->close();
     }
 
     private function readAll() : void
