@@ -41,8 +41,32 @@ final class FileInputStream implements ReadableStream<int>
         return $this->isOpened() === false;
     }
 
+    public function ready() : bool
+    {
+        $read = [ $this->handle ];
+        $write = [];
+        $expect = null;
+
+        $ng = ($num = stream_select($read, $write, $expect, 0, 200000)) === false;
+
+        if ($ng || $num <= 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function notReady() : bool
+    {
+        return $this->ready() === false;
+    }
+
     public function read(int $length = 4096) : string
     {
+        if ($this->notReady()) {
+            return '';
+        }
+
         $bufferedOutput = '';
 
         while (($chunk = fread($this->handle, 16384)) !== false) {
