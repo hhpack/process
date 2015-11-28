@@ -12,7 +12,6 @@
 namespace hhpack\process\input;
 
 use hhpack\process\Writable;
-use hhpack\process\output\BufferedOutputStream;
 
 final class StringInputStream implements ReadableStream<int>
 {
