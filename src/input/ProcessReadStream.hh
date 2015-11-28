@@ -22,7 +22,7 @@ final class ProcessReadStream implements ReadableStream<int>
 
     public function __construct(
         private StreamType $type,
-        private resource $handle,
+        resource $handle,
         private Writable<int> $output = new BufferedOutputStream()
     )
     {
