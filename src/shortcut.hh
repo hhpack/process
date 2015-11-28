@@ -51,3 +51,19 @@ function fork(
 
     return $builder->start();
 }
+
+function spawn(
+    string $command,
+    ?Traversable<mixed> $args = [],
+    ProcessOptions $options = new ProcessOptions()
+) : ChildProcess
+{
+    $arguments = ImmSet::fromItems($args)->map(($value) ==> {
+        return trim((string) $value);
+    })->toArray();
+
+    $command = sprintf('%s %s', trim($command), implode(' ', $arguments));
+    $builder = new ProcessBuilder($command, $options);
+
+    return $builder->start();
+}
