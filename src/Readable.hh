@@ -13,6 +13,13 @@ namespace hhpack\process;
 
 interface Readable
 {
+    /**
+     * Tests for end-of-file on a pointer
+     */
     public function eof() : bool;
-    public function read(int $length) : void;
+
+    /**
+     * Read only bytes specified from the stream
+     */
+    public function read(int $length) : string;
 }

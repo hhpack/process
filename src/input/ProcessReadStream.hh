@@ -42,15 +42,17 @@ final class ProcessReadStream implements ReadableStream<int>
         return $this->isOpened() === false;
     }
 
-    public function read(int $length) : void
+    public function read(int $length) : string
     {
         $chunk = (string) fread($this->handle, $length);
 
         if ($chunk === '') {
-            return;
+            return '';
         }
 
         $this->output->write($chunk);
+
+        return '';
     }
 
     public function getOutput() : Writable<int>

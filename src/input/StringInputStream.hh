@@ -1,4 +1,4 @@
-<?hh // strict
+<?hh //strict
 
 /**
  * This file is part of hhpack\process package.
@@ -42,21 +42,17 @@ final class StringInputStream implements ReadableStream<int>
         return $this->isOpened() === false;
     }
 
-    public function read(int $length) : void
+    public function read(int $length) : string
     {
         $chunk = $this->consume($length);
 
         if ($chunk === '') {
-            $this->close();
-            return;
+            return '';
         }
+
         $this->output->write($chunk);
-/*
-XXX Consider check for errors?
-        do {
-            $failed = $this->output->write($chunk) <= 0;
-        } while ($failed);
-*/
+
+        return $chunk;
     }
 
     public function getOutput() : Writable<int>
