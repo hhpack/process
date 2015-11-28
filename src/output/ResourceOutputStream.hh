@@ -61,4 +61,12 @@ final class ResourceOutputStream implements WritableStream
         fclose($this->handle);
     }
 
+    public function __destruct()
+    {
+        if ($this->isClosed()) {
+            return;
+        }
+        $this->close();
+    }
+
 }
