@@ -18,72 +18,53 @@ use hhpack\process\stream\StreamType;
 final class ProcessReadStream implements ReadableStream<int>
 {
 
+    private ResourceStream $stream;
+
     public function __construct(
         private StreamType $type,
         private resource $handle,
         private Writable<int> $output = new BufferedOutputStream()
     )
     {
-        stream_set_blocking($this->handle, 0);
+        $this->stream = new ResourceStream($handle);
     }
 
     public function eof() : bool
     {
-        return feof($this->handle);
+        return $this->stream->eof();
     }
 
     public function isOpened() : bool
     {
-        return is_resource($this->handle);
+        return $this->stream->isOpened();
     }
 
     public function isClosed() : bool
     {
-        return $this->isOpened() === false;
+        return $this->stream->isClosed();
     }
 
     public function ready() : bool
     {
-        $read = [ $this->handle ];
-        $write = [];
-        $expect = null;
-
-        $ng = ($num = stream_select($read, $write, $expect, 0, 200000)) === false;
-
-        if ($ng || $num <= 0) {
-            return false;
-        }
-
-        return true;
+        return $this->stream->ready();
     }
 
     public function notReady() : bool
     {
-        return $this->ready() === false;
+        return $this->stream->notReady();
     }
 
     public function read(int $length = 4096) : string
     {
-        if ($this->notReady()) {
+        $chunk = $this->stream->read($length);
+
+        if ($chunk === '') {
             return '';
         }
 
-        $bufferedOutput = '';
+        $this->output->write($chunk);
 
-        while (($chunk = fread($this->handle, 16384)) !== false) {
-            if ((string) $chunk === '') {
-                break;
-            }
-            $bufferedOutput .= (string) $chunk;
-        }
-
-        if ($this->eof() && strlen($bufferedOutput) <= 0) {
-            $this->close();
-        }
-
-        $this->output->write($bufferedOutput);
-
-        return $bufferedOutput;
+        return $chunk;
     }
 
     public function getOutput() : Output
@@ -103,7 +84,7 @@ final class ProcessReadStream implements ReadableStream<int>
 
     public function close() : void
     {
-        fclose($this->handle);
+        $this->stream->close();
     }
 
 }
