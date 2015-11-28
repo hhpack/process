@@ -16,76 +16,49 @@ use hhpack\process\Writable;
 final class FileInputStream implements ReadableStream<int>
 {
 
-    private resource $handle;
+    private ResourceStream $stream;
 
     public function __construct(
         private string $path
     )
     {
-        $this->handle = fopen($this->path, 'r');
-        stream_set_blocking($this->handle, 0);
+        $handle = fopen($this->path, 'r');
+        $this->stream = new ResourceStream($handle);
     }
 
     public function eof() : bool
     {
-        return feof($this->handle);
+        return $this->stream->eof();
     }
 
     public function isOpened() : bool
     {
-        return is_resource($this->handle);
+        return $this->stream->isOpened();
     }
 
     public function isClosed() : bool
     {
-        return $this->isOpened() === false;
+        return $this->stream->isClosed();
     }
 
     public function ready() : bool
     {
-        $read = [ $this->handle ];
-        $write = [];
-        $expect = null;
-
-        $ng = ($num = stream_select($read, $write, $expect, 0, 200000)) === false;
-
-        if ($ng || $num <= 0) {
-            return false;
-        }
-
-        return true;
+        return $this->stream->ready();
     }
 
     public function notReady() : bool
     {
-        return $this->ready() === false;
+        return $this->stream->notReady();
     }
 
     public function read(int $length = 4096) : string
     {
-        if ($this->notReady()) {
-            return '';
-        }
-
-        $bufferedOutput = '';
-
-        while (($chunk = fread($this->handle, 16384)) !== false) {
-            if ((string) $chunk === '') {
-                break;
-            }
-            $bufferedOutput .= (string) $chunk;
-        }
-
-        if ($this->eof() && strlen($bufferedOutput) <= 0) {
-            $this->close();
-        }
-
-        return $bufferedOutput;
+        return $this->stream->read($length);
     }
 
     public function close() : void
     {
-        fclose($this->handle);
+        $this->stream->close();
     }
 
 }
