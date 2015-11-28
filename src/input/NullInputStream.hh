@@ -1,4 +1,4 @@
-<?hh //strict
+<?hh // strict
 
 /**
  * This file is part of hhpack\process package.
@@ -33,9 +33,8 @@ final class NullInputStream implements ReadableStream<int>
         return $this->isOpened() === false;
     }
 
-    public function read(int $length) : string
+    public function read(int $length) : void
     {
-        return '';
     }
 
     public function pipeTo(Writable<int> $output) : void
