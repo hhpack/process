@@ -42,7 +42,7 @@ final class StringInputStream implements ReadableStream<int>
         return $this->isOpened() === false;
     }
 
-    public function read(int $length) : void
+    public function read(int $length = 4096) : void
     {
         $chunk = $this->consume($length);
 
@@ -50,13 +50,8 @@ final class StringInputStream implements ReadableStream<int>
             $this->close();
             return;
         }
+
         $this->output->write($chunk);
-/*
-XXX Consider check for errors?
-        do {
-            $failed = $this->output->write($chunk) <= 0;
-        } while ($failed);
-*/
     }
 
     public function getOutput() : Writable<int>

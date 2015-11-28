@@ -20,7 +20,7 @@ use hhpack\process\stream\StreamType;
 final class ProcessWriteStream implements WritableStream
 {
 
-    private BufferedOutputStream $bufferedOutput;
+    private string $bufferedInput = '';
 
     public function __construct(
         private StreamType $type,
@@ -28,8 +28,6 @@ final class ProcessWriteStream implements WritableStream
         private ReadableStream<int> $input = new NullInputStream()
     )
     {
-        $this->bufferedOutput = new BufferedOutputStream();
-        $this->input->pipeTo($this->bufferedOutput);
         stream_set_blocking($this->handle, 0);
     }
 
@@ -61,20 +59,33 @@ final class ProcessWriteStream implements WritableStream
 
     private function readAll() : void
     {
+        $bufferedInput = new BufferedOutputStream();
+        $this->input->pipeTo($bufferedInput);
+
         while ($this->input->eof() === false) {
-            $this->input->read(4096);
+            $this->input->read();
         }
+
+        $this->bufferedInput .= (string) $bufferedInput;
     }
 
     private function writeAll() : void
     {
-        $stream = new StringInputStream((string) $this->bufferedOutput, $this);
+        while (strlen($this->bufferedInput) > 0) {
+            $chunk = substr($this->bufferedInput, 0, 512);
+            $writedBytes = $this->write($chunk);
 
-        while ($stream->eof() === false) {
-            $stream->read(1024 * 512); //512KB
+            if ($writedBytes <= 0) {
+                break;
+            }
+            $this->bufferedInput = substr($this->bufferedInput, $writedBytes);
         }
 
-        $this->bufferedOutput->clear();
+        if (strlen($this->bufferedInput) > 0 || $this->input->isOpened()) {
+            return;
+        }
+
+        $this->close();
     }
 
 }

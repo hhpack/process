@@ -42,7 +42,7 @@ final class ProcessReadStream implements ReadableStream<int>
         return $this->isOpened() === false;
     }
 
-    public function read(int $length) : void
+    public function read(int $length = 4096) : void
     {
         $chunk = (string) fread($this->handle, $length);
 

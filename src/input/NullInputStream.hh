@@ -33,7 +33,7 @@ final class NullInputStream implements ReadableStream<int>
         return $this->isOpened() === false;
     }
 
-    public function read(int $length) : void
+    public function read(int $length = 4096) : void
     {
     }
 
