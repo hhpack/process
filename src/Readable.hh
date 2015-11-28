@@ -21,5 +21,5 @@ interface Readable
     /**
      * Read only bytes specified from the stream
      */
-    public function read(int $length) : string;
+    public function read(int $length = 4096) : string;
 }
