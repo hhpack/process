@@ -6,51 +6,32 @@ use hhpack\process\input\StringInputStream;
 use hhpack\process\output\BufferedOutputStream;
 
 describe(StringInputStream::class, function () {
-  describe('pipeTo()', function () {
+  describe('read()', function () {
     beforeEach(function () {
       $this->input = new StringInputStream('abcd');
-      $this->output = new BufferedOutputStream();
-      $this->input->pipeTo($this->output);
     });
-    it('outputs the read data to output stream', function() {
-      $this->input->read(1); //a
+    it('returns readed all data', function() {
       expect($this->input->eof())->toBeFalse();
-
-      $this->input->read(1); //b
-      expect($this->input->eof())->toBeFalse();
-
-      $this->input->read(1); //c
-      expect($this->input->eof())->toBeFalse();
-
-      $this->input->read(1); //d
+      $input = $this->input->read(1);
       expect($this->input->eof())->toBeTrue();
-
-      expect((string) $this->output)->toBe('abcd');
-
-      $this->input->read(1); //empty
-      expect($this->input->eof())->toBeTrue();
+      expect($input)->toBe('abcd');
     });
   });
 
-  describe('isOpen()', function () {
+  describe('isClosed()', function () {
     beforeEach(function () {
       $this->input = new StringInputStream('abcd');
     });
-    it('outputs the read data to output stream', function() {
-      $this->input->read(1); //a
-      expect($this->input->isOpened())->toBeTrue();
-
-      $this->input->read(1); //b
-      expect($this->input->isOpened())->toBeTrue();
-
-      $this->input->read(1); //c
-      expect($this->input->isOpened())->toBeTrue();
-
-      $this->input->read(1); //d
-      expect($this->input->isOpened())->toBeTrue();
-
-      $this->input->read(1); //empty
-      expect($this->input->isOpened())->toBeFalse();
+    context('when opened', function () {
+      it('returns false', function() {
+        expect($this->input->isClosed())->toBeFalse();
+      });
+    });
+    context('when closed', function () {
+      it('returns true', function() {
+        $this->input->close();
+        expect($this->input->isClosed())->toBeTrue();
+      });
     });
   });
 

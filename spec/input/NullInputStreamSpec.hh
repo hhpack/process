@@ -9,12 +9,10 @@ describe(NullInputStream::class, function () {
   describe('read()', function () {
     beforeEach(function () {
       $this->input = new NullInputStream();
-      $this->output = new BufferedOutputStream();
-      $this->input->pipeTo($this->output);
     });
     it('read text', function() {
-      $this->input->read();
-      expect((string) $this->output)->toBe('');
+      $output = $this->input->read();
+      expect((string) $output)->toBe('');
     });
   });
   describe('close()', function () {
