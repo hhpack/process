@@ -1,8 +1,15 @@
 <?hh // partial
 
 foreach ($argv as $value) {
-    $text = sprintf('%s%s', (string) $value, PHP_EOL);
+    $text = sprintf('argv = %s%s', (string) $value, PHP_EOL);
     fwrite(STDOUT, $text);
 }
 
-exit(0);
+while (($input = fgets(STDIN)) !== false) {
+  if (feof(STDIN) || $input === '') {
+    break;
+  }
+  fwrite(STDOUT, sprintf('input = %s', $input));
+}
+
+exit();

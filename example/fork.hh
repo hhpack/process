@@ -13,7 +13,7 @@ use hhpack\process\output\Stderr;
 async function fork_example() : Awaitable<void>
 {
     $options = new ProcessOptions();
-    $options->stdin(new StringInputStream("abcd"));
+    $options->stdin(new StringInputStream("abcd\n"));
     $options->stdout(new Stdout());
     $options->stderr(new Stderr());
 
