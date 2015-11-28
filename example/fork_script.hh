@@ -6,10 +6,10 @@ foreach ($argv as $value) {
 }
 
 while (($input = fgets(STDIN)) !== false) {
-  if (feof(STDIN) || $input === '') {
-    break;
-  }
-  fwrite(STDOUT, sprintf('input = %s', $input));
+    if (feof(STDIN) || $input === '') {
+        break;
+    }
+    fwrite(STDOUT, sprintf('input = %s', $input));
 }
 
 exit();
