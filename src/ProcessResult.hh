@@ -21,18 +21,25 @@ final class ProcessResult implements Displayable
     {
     }
 
-    public function display() : void
+    public function exitCode() : int
     {
-        fwrite(STDOUT, (string) $this);
+        return $this->status->exitCode();
     }
 
-    public function __toString() : string
+    public function stdout() : Output
     {
-        return sprintf(
-            "EXIT_CODE: %s\n\n%s\n",
-            (string) $this->status->getExitCode(),
-            (string) $this->output
-        );
+        return $this->output->stdout();
+    }
+
+    public function stderr() : Output
+    {
+        return $this->output->stderr();
+    }
+
+    public function display() : void
+    {
+        $this->status->display();
+        $this->output->display();
     }
 
 }

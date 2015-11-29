@@ -9,13 +9,11 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process;
+namespace hhpack\process\output;
 
-interface Stream
+use hhpack\process\Stream;
+use hhpack\process\Writable;
+
+interface WritableStream extends Stream, Writable<int>
 {
-    public function ready() : bool;
-    public function notReady() : bool;
-    public function isOpened() : bool;
-    public function isClosed() : bool;
-    public function close() : void;
 }

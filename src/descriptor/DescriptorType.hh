@@ -9,13 +9,10 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process;
+namespace hhpack\process\descriptor;
 
-interface Stream
+enum DescriptorType : int
 {
-    public function ready() : bool;
-    public function notReady() : bool;
-    public function isOpened() : bool;
-    public function isClosed() : bool;
-    public function close() : void;
+    Read = 0;
+    Write = 1;
 }

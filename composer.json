@@ -1,39 +1,41 @@
 {
-    "name": "hhpack/process",
-    "keywords": [
-        "process", "utility", "simple", "easy", "hack"
-    ],
-    "description": "Process utility library for Hack",
-    "authors": [
-        {
-            "name": "Noritaka Horio",
-            "email": "holy.shared.design@gmail.com"
-        }
-    ],
-    "license": "MIT",
-    "require": {
-        "hhvm": ">=3.6"
+  "name": "hhpack/process",
+  "keywords": [
+    "process", "utility", "simple", "easy", "hack"
+  ],
+  "description": "Process utility library for Hack",
+  "authors": [
+    {
+      "name": "Noritaka Horio",
+      "email": "holy.shared.design@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "require": {
+    "hhvm": ">=3.6"
+  },
+  "require-dev": {
+    "peridot-php/peridot": "~1.16",
+    "peridot-php/peridot-dot-reporter": "~1.0",
+    "expect/peridot-expect-plugin": "~3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "hhpack\\process\\": "src/"
     },
-    "require-dev": {
-        "peridot-php/peridot": "~1.15",
-        "peridot-php/peridot-dot-reporter": "~1.0",
-        "expect/peridot-expect-plugin": "3.0.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "hhpack\\process\\": "src/"
-        },
-        "files": [
-            "src/bootstrap.hh"
-        ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "hhpack\\file\\example\\": "example/custom/src"
-        }
-    },
-    "scripts": {
-        "test": "vendor/bin/peridot -c peridot.hh --grep *Spec.hh spec -r dot"
-    },
-    "minimum-stability": "stable"
+    "files": [
+      "src/bootstrap.hh",
+      "src/shortcut.hh"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "hhpack\\file\\example\\": "example/custom/src"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/peridot -c peridot.hh --grep *Spec.hh spec -r dot",
+    "check": "./typecheck"
+  },
+  "minimum-stability": "stable"
 }

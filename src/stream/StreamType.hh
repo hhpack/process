@@ -9,13 +9,11 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process;
+namespace hhpack\process\stream;
 
-interface Stream
+enum StreamType : int
 {
-    public function ready() : bool;
-    public function notReady() : bool;
-    public function isOpened() : bool;
-    public function isClosed() : bool;
-    public function close() : void;
+    Stdin = 0;
+    Stdout = 1;
+    Stderr = 2;
 }

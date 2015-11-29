@@ -14,5 +14,5 @@ namespace hhpack\process;
 interface Readable
 {
     public function eof() : bool;
-    public function read(int $length) : void;
+    public function read(int $length = 4096) : string;
 }

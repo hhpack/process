@@ -11,44 +11,59 @@
 
 namespace hhpack\process;
 
+use hhpack\process\Writable;
+use hhpack\process\output\NullOutputStream;
+use hhpack\process\output\OutputBufferedStream;
+
 final class OutputResult implements Displayable
 {
 
     public function __construct(
-        private BufferedOutput $stdout,
-        private BufferedOutput $stderr
+        private Output $stdout,
+        private Output $stderr
     )
     {
     }
 
-    public static function fromOutputs(Outputs $outputs) : OutputResult
+    public function stdout() : Output
     {
-        return new OutputResult(
+        return $this->stdout;
+    }
+
+    public function stderr() : Output
+    {
+        return $this->stderr;
+    }
+
+    public static function fromOutputs(Outputs $outputs) : this
+    {
+        return new static(
             $outputs['stdout'],
             $outputs['stderr']
         );
     }
 
-    public static function emptyResult() : OutputResult
+    public static function emptyResult() : this
     {
-        return new OutputResult(
-            new BufferedOutput(),
-            new BufferedOutput()
+        return new static(
+            new NullOutputStream(),
+            new NullOutputStream()
         );
     }
 
     public function display() : void
     {
-        fwrite(STDOUT, (string) $this);
+        $this->displayOutput('stdout: ', $this->stdout);
+        $this->displayOutput('stderr: ', $this->stderr);
     }
 
-    public function __toString() : string
+    private function displayOutput(string $header, Output $output) : void
     {
-        return sprintf(
-            "STDOUT: \n%s\n\nSTDERR: \n%s",
-            (string) $this->stdout,
-            (string) $this->stderr
-        );
+        if (!($output instanceof Displayable)) {
+            return;
+        }
+        fwrite(STDOUT, $header);
+        $output->display();
     }
 
 }

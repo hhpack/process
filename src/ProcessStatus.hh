@@ -11,7 +11,7 @@
 
 namespace hhpack\process;
 
-final class ProcessStatus
+final class ProcessStatus implements Displayable
 {
 
     private string $command;
@@ -37,7 +37,7 @@ final class ProcessStatus
         $this->stopsig = $status['stopsig'];
     }
 
-    public function getPid() : ?int
+    public function pid() : ?int
     {
         return $this->pid;
     }
@@ -47,9 +47,14 @@ final class ProcessStatus
         return $this->running;
     }
 
-    public function getExitCode() : int
+    public function exitCode() : int
     {
         return $this->exitcode;
+    }
+
+    public function display() : void
+    {
+        fwrite(STDOUT, 'code: ' . (string) $this->exitcode . PHP_EOL);
     }
 
     public static function fromCapturedStatus(CapturedProcessStatus $status) : ProcessStatus
@@ -63,12 +68,12 @@ final class ProcessStatus
         return new ProcessStatus($status);
     }
 
-    public static function initialStatus() : ProcessStatus
+    public static function initial() : ProcessStatus
     {
         return new ProcessStatus(shape(
             'command' => '',
             'pid' => null,
-            'running' => false,
+            'running' => true,
             'signaled' => false,
             'stopped' => false,
             'exitcode' => -1,

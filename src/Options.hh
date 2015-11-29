@@ -11,11 +11,7 @@
 
 namespace hhpack\process;
 
-interface Stream
+interface Options
 {
-    public function ready() : bool;
-    public function notReady() : bool;
-    public function isOpened() : bool;
-    public function isClosed() : bool;
-    public function close() : void;
+    public function applyTo(ProcessBuilder $bulider) : void;
 }
