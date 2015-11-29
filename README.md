@@ -28,6 +28,24 @@ async function main() : Awaitable<void>
 main();
 ```
 
+Execution of the script
+----------------------------------------
+
+If you want to run the script, you can run in **execFile** function.
+
+```hack
+use hhpack\process;
+
+async function main() : Awaitable<void>
+{
+    $result = await process\execFile('/path/to/example.hh', [ 'a', 'b' ]);
+    $result->stdout()->display();
+    $result->stderr()->display();
+}
+
+main();
+```
+
 Run the test
 ----------------------------------------
 
