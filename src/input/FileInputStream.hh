@@ -12,6 +12,7 @@
 namespace hhpack\process\input;
 
 use hhpack\process\Writable;
+use RuntimeException;
 
 final class FileInputStream implements ReadableStream<int>
 {
@@ -19,10 +20,15 @@ final class FileInputStream implements ReadableStream<int>
     private ResourceInputStream $stream;
 
     public function __construct(
-        private string $path
+        string $path
     )
     {
-        $handle = fopen($this->path, 'r');
+        $handle = fopen($path, 'r');
+
+        if (!is_resource($handle)) {
+            throw new RuntimeException(sprintf('Failed to open the file %s', $path));
+        }
+
         $this->stream = new ResourceInputStream($handle);
     }
 

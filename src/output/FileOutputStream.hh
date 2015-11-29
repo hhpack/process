@@ -11,15 +11,23 @@
 
 namespace hhpack\process\output;
 
+use RuntimeException;
+
 final class FileOutputStream implements WritableStream
 {
 
     private ResourceOutputStream $stream; 
 
     public function __construct(
-        resource $handle
+        string $path
     )
     {
+        $handle = fopen($path, 'w');
+
+        if (!is_resource($handle)) {
+            throw new RuntimeException(sprintf('Failed to open the file %s', $path));
+        }
+
         $this->stream = new ResourceOutputStream($handle);
     }
 
