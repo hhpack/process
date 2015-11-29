@@ -35,7 +35,7 @@ final class ProcessBuilder
 
     public function __construct(
         private string $command,
-        ProcessOptions $options = new ProcessOptions()
+        Options $options = new ProcessOptions()
     )
     {
         $this->cwd = (string) getcwd();

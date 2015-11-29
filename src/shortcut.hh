@@ -11,12 +11,11 @@
 
 namespace hhpack\process;
 
-use hhpack\process\output\OutputBufferedStream;
 use RuntimeException;
 
 async function exec(
     string $command,
-    ProcessOptions $options = new ProcessOptions()
+    ExecOptions $options = new ExecOptions()
 ) : Awaitable<ProcessResult>
 {
     $builder = new ProcessBuilder($command, $options);
@@ -26,14 +25,20 @@ async function exec(
 async function execFile(
     string $file,
     ?Traversable<mixed> $args = [],
-    ProcessOptions $options = new ProcessOptions()
+    ExecOptions $options = new ExecOptions()
 ) : Awaitable<ProcessResult>
 {
     if (is_file($file) === false) {
         throw new RuntimeException(sprintf('%s is not a file', $file));
     }
 
-    return await fork($file, $args, $options)->wait();
+    $arguments = ImmSet::fromItems($args)->map(($value) ==> {
+        return trim((string) $value);
+    })->toArray();
+
+    $command = sprintf('hhvm %s %s', trim($file), implode(' ', $arguments));
+
+    return await exec($command, $options);
 }
 
 function fork(

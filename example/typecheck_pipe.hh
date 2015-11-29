@@ -15,8 +15,11 @@ async function pipe_example() : Awaitable<void>
     $options->stdout(new Stdout());
     $options->stderr(new Stderr());
 
-    await process\exec('hh_client restart', $options);
-    await process\exec('hh_client check --json', $options);
+    $p = process\spawn('hh_client restart', [], $options);
+    await $p->wait();
+
+    $p = process\spawn('hh_client check --json', [], $options);
+    await $p->wait();
 }
 
 pipe_example();
