@@ -16,7 +16,7 @@ use hhpack\process\input\ReadableStream;
 use hhpack\process\input\NullInputStream;
 use hhpack\process\output\BufferedOutputStream;
 
-final class ProcessOptions
+final class ProcessOptions implements Options
 {
 
     private ReadableStream<int> $input;
