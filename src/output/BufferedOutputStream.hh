@@ -34,6 +34,16 @@ final class BufferedOutputStream implements WritableStream, Displayable
         return $this->isOpened() === false;
     }
 
+    public function ready() : bool
+    {
+        return $this->isOpened();
+    }
+
+    public function notReady() : bool
+    {
+        return $this->ready() === false;
+    }
+
     public function close() : void
     {
         $this->opened = false;

@@ -39,6 +39,16 @@ final class StringInputStream implements ReadableStream<int>
         return $this->isOpened() === false;
     }
 
+    public function ready() : bool
+    {
+        return $this->eof() === false;
+    }
+
+    public function notReady() : bool
+    {
+        return $this->ready() === false;
+    }
+
     public function read(int $length = 4096) : string
     {
         $input = $this->input;

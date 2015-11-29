@@ -26,6 +26,16 @@ final class Stderr implements WritableStream
         return $this->isOpened() === false;
     }
 
+    public function ready() : bool
+    {
+        return $this->isOpened();
+    }
+
+    public function notReady() : bool
+    {
+        return $this->ready() === false;
+    }
+
     public function close() : void
     {
     }
