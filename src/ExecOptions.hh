@@ -11,14 +11,20 @@
 
 namespace hhpack\process;
 
+use hhpack\process\input\ReadableStream;
+use hhpack\process\input\NullInputStream;
+
 final class ExecOptions implements Options
 {
+
+    private ReadableStream<int> $input;
 
     public function __construct(
         private string $cwd = (string) getcwd(),
         private ?environment $env = null
     )
     {
+        $this->input = new NullInputStream();
     }
 
     public function workingDirectory(string $cwd) : this
@@ -33,10 +39,17 @@ final class ExecOptions implements Options
         return $this;
     }
 
+    public function stdin(ReadableStream<int> $input) : this
+    {
+        $this->input = $input;
+        return $this;
+    }
+
     public function applyTo(ProcessBuilder $bulider) : void
     {
         $bulider->environment($this->env);
         $bulider->workingDirectory($this->cwd);
+        $bulider->stdin($this->input);
     }
 
 }
