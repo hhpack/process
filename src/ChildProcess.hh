@@ -60,6 +60,8 @@ final class ChildProcess
             $this->captureStatus();
         } while($this->isAlive());
 
+        $this->streamManager->read();
+
         return $this->close();
     }
 

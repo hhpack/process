@@ -37,6 +37,10 @@ final class ResourceOutputStream implements WritableStream
         $write = [ $this->handle ];
         $expect = null;
 
+        if ($this->isClosed()) {
+            return false;
+        }
+
         $ng = ($num = stream_select($read, $write, $expect, 0, 200000)) === false;
 
         if ($ng || $num <= 0) {
