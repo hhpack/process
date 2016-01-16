@@ -55,12 +55,14 @@ final class ChildProcess
     {
         do {
             $this->captureStatus();
-            $this->streamManager->read();
-            $this->streamManager->write();
+            await \HH\Asio\v([
+                $this->streamManager->read(),
+                $this->streamManager->write()
+            ]);
             $this->captureStatus();
         } while($this->isAlive());
 
-        $this->streamManager->read();
+        await $this->streamManager->read();
 
         return $this->close();
     }

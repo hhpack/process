@@ -36,14 +36,14 @@ final class StreamRegistry implements StreamManager
         return $this->writableStreams->items();
     }
 
-    public function read() : void
+    public async function read() : Awaitable<void>
     {
         foreach ($this->readableStreams() as $stream) {
             $stream->read();
         }
     }
 
-    public function write() : void
+    public async function write() : Awaitable<void>
     {
         foreach ($this->writableStreams() as $stream) {
             $stream->flush();
