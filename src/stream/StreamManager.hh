@@ -18,12 +18,12 @@ interface StreamManager
     /**
      * Reads the data from the STDOUT/STDERR
      */
-    public function read() : void;
+    public function read() : Awaitable<void>;
 
     /**
      * Write the data into STDIN
      */
-    public function write() : void;
+    public function write() : Awaitable<void>;
 
     /**
      * Close all the stream
