@@ -44,7 +44,7 @@ final class ChildProcess
         proc_terminate($this->process);
 
         while($this->isAlive()) {
-            usleep(1000);
+            await \HH\Asio\usleep(1000);
             $this->captureStatus();
         }
 
