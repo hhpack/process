@@ -12,7 +12,7 @@
   ],
   "license": "MIT",
   "require": {
-    "hhvm": ">=3.6"
+    "hhvm": ">=3.11.0"
   },
   "require-dev": {
     "peridot-php/peridot": "~1.16",
