@@ -9,9 +9,9 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process
+namespace HHPack\Process
 {
-    use hhpack\process\output\OutputBufferedStream;
+    use HHPack\Process\Output\OutputBufferedStream;
 
     type environment = KeyedTraversable<string, string>;
     type EnviromentVariables = ImmMap<string, string>;
@@ -35,9 +35,9 @@ namespace hhpack\process
     );
 }
 
-namespace hhpack\process\input
+namespace HHPack\Process\Input
 {
-    use hhpack\process\Writable;
+    use HHPack\Process\Writable;
 
     type Output = Writable<int>;
 }

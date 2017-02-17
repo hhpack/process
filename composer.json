@@ -21,7 +21,7 @@
   },
   "autoload": {
     "psr-4": {
-      "hhpack\\process\\": "src/"
+      "HHPack\\Process\\": "src/"
     },
     "files": [
       "src/bootstrap.hh",
@@ -30,7 +30,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "hhpack\\file\\example\\": "example/custom/src"
+      "HHPack\\File\\Example\\": "example/custom/src"
     }
   },
   "scripts": {

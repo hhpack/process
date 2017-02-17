@@ -9,10 +9,11 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process\descriptor;
+namespace HHPack\Process\Input;
 
-enum DescriptorType : int
+use HHPack\Process\Stream;
+use HHPack\Process\Readable;
+
+interface ReadableStream<T> extends Stream, Readable
 {
-    Read = 0;
-    Write = 1;
 }

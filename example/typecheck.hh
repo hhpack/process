@@ -1,17 +1,17 @@
 <?hh // partial
 
-namespace hhpack\process\example;
+namespace HHPack\Process\Example;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use hhpack\process;
+use HHPack\Process;
 
 async function main() : Awaitable<void>
 {
-    $result = await process\exec('hh_client restart');
+    $result = await Process\exec('hh_client restart');
     $result->display();
 
-    $result = await process\exec('hh_client check --json');
+    $result = await Process\exec('hh_client check --json');
     $result->display();
 }
 

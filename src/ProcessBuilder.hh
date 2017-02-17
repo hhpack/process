@@ -9,18 +9,18 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process;
+namespace HHPack\Process;
 
-use hhpack\process\Writable;
-use hhpack\process\stream\StreamType;
-use hhpack\process\descriptor\ReadDescriptor;
-use hhpack\process\descriptor\WriteDescriptor;
-use hhpack\process\descriptor\DescriptorRegistry;
-use hhpack\process\descriptor\DefaultDescriptorRegistry;
-use hhpack\process\descriptor\DescriptorSpecification;
-use hhpack\process\input\ReadableStream;
-use hhpack\process\input\NullInputStream;
-use hhpack\process\output\BufferedOutputStream;
+use HHPack\Process\Writable;
+use HHPack\Process\Stream\StreamType;
+use HHPack\Process\Descriptor\ReadDescriptor;
+use HHPack\Process\Descriptor\WriteDescriptor;
+use HHPack\Process\Descriptor\DescriptorRegistry;
+use HHPack\Process\Descriptor\DefaultDescriptorRegistry;
+use HHPack\Process\Descriptor\DescriptorSpecification;
+use HHPack\Process\Input\ReadableStream;
+use HHPack\Process\Input\NullInputStream;
+use HHPack\Process\Output\BufferedOutputStream;
 use RuntimeException;
 
 final class ProcessBuilder

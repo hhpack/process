@@ -9,10 +9,10 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process;
+namespace HHPack\Process;
 
-use hhpack\process\input\ReadableStream;
-use hhpack\process\input\NullInputStream;
+use HHPack\Process\Input\ReadableStream;
+use HHPack\Process\Input\NullInputStream;
 
 final class ExecOptions implements Options
 {

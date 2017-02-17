@@ -1,8 +1,8 @@
 <?hh //partial
 
-namespace hhpack\process\spec;
+namespace HHPack\Process\Spec;
 
-use hhpack\process\input\FileInputStream;
+use HHPack\Process\Input\FileInputStream;
 
 describe(FileInputStream::class, function () {
   beforeEach(function () {

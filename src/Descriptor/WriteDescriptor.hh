@@ -9,13 +9,13 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process\descriptor;
+namespace HHPack\Process\Descriptor;
 
-use hhpack\process\input\NullInputStream;
-use hhpack\process\input\ReadableStream;
-use hhpack\process\output\WritableStream;
-use hhpack\process\output\ProcessWriteStream;
-use hhpack\process\stream\StreamType;
+use HHPack\Process\Input\NullInputStream;
+use HHPack\Process\Input\ReadableStream;
+use HHPack\Process\Output\WritableStream;
+use HHPack\Process\Output\ProcessWriteStream;
+use HHPack\Process\Stream\StreamType;
 use LogicException;
 
 final class WriteDescriptor implements DescriptorSpecification<ProcessWriteStream>

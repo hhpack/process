@@ -1,8 +1,8 @@
 <?hh //partial
 
-namespace hhpack\process\spec;
+namespace HHPack\Process\Spec;
 
-use hhpack\process\output\BufferedOutputStream;
+use HHPack\Process\Output\BufferedOutputStream;
 
 describe(BufferedOutputStream::class, function () {
   beforeEach(function () {

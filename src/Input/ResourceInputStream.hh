@@ -9,9 +9,9 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process\output;
+namespace HHPack\Process\Input;
 
-final class ResourceOutputStream implements WritableStream
+final class ResourceInputStream implements ReadableStream<int>
 {
 
     public function __construct(
@@ -19,6 +19,11 @@ final class ResourceOutputStream implements WritableStream
     )
     {
         stream_set_blocking($this->handle, 0);
+    }
+
+    public function eof() : bool
+    {
+        return feof($this->handle);
     }
 
     public function isOpened() : bool
@@ -33,8 +38,8 @@ final class ResourceOutputStream implements WritableStream
 
     public function ready() : bool
     {
-        $read = [];
-        $write = [ $this->handle ];
+        $read = [ $this->handle ];
+        $write = [];
         $expect = null;
 
         if ($this->isClosed()) {
@@ -55,9 +60,26 @@ final class ResourceOutputStream implements WritableStream
         return $this->ready() === false;
     }
 
-    public function write(string $output) : int
+    public function read(int $length = 4096) : string
     {
-        return (int) fwrite($this->handle, $output);
+        if ($this->notReady()) {
+            return '';
+        }
+
+        $bufferedOutput = '';
+
+        while (($chunk = fread($this->handle, 16384)) !== false) {
+            if ((string) $chunk === '') {
+                break;
+            }
+            $bufferedOutput .= (string) $chunk;
+        }
+
+        if ($this->eof() && strlen($bufferedOutput) <= 0) {
+            $this->close();
+        }
+
+        return $bufferedOutput;
     }
 
     public function close() : void

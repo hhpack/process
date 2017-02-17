@@ -9,26 +9,32 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process\output;
+namespace HHPack\Process\Input;
 
+use HHPack\Process\Writable;
 use RuntimeException;
 
-final class FileOutputStream implements WritableStream
+final class FileInputStream implements ReadableStream<int>
 {
 
-    private ResourceOutputStream $stream; 
+    private ResourceInputStream $stream;
 
     public function __construct(
         string $path
     )
     {
-        $handle = fopen($path, 'w');
+        $handle = fopen($path, 'r');
 
         if (!is_resource($handle)) {
             throw new RuntimeException(sprintf('Failed to open the file %s', $path));
         }
 
-        $this->stream = new ResourceOutputStream($handle);
+        $this->stream = new ResourceInputStream($handle);
+    }
+
+    public function eof() : bool
+    {
+        return $this->stream->eof();
     }
 
     public function isOpened() : bool
@@ -51,9 +57,9 @@ final class FileOutputStream implements WritableStream
         return $this->stream->notReady();
     }
 
-    public function write(string $output) : int
+    public function read(int $length = 4096) : string
     {
-        return $this->stream->write($output);
+        return $this->stream->read($length);
     }
 
     public function close() : void

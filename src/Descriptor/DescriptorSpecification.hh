@@ -9,9 +9,9 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process\descriptor;
+namespace HHPack\Process\Descriptor;
 
-use hhpack\process\stream\StreamType;
+use HHPack\Process\Stream\StreamType;
 
 interface DescriptorSpecification<T>
 {

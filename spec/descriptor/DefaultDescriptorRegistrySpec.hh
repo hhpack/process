@@ -1,11 +1,11 @@
 <?hh //partial
 
-namespace hhpack\process\spec;
+namespace HHPack\Process\Spec;
 
-use hhpack\process\stream\StreamType;
-use hhpack\process\descriptor\WriteDescriptor;
-use hhpack\process\descriptor\ReadDescriptor;
-use hhpack\process\descriptor\DefaultDescriptorRegistry;
+use HHPack\Process\Stream\StreamType;
+use HHPack\Process\Descriptor\WriteDescriptor;
+use HHPack\Process\Descriptor\ReadDescriptor;
+use HHPack\Process\Descriptor\DefaultDescriptorRegistry;
 
 describe(DefaultDescriptorRegistry::class, function () {
   describe('toArray()', function () {

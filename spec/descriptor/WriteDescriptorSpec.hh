@@ -1,9 +1,9 @@
 <?hh //partial
 
-namespace hhpack\process\spec;
+namespace HHPack\Process\Spec;
 
-use hhpack\process\stream\StreamType;
-use hhpack\process\descriptor\WriteDescriptor;
+use HHPack\Process\Stream\StreamType;
+use HHPack\Process\Descriptor\WriteDescriptor;
 use LogicException;
 
 describe(WriteDescriptor::class, function () {

@@ -1,13 +1,13 @@
 <?hh // partial
 
-namespace hhpack\process\example;
+namespace HHPack\Process\Example;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use hhpack\process;
-use hhpack\process\ProcessOptions;
-use hhpack\process\output\Stdout;
-use hhpack\process\output\Stderr;
+use HHPack\Process;
+use HHPack\Process\ProcessOptions;
+use HHPack\Process\Output\Stdout;
+use HHPack\Process\Output\Stderr;
 
 async function pipe_example() : Awaitable<void>
 {
@@ -15,10 +15,10 @@ async function pipe_example() : Awaitable<void>
     $options->stdout(new Stdout());
     $options->stderr(new Stderr());
 
-    $p = process\spawn('hh_client restart', [], $options);
+    $p = Process\spawn('hh_client restart', [], $options);
     await $p->wait();
 
-    $p = process\spawn('hh_client check --json', [], $options);
+    $p = Process\spawn('hh_client check --json', [], $options);
     await $p->wait();
 }
 

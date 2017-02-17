@@ -9,11 +9,11 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process\input;
+namespace HHPack\Process\Input;
 
-use hhpack\process\Writable;
-use hhpack\process\output\BufferedOutputStream;
-use hhpack\process\stream\StreamType;
+use HHPack\Process\Writable;
+use HHPack\Process\Output\BufferedOutputStream;
+use HHPack\Process\Stream\StreamType;
 
 final class ProcessReadStream implements ReadableStream<int>
 {

@@ -13,15 +13,15 @@ Start the process, it is an example to wait until the end.
 information of stdout and stderr are output to the buffer.
 
 ```hack
-use hhpack\process;
+use HHPack\Process;
 
 async function main() : Awaitable<void>
 {
-    $result = await process\exec('hh_client restart');
+    $result = await Process\exec('hh_client restart');
     $result->stdout()->display();
     $result->stderr()->display();
 
-    $result = await process\exec('hh_client check --json');
+    $result = await Process\exec('hh_client check --json');
     $result->display();
 }
 
@@ -34,11 +34,11 @@ Execution of the script
 If you want to run the script, you can run in **execFile** function.
 
 ```hack
-use hhpack\process;
+use HHPack\Process;
 
 async function main() : Awaitable<void>
 {
-    $result = await process\execFile('/path/to/example.hh', [ 'a', 'b' ]);
+    $result = await Process\execFile('/path/to/example.hh', [ 'a', 'b' ]);
     $result->stdout()->display();
     $result->stderr()->display();
 }
