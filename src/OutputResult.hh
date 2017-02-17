@@ -9,11 +9,11 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process;
+namespace HHPack\Process;
 
-use hhpack\process\Writable;
-use hhpack\process\output\NullOutputStream;
-use hhpack\process\output\OutputBufferedStream;
+use HHPack\Process\Writable;
+use HHPack\Process\Output\NullOutputStream;
+use HHPack\Process\Output\OutputBufferedStream;
 
 final class OutputResult implements Displayable
 {

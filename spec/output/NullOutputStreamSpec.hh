@@ -1,8 +1,8 @@
 <?hh //partial
 
-namespace hhpack\process\spec;
+namespace HHPack\Process\Spec;
 
-use hhpack\process\output\NullOutputStream;
+use HHPack\Process\Output\NullOutputStream;
 
 describe(NullOutputStream::class, function () {
   describe('write()', function () {

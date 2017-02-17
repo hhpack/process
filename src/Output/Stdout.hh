@@ -9,16 +9,16 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process\output;
+namespace HHPack\Process\Output;
 
-use hhpack\process\Writable;
+use HHPack\Process\Writable;
 
-final class Stderr implements WritableStream
+final class Stdout implements WritableStream
 {
 
     public function isOpened() : bool
     {
-        return is_resource(STDERR);
+        return is_resource(STDOUT);
     }
 
     public function isClosed() : bool
@@ -42,7 +42,7 @@ final class Stderr implements WritableStream
 
     public function write(string $output) : int
     {
-        fputs(STDERR, $output);
+        fputs(STDOUT, $output);
         return strlen($output);
     }
 

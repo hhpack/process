@@ -9,12 +9,12 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process;
+namespace HHPack\Process;
 
-use hhpack\process\Writable;
-use hhpack\process\input\ReadableStream;
-use hhpack\process\input\NullInputStream;
-use hhpack\process\output\BufferedOutputStream;
+use HHPack\Process\Writable;
+use HHPack\Process\Input\ReadableStream;
+use HHPack\Process\Input\NullInputStream;
+use HHPack\Process\Output\BufferedOutputStream;
 
 final class ProcessOptions implements Options
 {

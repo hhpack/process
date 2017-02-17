@@ -9,11 +9,10 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process\stream;
+namespace HHPack\Process\Descriptor;
 
-enum StreamType : int
+enum DescriptorType : int
 {
-    Stdin = 0;
-    Stdout = 1;
-    Stderr = 2;
+    Read = 0;
+    Write = 1;
 }

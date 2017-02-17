@@ -9,13 +9,13 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process\descriptor;
+namespace HHPack\Process\Descriptor;
 
-use hhpack\process\Writable;
-use hhpack\process\output\BufferedOutputStream;
-use hhpack\process\input\ReadableStream;
-use hhpack\process\input\ProcessReadStream;
-use hhpack\process\stream\StreamType;
+use HHPack\Process\Writable;
+use HHPack\Process\Output\BufferedOutputStream;
+use HHPack\Process\Input\ReadableStream;
+use HHPack\Process\Input\ProcessReadStream;
+use HHPack\Process\Stream\StreamType;
 use LogicException;
 
 final class ReadDescriptor implements DescriptorSpecification<ProcessReadStream>

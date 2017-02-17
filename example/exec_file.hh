@@ -1,12 +1,12 @@
 <?hh // partial
 
-namespace hhpack\process\example;
+namespace HHPack\Process\Example;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use hhpack\process;
-use hhpack\process\ExecOptions;
-use hhpack\process\input\FileInputStream;
+use HHPack\Process;
+use HHPack\Process\ExecOptions;
+use HHPack\Process\Input\FileInputStream;
 
 async function exec_file_example() : Awaitable<void>
 {

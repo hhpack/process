@@ -9,18 +9,18 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process\output;
+namespace HHPack\Process\Output;
 
-use hhpack\process\input\NullInputStream;
-use hhpack\process\input\StringInputStream;
-use hhpack\process\input\ReadableStream;
-use hhpack\process\output\BufferedOutputStream;
-use hhpack\process\stream\StreamType;
+use HHPack\Process\Input\NullInputStream;
+use HHPack\Process\Input\StringInputStream;
+use HHPack\Process\Input\ReadableStream;
+use HHPack\Process\Output\BufferedOutputStream;
+use HHPack\Process\Stream\StreamType;
 
 final class ProcessWriteStream implements WritableStream
 {
 
-    private ResourceOutputStream $stream; 
+    private ResourceOutputStream $stream;
     private string $bufferedInput = '';
 
     public function __construct(

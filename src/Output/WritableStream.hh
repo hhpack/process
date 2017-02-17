@@ -9,10 +9,10 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process\output;
+namespace HHPack\Process\Output;
 
-use hhpack\process\Stream;
-use hhpack\process\Writable;
+use HHPack\Process\Stream;
+use HHPack\Process\Writable;
 
 interface WritableStream extends Stream, Writable<int>
 {

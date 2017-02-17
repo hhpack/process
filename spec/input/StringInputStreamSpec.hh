@@ -1,9 +1,9 @@
 <?hh //partial
 
-namespace hhpack\process\spec;
+namespace HHPack\Process\Spec;
 
-use hhpack\process\input\StringInputStream;
-use hhpack\process\output\BufferedOutputStream;
+use HHPack\Process\Input\StringInputStream;
+use HHPack\Process\Output\BufferedOutputStream;
 
 describe(StringInputStream::class, function () {
   describe('read()', function () {

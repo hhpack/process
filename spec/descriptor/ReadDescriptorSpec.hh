@@ -1,9 +1,9 @@
 <?hh //partial
 
-namespace hhpack\process\spec;
+namespace HHPack\Process\Spec;
 
-use hhpack\process\stream\StreamType;
-use hhpack\process\descriptor\ReadDescriptor;
+use HHPack\Process\Stream\StreamType;
+use HHPack\Process\Descriptor\ReadDescriptor;
 use LogicException;
 
 describe(ReadDescriptor::class, function () {

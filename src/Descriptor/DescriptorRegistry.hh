@@ -9,14 +9,14 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process\descriptor;
+namespace HHPack\Process\Descriptor;
 
-use hhpack\process\stream\StreamType;
-use hhpack\process\stream\StreamManager;
-use hhpack\process\stream\StreamRegistry;
-use hhpack\process\DescriptorSpecification;
-use hhpack\process\input\InputPipeStream;
-use hhpack\process\output\OutputPipeStream;
+use HHPack\Process\Stream\StreamType;
+use HHPack\Process\Stream\StreamManager;
+use HHPack\Process\Stream\StreamRegistry;
+use HHPack\Process\DescriptorSpecification;
+use HHPack\Process\Input\InputPipeStream;
+use HHPack\Process\Output\OutputPipeStream;
 
 interface DescriptorRegistry
 {

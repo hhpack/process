@@ -9,9 +9,9 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process;
+namespace HHPack\Process;
 
-use hhpack\process\stream\StreamManager;
+use HHPack\Process\Stream\StreamManager;
 use RuntimeException;
 
 final class ChildProcess

@@ -9,11 +9,11 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process\input;
+namespace HHPack\Process\Stream;
 
-use hhpack\process\Stream;
-use hhpack\process\Readable;
-
-interface ReadableStream<T> extends Stream, Readable
+enum StreamType : int
 {
+    Stdin = 0;
+    Stdout = 1;
+    Stderr = 2;
 }

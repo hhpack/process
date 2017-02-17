@@ -1,14 +1,14 @@
 <?hh // partial
 
-namespace hhpack\process\example;
+namespace HHPack\Process\Example;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use hhpack\process;
-use hhpack\process\ProcessOptions;
-use hhpack\process\input\StringInputStream;
-use hhpack\process\output\Stdout;
-use hhpack\process\output\Stderr;
+use HHPack\Process;
+use HHPack\Process\ProcessOptions;
+use HHPack\Process\Input\StringInputStream;
+use HHPack\Process\Output\Stdout;
+use HHPack\Process\Output\Stderr;
 
 async function fork_example() : Awaitable<void>
 {

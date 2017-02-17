@@ -9,14 +9,17 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process\output;
+namespace HHPack\Process\Input;
 
-use hhpack\process\Writable;
-
-final class NullOutputStream implements WritableStream
+final class NullInputStream implements ReadableStream<int>
 {
 
     private bool $opened = true;
+
+    public function eof() : bool
+    {
+        return true;
+    }
 
     public function isOpened() : bool
     {
@@ -38,14 +41,14 @@ final class NullOutputStream implements WritableStream
         return $this->ready() === false;
     }
 
+    public function read(int $length = 4096) : string
+    {
+        return '';
+    }
+
     public function close() : void
     {
         $this->opened = false;
-    }
-
-    public function write(string $output) : int
-    {
-        return strlen($output);
     }
 
 }

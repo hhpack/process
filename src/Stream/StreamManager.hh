@@ -9,9 +9,9 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process\stream;
+namespace HHPack\Process\Stream;
 
-use hhpack\process\OutputResult;
+use HHPack\Process\OutputResult;
 
 interface StreamManager
 {

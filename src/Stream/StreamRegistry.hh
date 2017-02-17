@@ -9,12 +9,12 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process\stream;
+namespace HHPack\Process\Stream;
 
-use hhpack\process\Stream;
-use hhpack\process\OutputResult;
-use hhpack\process\input\ProcessReadStream;
-use hhpack\process\output\ProcessWriteStream;
+use HHPack\Process\Stream;
+use HHPack\Process\OutputResult;
+use HHPack\Process\Input\ProcessReadStream;
+use HHPack\Process\Output\ProcessWriteStream;
 
 final class StreamRegistry implements StreamManager
 {
@@ -28,7 +28,7 @@ final class StreamRegistry implements StreamManager
 
     public function readableStreams() : Iterable<ProcessReadStream>
     {
-        return $this->readableStreams->items(); 
+        return $this->readableStreams->items();
     }
 
     public function writableStreams() : Iterable<ProcessWriteStream>

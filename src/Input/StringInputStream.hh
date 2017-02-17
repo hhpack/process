@@ -9,9 +9,9 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process\input;
+namespace HHPack\Process\Input;
 
-use hhpack\process\Writable;
+use HHPack\Process\Writable;
 
 final class StringInputStream implements ReadableStream<int>
 {

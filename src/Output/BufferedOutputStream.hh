@@ -9,16 +9,24 @@
  * with this source code in the file LICENSE.
  */
 
-namespace hhpack\process\output;
+namespace HHPack\Process\Output;
 
-use hhpack\process\Writable;
+use HHPack\Process\Displayable;
 
-final class Stdout implements WritableStream
+final class BufferedOutputStream implements WritableStream, Displayable
 {
+
+    private bool $opened = true;
+
+    public function __construct(
+        private string $output = ''
+    )
+    {
+    }
 
     public function isOpened() : bool
     {
-        return is_resource(STDOUT);
+        return $this->opened;
     }
 
     public function isClosed() : bool
@@ -38,12 +46,28 @@ final class Stdout implements WritableStream
 
     public function close() : void
     {
+        $this->opened = false;
     }
 
     public function write(string $output) : int
     {
-        fputs(STDOUT, $output);
+        $this->output .= $output;
         return strlen($output);
+    }
+
+    public function clear() : void
+    {
+        $this->output = '';
+    }
+
+    public function display() : void
+    {
+        fwrite(STDOUT, (string) $this . PHP_EOL);
+    }
+
+    public function __toString() : string
+    {
+        return $this->output;
     }
 
 }
