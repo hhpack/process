@@ -7,9 +7,9 @@ before_install:
   - sudo add-apt-repository "deb http://dl.hhvm.com/ubuntu $(lsb_release -sc) main"
   - sudo apt-get update
 install:
+  - sudo apt-get install hhvm
   - curl -sS https://getcomposer.org/installer | php
   - sudo mv composer.phar /usr/local/bin/composer
-  - sudo apt-get install hhvm
 before_script:
   - travis_retry composer install --no-interaction
   - touch .hhconfig
