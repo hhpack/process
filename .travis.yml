@@ -1,22 +1,18 @@
 language: generic
 sudo: required
 dist: trusty
-before_install:
-  - sudo apt-get install software-properties-common
-  - sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e7281be7a449
-  - sudo add-apt-repository "deb http://dl.hhvm.com/ubuntu $(lsb_release -sc) main"
-  - sudo apt-get update
-install:
-  - sudo apt-get install hhvm
-  - curl -sS https://getcomposer.org/installer | php
-  - sudo mv composer.phar /usr/local/bin/composer
+env:
+  global:
+  - secure: npR041mU55rg7tIKJPw3d0EZXpAW/No/YtSpqTrK+AAHrxzJPRutBQz4baElmNIToklHeczDBPhZXiXB8VEPQtm398FkFqR42bWdkDRiuKNTfPgElmDV9UMQwGGqMvkiQJo4UUClDiA1ufTtbSBiNes/kwu5xJ5Flp6bpqUPINltmrfoog7Xs1+jnP7z2ojTWQWu75JkOU5ZeJjyD2AZ4Xo43VIbKXNXx2xPuM7X39ERGQstYCDOhfyMU7HiPWLd27pPiv935ShT0QrslX4SiCusExhsp8OaT+yj+kRygXbRRHlPvFvYolA4QtGAUBfETIix39Csy2vGi582R0F1EXsQ6S12U8QYQBWEEIjf7OmogNl4V00gxtE6CqoVwyPk6zp42oxaqMYZYFqWlrVakINeH9Zun0IV5Em9vYaZHa+KoG3fHRrJNWdIUuqDICFoCIEPpLqLhvkttkIbsXCWJFOhGruHi4Yab3pIkKYPZsKmTBEmhm78KQX1909HPTzsvFomLUw5VOQNPdhjmnPUpwF8XACmZ/z+31lcGvOZD0vrQDMg4kSSE4yvGeOxJAisne91ufYNsyIbpTuijpMXyLBdw8ogtY9sj5DLk7mF92oUTP//Wth33Vnl7Pp2Rm1gd8uFXp6eGVHJbnDtU81dqmLlgcR7Vck0QGCaTCMnYm0=
+  - secure: Gq8VQF+B5DhodIa0zul53bUsGi3NAcLd0U6U3su5G0CYQp6ggNmBoo+OX7YrigVc4cKiSI/DsgktWXatrcFskFA/BsbVMMuF3UyS40ZgUL9lKHLNXcVDF5w8RtzQcQ+7FJk1rnoxNYQAn2y8+V+YqOaj9UOGLTo3KPZymSvdViVqIn0c97ExsZrAAn4UjZ0NZvTBzPshGjZWnf3uww5v8oy2i5b+RMlMksjbSZl9PIiIJGTG4YKuWH8RatXugniHWD3nD+/E1nUjnJ98l8L9O7sWys7xzN11vbe/HVwzLT/ihd4hcDeF+SJZotZ9hxKfYGypmZy/1sKemkPVYuxQWZKy79zo1CaudFNjn7uHik7uTL3Myhama3tutrk6Fo4M/RTKTKmIGuWoNvWqQOIgAZ7uW5/bsxZtx2k7v22R68YLjdmmH1trpK2rDRAbymDNuXas4X1P97igcFWoNK4BIBV3oHojHxXAfLMW5PpykyaDLdBvjG9gq96ZqacKDkOLMNh4rDEcGilSNJz+TGaRJEKx/I5IUXQhlXLlmuLwhWmHoEa0yMpZ1It6/ma67iF07dMZ58TGiquj8ay9BmzA9SCc+wr8clAwnZyKbRYIcnnL/3XZZU4vyFVHcOPRfo7f/6Hw0r9RZiJFmdLkrbj8mvwIGlTmVoaAScc6BEr2Apw=
+services:
+- docker
 before_script:
-  - travis_retry composer install --no-interaction
-  - touch .hhconfig
+- printenv | awk -F= '{if ($1 ~ /^(TRAVIS|GITHUB)/) print $1"="$2}' > .env
+- docker-compose build
 script:
-  - composer check
-  - killall hh_server
-  - composer test
+- docker-compose run web typesafety --review
+- docker-compose run web composer test
 matrix:
   fast_finish: true
 notifications:

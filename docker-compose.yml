@@ -1,0 +1,17 @@
+version: '2.1'
+services:
+  web:
+    image: typesafety/hackunit:latest
+    build:
+      context: .
+      args:
+        hack_user: develop
+        hack_group: develop
+    env_file: .env
+    user: develop
+    tty: true
+    cap_add:
+      - ALL
+    cap_drop:
+      - NET_ADMIN
+      - SYS_ADMIN
