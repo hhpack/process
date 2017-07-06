@@ -51,10 +51,9 @@ final class StringInputStream implements ReadableStream<int>
 
     public function read(int $length = 4096) : string
     {
-        $input = $this->input;
-        $this->input = '';
-
-        return $input;
+        $content = substr($this->input, 0, $length);
+        $this->input = substr($this->input, $length);
+        return $content;
     }
 
     public function close() : void

@@ -12,12 +12,10 @@
   ],
   "license": "MIT",
   "require": {
-    "hhvm": ">=3.11.0"
+    "hhvm": ">=3.18.0"
   },
   "require-dev": {
-    "peridot-php/peridot": "~1.16",
-    "peridot-php/peridot-dot-reporter": "~1.0",
-    "expect/peridot-expect-plugin": "~3.0"
+    "hackpack/hackunit": "^1.1"
   },
   "autoload": {
     "psr-4": {
@@ -34,7 +32,7 @@
     }
   },
   "scripts": {
-    "test": "vendor/bin/peridot -c peridot.hh --grep *Spec.hh spec -r dot",
+    "test": "vendor/bin/hackunit test",
     "check": "./typecheck"
   },
   "minimum-stability": "stable"
