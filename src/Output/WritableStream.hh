@@ -11,8 +11,7 @@
 
 namespace HHPack\Process\Output;
 
-use HHPack\Process\Stream;
-use HHPack\Process\Writable;
+use HHPack\Process\{ Stream, Writable };
 
 interface WritableStream extends Stream, Writable<int>
 {

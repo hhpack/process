@@ -12,8 +12,7 @@
 namespace HHPack\Process;
 
 use HHPack\Process\Writable;
-use HHPack\Process\Input\ReadableStream;
-use HHPack\Process\Input\NullInputStream;
+use HHPack\Process\Input\{ ReadableStream, NullInputStream };
 use HHPack\Process\Output\BufferedOutputStream;
 
 final class ProcessOptions implements Options

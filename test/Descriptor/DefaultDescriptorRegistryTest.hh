@@ -3,9 +3,7 @@
 namespace HHPack\Process\Test;
 
 use HHPack\Process\Stream\StreamType;
-use HHPack\Process\Descriptor\WriteDescriptor;
-use HHPack\Process\Descriptor\ReadDescriptor;
-use HHPack\Process\Descriptor\DefaultDescriptorRegistry;
+use HHPack\Process\Descriptor\{ WriteDescriptor, ReadDescriptor, DefaultDescriptorRegistry };
 use HackPack\HackUnit\Contract\Assert;
 
 final class DefaultDescriptorRegistryTest

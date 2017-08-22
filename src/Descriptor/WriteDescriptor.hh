@@ -11,10 +11,8 @@
 
 namespace HHPack\Process\Descriptor;
 
-use HHPack\Process\Input\NullInputStream;
-use HHPack\Process\Input\ReadableStream;
-use HHPack\Process\Output\WritableStream;
-use HHPack\Process\Output\ProcessWriteStream;
+use HHPack\Process\Input\{ NullInputStream, ReadableStream };
+use HHPack\Process\Output\{ WritableStream, ProcessWriteStream };
 use HHPack\Process\Stream\StreamType;
 use LogicException;
 

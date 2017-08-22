@@ -11,8 +11,7 @@
 
 namespace HHPack\Process\Stream;
 
-use HHPack\Process\Stream;
-use HHPack\Process\OutputResult;
+use HHPack\Process\{ Stream, OutputResult };
 use HHPack\Process\Input\ProcessReadStream;
 use HHPack\Process\Output\ProcessWriteStream;
 

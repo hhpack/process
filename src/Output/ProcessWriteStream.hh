@@ -11,9 +11,7 @@
 
 namespace HHPack\Process\Output;
 
-use HHPack\Process\Input\NullInputStream;
-use HHPack\Process\Input\StringInputStream;
-use HHPack\Process\Input\ReadableStream;
+use HHPack\Process\Input\{ NullInputStream, StringInputStream, ReadableStream };
 use HHPack\Process\Output\BufferedOutputStream;
 use HHPack\Process\Stream\StreamType;
 

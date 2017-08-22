@@ -11,10 +11,8 @@
 
 namespace HHPack\Process\Descriptor;
 
-use HHPack\Process\Stream\StreamType;
-use HHPack\Process\Stream\StreamManager;
-use HHPack\Process\Stream\StreamRegistry;
 use HHPack\Process\DescriptorSpecification;
+use HHPack\Process\Stream\{ StreamType, StreamManager, StreamRegistry };
 use HHPack\Process\Input\InputPipeStream;
 use HHPack\Process\Output\OutputPipeStream;
 
