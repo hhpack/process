@@ -12,10 +12,9 @@
 namespace HHPack\Process\Descriptor;
 
 use HHPack\Process\Writable;
-use HHPack\Process\Output\BufferedOutputStream;
-use HHPack\Process\Input\ReadableStream;
-use HHPack\Process\Input\ProcessReadStream;
 use HHPack\Process\Stream\StreamType;
+use HHPack\Process\Input\{ ReadableStream, ProcessReadStream };
+use HHPack\Process\Output\BufferedOutputStream;
 use LogicException;
 
 final class ReadDescriptor implements DescriptorSpecification<ProcessReadStream>

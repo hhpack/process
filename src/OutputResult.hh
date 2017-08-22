@@ -12,8 +12,7 @@
 namespace HHPack\Process;
 
 use HHPack\Process\Writable;
-use HHPack\Process\Output\NullOutputStream;
-use HHPack\Process\Output\OutputBufferedStream;
+use HHPack\Process\Output\{ NullOutputStream, OutputBufferedStream };
 
 final class OutputResult implements Displayable
 {

@@ -7,8 +7,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use HHPack\Process;
 use HHPack\Process\ProcessOptions;
 use HHPack\Process\Input\StringInputStream;
-use HHPack\Process\Output\Stdout;
-use HHPack\Process\Output\Stderr;
+use HHPack\Process\Output\{ Stdout, Stderr };
 
 async function fork_example() : Awaitable<void>
 {

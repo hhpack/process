@@ -13,13 +13,9 @@ namespace HHPack\Process;
 
 use HHPack\Process\Writable;
 use HHPack\Process\Stream\StreamType;
-use HHPack\Process\Descriptor\ReadDescriptor;
-use HHPack\Process\Descriptor\WriteDescriptor;
-use HHPack\Process\Descriptor\DescriptorRegistry;
-use HHPack\Process\Descriptor\DefaultDescriptorRegistry;
-use HHPack\Process\Descriptor\DescriptorSpecification;
-use HHPack\Process\Input\ReadableStream;
-use HHPack\Process\Input\NullInputStream;
+use HHPack\Process\Descriptor\{ ReadDescriptor, WriteDescriptor,
+    DescriptorRegistry, DefaultDescriptorRegistry, DescriptorSpecification };
+use HHPack\Process\Input\{ ReadableStream, NullInputStream };
 use HHPack\Process\Output\BufferedOutputStream;
 use RuntimeException;
 
