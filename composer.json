@@ -32,6 +32,12 @@
       "HHPack\\File\\Example\\": "example/custom/src"
     }
   },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/holyshared/HackUnit"
+    }
+  ],
   "scripts": {
     "test": "vendor/bin/hackunit test",
     "check": "./typecheck"
