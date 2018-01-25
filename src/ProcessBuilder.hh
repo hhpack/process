@@ -93,7 +93,7 @@ final class ProcessBuilder
         $process = proc_open(
             $this->command,
             $descriptors->toArray(),
-            $streamHandles,
+            &$streamHandles,
             $this->cwd,
             $this->env
         );

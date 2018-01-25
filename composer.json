@@ -13,7 +13,7 @@
   "license": "MIT",
   "require": {
     "hhvm": ">=3.21.0",
-    "facebook/hhvm-autoload": "^1.4"
+    "hhvm/hhvm-autoload": "^1.5"
   },
   "require-dev": {
     "hackpack/hackunit": "^1.1"
@@ -32,6 +32,12 @@
       "HHPack\\File\\Example\\": "example/custom/src"
     }
   },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/holyshared/HackUnit"
+    }
+  ],
   "scripts": {
     "test": "vendor/bin/hackunit test",
     "check": "./typecheck"
