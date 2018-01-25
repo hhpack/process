@@ -41,7 +41,7 @@ final class ResourceOutputStream implements WritableStream
             return false;
         }
 
-        $ng = ($num = stream_select($read, $write, $expect, 0, 200000)) === false;
+        $ng = ($num = stream_select(&$read, &$write, &$expect, 0, 200000)) === false;
 
         if ($ng || $num <= 0) {
             return false;
