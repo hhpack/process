@@ -13,52 +13,40 @@ namespace HHPack\Process\Input;
 
 use HHPack\Process\Writable;
 
-final class StringInputStream implements ReadableStream<int>
-{
+final class StringInputStream implements ReadableStream<int> {
 
-    private bool $opened = true;
+  private bool $opened = true;
 
-    public function __construct(
-        private string $input
-    )
-    {
-    }
+  public function __construct(private string $input) {}
 
-    public function eof() : bool
-    {
-        return strlen($this->input) <= 0;
-    }
+  public function eof(): bool {
+    return strlen($this->input) <= 0;
+  }
 
-    public function isOpened() : bool
-    {
-        return $this->opened;
-    }
+  public function isOpened(): bool {
+    return $this->opened;
+  }
 
-    public function isClosed() : bool
-    {
-        return $this->isOpened() === false;
-    }
+  public function isClosed(): bool {
+    return $this->isOpened() === false;
+  }
 
-    public function ready() : bool
-    {
-        return $this->eof() === false;
-    }
+  public function ready(): bool {
+    return $this->eof() === false;
+  }
 
-    public function notReady() : bool
-    {
-        return $this->ready() === false;
-    }
+  public function notReady(): bool {
+    return $this->ready() === false;
+  }
 
-    public function read(int $length = 4096) : string
-    {
-        $content = substr($this->input, 0, $length);
-        $this->input = substr($this->input, $length);
-        return $content;
-    }
+  public function read(int $length = 4096): string {
+    $content = substr($this->input, 0, $length);
+    $this->input = substr($this->input, $length);
+    return $content;
+  }
 
-    public function close() : void
-    {
-        $this->opened = false;
-    }
+  public function close(): void {
+    $this->opened = false;
+  }
 
 }

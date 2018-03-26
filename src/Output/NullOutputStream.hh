@@ -13,39 +13,32 @@ namespace HHPack\Process\Output;
 
 use HHPack\Process\Writable;
 
-final class NullOutputStream implements WritableStream
-{
+final class NullOutputStream implements WritableStream {
 
-    private bool $opened = true;
+  private bool $opened = true;
 
-    public function isOpened() : bool
-    {
-        return $this->opened;
-    }
+  public function isOpened(): bool {
+    return $this->opened;
+  }
 
-    public function isClosed() : bool
-    {
-        return $this->isOpened() === false;
-    }
+  public function isClosed(): bool {
+    return $this->isOpened() === false;
+  }
 
-    public function ready() : bool
-    {
-        return $this->isOpened();
-    }
+  public function ready(): bool {
+    return $this->isOpened();
+  }
 
-    public function notReady() : bool
-    {
-        return $this->ready() === false;
-    }
+  public function notReady(): bool {
+    return $this->ready() === false;
+  }
 
-    public function close() : void
-    {
-        $this->opened = false;
-    }
+  public function close(): void {
+    $this->opened = false;
+  }
 
-    public function write(string $output) : int
-    {
-        return strlen($output);
-    }
+  public function write(string $output): int {
+    return strlen($output);
+  }
 
 }

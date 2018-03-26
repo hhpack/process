@@ -13,25 +13,24 @@ namespace HHPack\Process\Stream;
 
 use HHPack\Process\OutputResult;
 
-interface StreamManager
-{
-    /**
-     * Reads the data from the STDOUT/STDERR
-     */
-    public function read() : Awaitable<void>;
+interface StreamManager {
+  /**
+   * Reads the data from the STDOUT/STDERR
+   */
+  public function read(): Awaitable<void>;
 
-    /**
-     * Write the data into STDIN
-     */
-    public function write() : Awaitable<void>;
+  /**
+   * Write the data into STDIN
+   */
+  public function write(): Awaitable<void>;
 
-    /**
-     * Close all the stream
-     */
-    public function close() : void;
+  /**
+   * Close all the stream
+   */
+  public function close(): void;
 
-    /**
-     * Return the result of stream
-     */
-    public function getOutputResult() : OutputResult;
+  /**
+   * Return the result of stream
+   */
+  public function getOutputResult(): OutputResult;
 }

@@ -12,12 +12,13 @@
 namespace HHPack\Process\Descriptor;
 
 use HHPack\Process\DescriptorSpecification;
-use HHPack\Process\Stream\{ StreamType, StreamManager, StreamRegistry };
+use HHPack\Process\Stream\{StreamType, StreamManager, StreamRegistry};
 use HHPack\Process\Input\InputPipeStream;
 use HHPack\Process\Output\OutputPipeStream;
 
-interface DescriptorRegistry
-{
-    public function createStreamManager(array<int, resource> $streamHandles) : StreamManager;
-    public function toArray() : array<int, array<string>>;
+interface DescriptorRegistry {
+  public function createStreamManager(
+    array<int, resource> $streamHandles,
+  ): StreamManager;
+  public function toArray(): array<int, array<string>>;
 }

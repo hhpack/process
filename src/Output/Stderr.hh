@@ -13,37 +13,29 @@ namespace HHPack\Process\Output;
 
 use HHPack\Process\Writable;
 
-final class Stderr implements WritableStream
-{
+final class Stderr implements WritableStream {
 
-    public function isOpened() : bool
-    {
-        return is_resource(STDERR);
-    }
+  public function isOpened(): bool {
+    return is_resource(STDERR);
+  }
 
-    public function isClosed() : bool
-    {
-        return $this->isOpened() === false;
-    }
+  public function isClosed(): bool {
+    return $this->isOpened() === false;
+  }
 
-    public function ready() : bool
-    {
-        return $this->isOpened();
-    }
+  public function ready(): bool {
+    return $this->isOpened();
+  }
 
-    public function notReady() : bool
-    {
-        return $this->ready() === false;
-    }
+  public function notReady(): bool {
+    return $this->ready() === false;
+  }
 
-    public function close() : void
-    {
-    }
+  public function close(): void {}
 
-    public function write(string $output) : int
-    {
-        fputs(STDERR, $output);
-        return strlen($output);
-    }
+  public function write(string $output): int {
+    fputs(STDERR, $output);
+    return strlen($output);
+  }
 
 }

@@ -14,84 +14,75 @@ namespace HHPack\Process;
 use HHPack\Process\Stream\StreamManager;
 use RuntimeException;
 
-final class ChildProcess implements \IDisposable
-{
+final class ChildProcess implements \IDisposable {
 
-    private ProcessStatus $status;
+  private ProcessStatus $status;
 
-    public function __construct(
-        private resource $process,
-        private StreamManager $streamManager
-    )
-    {
-        $this->status = ProcessStatus::initial();
-        $this->captureStatus();
+  public function __construct(
+    private resource $process,
+    private StreamManager $streamManager,
+  ) {
+    $this->status = ProcessStatus::initial();
+    $this->captureStatus();
+  }
+
+  public function pid(): ?int {
+    return $this->status->pid();
+  }
+
+  public async function stop(): Awaitable<ProcessResult> {
+    $this->captureStatus();
+
+    if ($this->isAlive() === false) {
+      return $this->close();
     }
 
-    public function pid() : ?int
-    {
-        return $this->status->pid();
+    proc_terminate($this->process);
+
+    while ($this->isAlive()) {
+      await \HH\Asio\usleep(1000);
+      $this->captureStatus();
     }
 
-    public async function stop() : Awaitable<ProcessResult>
-    {
-        $this->captureStatus();
+    return $this->close();
+  }
 
-        if ($this->isAlive() === false) {
-            return $this->close();
-        }
+  public async function wait(): Awaitable<ProcessResult> {
+    do {
+      $this->captureStatus();
+      await \HH\Asio\v(
+        [$this->streamManager->read(), $this->streamManager->write()],
+      );
+      $this->captureStatus();
+    } while ($this->isAlive());
 
-        proc_terminate($this->process);
+    await $this->streamManager->read();
 
-        while($this->isAlive()) {
-            await \HH\Asio\usleep(1000);
-            $this->captureStatus();
-        }
+    return $this->close();
+  }
 
-        return $this->close();
+  public function isAlive(): bool {
+    return $this->status->isAlive();
+  }
+
+  protected function close(): ProcessResult {
+    $this->streamManager->close();
+    proc_close($this->process);
+
+    return new ProcessResult(
+      $this->status,
+      $this->streamManager->getOutputResult(),
+    );
+  }
+
+  private function captureStatus(): void {
+    if ($this->status->isAlive() === false) {
+      return;
     }
+    $this->status = ProcessStatus::fromResource($this->process);
+  }
 
-    public async function wait() : Awaitable<ProcessResult>
-    {
-        do {
-            $this->captureStatus();
-            await \HH\Asio\v([
-                $this->streamManager->read(),
-                $this->streamManager->write()
-            ]);
-            $this->captureStatus();
-        } while($this->isAlive());
-
-        await $this->streamManager->read();
-
-        return $this->close();
-    }
-
-    public function isAlive() : bool
-    {
-        return $this->status->isAlive();
-    }
-
-    protected function close() : ProcessResult
-    {
-        $this->streamManager->close();
-        proc_close($this->process);
-
-        return new ProcessResult(
-            $this->status,
-            $this->streamManager->getOutputResult()
-        );
-    }
-
-    private function captureStatus() : void
-    {
-        if ($this->status->isAlive() === false) {
-            return;
-        }
-        $this->status = ProcessStatus::fromResource($this->process);
-    }
-
-    public function __dispose() : void {
-        $this->close();
-    }
+  public function __dispose(): void {
+    $this->close();
+  }
 }

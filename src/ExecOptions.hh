@@ -11,44 +11,38 @@
 
 namespace HHPack\Process;
 
-use HHPack\Process\Input\{ ReadableStream, NullInputStream };
+use HHPack\Process\Input\{ReadableStream, NullInputStream};
 
-final class ExecOptions implements Options
-{
+final class ExecOptions implements Options {
 
-    private ReadableStream<int> $input;
+  private ReadableStream<int> $input;
 
-    public function __construct(
-        private string $cwd = (string) getcwd(),
-        private ?environment $env = null
-    )
-    {
-        $this->input = new NullInputStream();
-    }
+  public function __construct(
+    private string $cwd = (string) getcwd(),
+    private ?environment $env = null,
+  ) {
+    $this->input = new NullInputStream();
+  }
 
-    public function workingDirectory(string $cwd) : this
-    {
-        $this->cwd = $cwd;
-        return $this;
-    }
+  public function workingDirectory(string $cwd): this {
+    $this->cwd = $cwd;
+    return $this;
+  }
 
-    public function environment(?environment $environment = null) : this
-    {
-        $this->env = $environment;
-        return $this;
-    }
+  public function environment(?environment $environment = null): this {
+    $this->env = $environment;
+    return $this;
+  }
 
-    public function stdin(ReadableStream<int> $input) : this
-    {
-        $this->input = $input;
-        return $this;
-    }
+  public function stdin(ReadableStream<int> $input): this {
+    $this->input = $input;
+    return $this;
+  }
 
-    public function applyTo(ProcessBuilder $bulider) : void
-    {
-        $bulider->environment($this->env);
-        $bulider->workingDirectory($this->cwd);
-        $bulider->stdin($this->input);
-    }
+  public function applyTo(ProcessBuilder $bulider): void {
+    $bulider->environment($this->env);
+    $bulider->workingDirectory($this->cwd);
+    $bulider->stdin($this->input);
+  }
 
 }

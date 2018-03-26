@@ -11,44 +11,36 @@
 
 namespace HHPack\Process\Input;
 
-final class NullInputStream implements ReadableStream<int>
-{
+final class NullInputStream implements ReadableStream<int> {
 
-    private bool $opened = true;
+  private bool $opened = true;
 
-    public function eof() : bool
-    {
-        return true;
-    }
+  public function eof(): bool {
+    return true;
+  }
 
-    public function isOpened() : bool
-    {
-        return $this->opened;
-    }
+  public function isOpened(): bool {
+    return $this->opened;
+  }
 
-    public function isClosed() : bool
-    {
-        return $this->isOpened() === false;
-    }
+  public function isClosed(): bool {
+    return $this->isOpened() === false;
+  }
 
-    public function ready() : bool
-    {
-        return $this->isOpened();
-    }
+  public function ready(): bool {
+    return $this->isOpened();
+  }
 
-    public function notReady() : bool
-    {
-        return $this->ready() === false;
-    }
+  public function notReady(): bool {
+    return $this->ready() === false;
+  }
 
-    public function read(int $length = 4096) : string
-    {
-        return '';
-    }
+  public function read(int $length = 4096): string {
+    return '';
+  }
 
-    public function close() : void
-    {
-        $this->opened = false;
-    }
+  public function close(): void {
+    $this->opened = false;
+  }
 
 }

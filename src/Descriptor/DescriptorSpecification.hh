@@ -13,9 +13,8 @@ namespace HHPack\Process\Descriptor;
 
 use HHPack\Process\Stream\StreamType;
 
-interface DescriptorSpecification<T>
-{
-    public function type() : StreamType;
-    public function values() : array<string>;
-    public function createStreamFromHandle(resource $handle) : T;
+interface DescriptorSpecification<T> {
+  public function type(): StreamType;
+  public function values(): array<string>;
+  public function createStreamFromHandle(resource $handle): T;
 }

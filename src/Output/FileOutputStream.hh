@@ -13,52 +13,44 @@ namespace HHPack\Process\Output;
 
 use RuntimeException;
 
-final class FileOutputStream implements WritableStream
-{
+final class FileOutputStream implements WritableStream {
 
-    private ResourceOutputStream $stream;
+  private ResourceOutputStream $stream;
 
-    public function __construct(
-        string $path
-    )
-    {
-        $handle = fopen($path, 'w');
+  public function __construct(string $path) {
+    $handle = fopen($path, 'w');
 
-        if (!is_resource($handle)) {
-            throw new RuntimeException(sprintf('Failed to open the file %s', $path));
-        }
-
-        $this->stream = new ResourceOutputStream($handle);
+    if (!is_resource($handle)) {
+      throw new RuntimeException(
+        sprintf('Failed to open the file %s', $path),
+      );
     }
 
-    public function isOpened() : bool
-    {
-        return $this->stream->isOpened();
-    }
+    $this->stream = new ResourceOutputStream($handle);
+  }
 
-    public function isClosed() : bool
-    {
-        return $this->stream->isClosed();
-    }
+  public function isOpened(): bool {
+    return $this->stream->isOpened();
+  }
 
-    public function ready() : bool
-    {
-        return $this->stream->ready();
-    }
+  public function isClosed(): bool {
+    return $this->stream->isClosed();
+  }
 
-    public function notReady() : bool
-    {
-        return $this->stream->notReady();
-    }
+  public function ready(): bool {
+    return $this->stream->ready();
+  }
 
-    public function write(string $output) : int
-    {
-        return $this->stream->write($output);
-    }
+  public function notReady(): bool {
+    return $this->stream->notReady();
+  }
 
-    public function close() : void
-    {
-        $this->stream->close();
-    }
+  public function write(string $output): int {
+    return $this->stream->write($output);
+  }
+
+  public function close(): void {
+    $this->stream->close();
+  }
 
 }

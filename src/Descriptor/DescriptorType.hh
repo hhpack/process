@@ -11,8 +11,7 @@
 
 namespace HHPack\Process\Descriptor;
 
-enum DescriptorType : int
-{
-    Read = 0;
-    Write = 1;
+enum DescriptorType : int {
+  Read = 0;
+  Write = 1;
 }
