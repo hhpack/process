@@ -14,7 +14,7 @@ namespace HHPack\Process;
 use HHPack\Process\Stream\StreamManager;
 use RuntimeException;
 
-final class ChildProcess
+final class ChildProcess implements \IDisposable
 {
 
     private ProcessStatus $status;
@@ -91,9 +91,7 @@ final class ChildProcess
         $this->status = ProcessStatus::fromResource($this->process);
     }
 
-    protected function __destruct()
-    {
+    public function __dispose() : void {
         $this->close();
     }
-
 }

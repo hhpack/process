@@ -85,6 +85,7 @@ final class ProcessBuilder
         return $this;
     }
 
+    <<__ReturnDisposable>>
     public function start() : ChildProcess
     {
         $streamHandles = [];

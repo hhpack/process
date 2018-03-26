@@ -84,15 +84,9 @@ final class ResourceInputStream implements ReadableStream<int>
 
     public function close() : void
     {
-        fclose($this->handle);
+      if ($this->isClosed()) {
+          return;
+      }
+      fclose($this->handle);
     }
-
-    public function __destruct()
-    {
-        if ($this->isClosed()) {
-            return;
-        }
-        $this->close();
-    }
-
 }

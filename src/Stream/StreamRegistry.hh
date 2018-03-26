@@ -91,10 +91,4 @@ final class StreamRegistry implements StreamManager
 
         return $streams->toImmVector();
     }
-
-    public function __destruct()
-    {
-        $this->close();
-    }
-
 }

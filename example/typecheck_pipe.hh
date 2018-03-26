@@ -14,11 +14,13 @@ async function pipe_example() : Awaitable<void>
     $options->stdout(new Stdout());
     $options->stderr(new Stderr());
 
-    $p = Process\spawn('hh_client restart', [], $options);
-    await $p->wait();
+    using ($p = Process\spawn('hh_client restart', [], $options)) {
+        await $p->wait();
+    }
 
-    $p = Process\spawn('hh_client check --json', [], $options);
-    await $p->wait();
+    using ($p = Process\spawn('hh_client check --json', [], $options)) {
+        await $p->wait();
+    }
 }
 
 pipe_example();

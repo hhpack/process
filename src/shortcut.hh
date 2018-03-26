@@ -19,7 +19,10 @@ async function exec(
 ) : Awaitable<ProcessResult>
 {
     $builder = new ProcessBuilder($command, $options);
-    return await $builder->start()->wait();
+
+    using ($cp = $builder->start()) {
+        return await $cp->wait();
+    }
 }
 
 async function execFile(
@@ -41,6 +44,7 @@ async function execFile(
     return await exec($command, $options);
 }
 
+<<__ReturnDisposable>>
 function fork(
     string $script,
     ?Traversable<mixed> $args = [],
@@ -57,6 +61,7 @@ function fork(
     return $builder->start();
 }
 
+<<__ReturnDisposable>>
 function spawn(
     string $command,
     ?Traversable<mixed> $args = [],
