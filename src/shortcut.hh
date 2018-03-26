@@ -14,66 +14,66 @@ namespace HHPack\Process;
 use RuntimeException;
 
 async function exec(
-    string $command,
-    ExecOptions $options = new ExecOptions()
+  string $command,
+  ExecOptions $options = new ExecOptions()
 ) : Awaitable<ProcessResult>
 {
-    $builder = new ProcessBuilder($command, $options);
+  $builder = new ProcessBuilder($command, $options);
 
-    using ($cp = $builder->start()) {
-        return await $cp->wait();
-    }
+  using ($cp = $builder->start()) {
+    return await $cp->wait();
+  }
 }
 
 async function execFile(
-    string $file,
-    ?Traversable<mixed> $args = [],
-    ExecOptions $options = new ExecOptions()
+  string $file,
+  ?Traversable<mixed> $args = [],
+  ExecOptions $options = new ExecOptions()
 ) : Awaitable<ProcessResult>
 {
-    if (is_file($file) === false) {
-        throw new RuntimeException(sprintf('%s is not a file', $file));
-    }
+  if (is_file($file) === false) {
+    throw new RuntimeException(sprintf('%s is not a file', $file));
+  }
 
-    $arguments = ImmSet::fromItems($args)->map(($value) ==> {
-        return trim((string) $value);
-    })->toArray();
+  $arguments = ImmSet::fromItems($args)->map(($value) ==> {
+    return trim((string) $value);
+  })->toArray();
 
-    $command = sprintf('hhvm %s %s', trim($file), implode(' ', $arguments));
+  $command = sprintf('hhvm %s %s', trim($file), implode(' ', $arguments));
 
-    return await exec($command, $options);
+  return await exec($command, $options);
 }
 
 <<__ReturnDisposable>>
 function fork(
-    string $script,
-    ?Traversable<mixed> $args = [],
-    ProcessOptions $options = new ProcessOptions()
+  string $script,
+  ?Traversable<mixed> $args = [],
+  ProcessOptions $options = new ProcessOptions()
 ) : ChildProcess
 {
-    $arguments = ImmSet::fromItems($args)->map(($value) ==> {
-        return trim((string) $value);
-    })->toArray();
+  $arguments = ImmSet::fromItems($args)->map(($value) ==> {
+    return trim((string) $value);
+  })->toArray();
 
-    $command = sprintf('hhvm %s %s', trim($script), implode(' ', $arguments));
-    $builder = new ProcessBuilder($command, $options);
+  $command = sprintf('hhvm %s %s', trim($script), implode(' ', $arguments));
+  $builder = new ProcessBuilder($command, $options);
 
-    return $builder->start();
+  return $builder->start();
 }
 
 <<__ReturnDisposable>>
 function spawn(
-    string $command,
-    ?Traversable<mixed> $args = [],
-    ProcessOptions $options = new ProcessOptions()
+  string $command,
+  ?Traversable<mixed> $args = [],
+  ProcessOptions $options = new ProcessOptions()
 ) : ChildProcess
 {
-    $arguments = ImmSet::fromItems($args)->map(($value) ==> {
-        return trim((string) $value);
-    })->toArray();
+  $arguments = ImmSet::fromItems($args)->map(($value) ==> {
+    return trim((string) $value);
+  })->toArray();
 
-    $command = sprintf('%s %s', trim($command), implode(' ', $arguments));
-    $builder = new ProcessBuilder($command, $options);
+  $command = sprintf('%s %s', trim($command), implode(' ', $arguments));
+  $builder = new ProcessBuilder($command, $options);
 
-    return $builder->start();
+  return $builder->start();
 }
