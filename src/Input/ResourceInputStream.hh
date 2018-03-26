@@ -14,7 +14,7 @@ namespace HHPack\Process\Input;
 final class ResourceInputStream implements ReadableStream<int> {
 
   public function __construct(private resource $handle) {
-    stream_set_blocking($this->handle, 0);
+    stream_set_blocking($this->handle, false);
   }
 
   public function eof(): bool {
