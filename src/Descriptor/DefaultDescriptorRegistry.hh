@@ -50,7 +50,7 @@ final class DefaultDescriptorRegistry implements DescriptorRegistry {
     return new StreamRegistry($readableStreams, $writableStreams);
   }
 
-  public function toArray(): array<int, array<string>> {
+  public function toArray(): array<array<string>> {
     return [
       $this->stdin->values(),
       $this->stdout->values(),

@@ -20,5 +20,5 @@ interface DescriptorRegistry {
   public function createStreamManager(
     array<int, resource> $streamHandles,
   ): StreamManager;
-  public function toArray(): array<int, array<string>>;
+  public function toArray(): array<array<string>>;
 }
