@@ -11,7 +11,6 @@
 
 namespace HHPack\Process;
 
-interface Options
-{
-    public function applyTo(ProcessBuilder $bulider) : void;
+interface Options {
+  public function applyTo(ProcessBuilder $bulider): void;
 }

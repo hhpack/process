@@ -1,0 +1,5 @@
+disallow_destruct = true
+enable_experimental_tc_features = unpacking_check_arity
+enable_experimental_tc_features = disallow_untyped_lambda_as_non_function_type
+enable_experimental_tc_features = disallow_refs_in_array
+

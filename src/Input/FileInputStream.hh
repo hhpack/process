@@ -14,57 +14,48 @@ namespace HHPack\Process\Input;
 use HHPack\Process\Writable;
 use RuntimeException;
 
-final class FileInputStream implements ReadableStream<int>
-{
+final class FileInputStream implements ReadableStream<int> {
 
-    private ResourceInputStream $stream;
+  private ResourceInputStream $stream;
 
-    public function __construct(
-        string $path
-    )
-    {
-        $handle = fopen($path, 'r');
+  public function __construct(string $path) {
+    $handle = fopen($path, 'r');
 
-        if (!is_resource($handle)) {
-            throw new RuntimeException(sprintf('Failed to open the file %s', $path));
-        }
-
-        $this->stream = new ResourceInputStream($handle);
+    if (!is_resource($handle)) {
+      throw new RuntimeException(
+        sprintf('Failed to open the file %s', $path),
+      );
     }
 
-    public function eof() : bool
-    {
-        return $this->stream->eof();
-    }
+    $this->stream = new ResourceInputStream($handle);
+  }
 
-    public function isOpened() : bool
-    {
-        return $this->stream->isOpened();
-    }
+  public function eof(): bool {
+    return $this->stream->eof();
+  }
 
-    public function isClosed() : bool
-    {
-        return $this->stream->isClosed();
-    }
+  public function isOpened(): bool {
+    return $this->stream->isOpened();
+  }
 
-    public function ready() : bool
-    {
-        return $this->stream->ready();
-    }
+  public function isClosed(): bool {
+    return $this->stream->isClosed();
+  }
 
-    public function notReady() : bool
-    {
-        return $this->stream->notReady();
-    }
+  public function ready(): bool {
+    return $this->stream->ready();
+  }
 
-    public function read(int $length = 4096) : string
-    {
-        return $this->stream->read($length);
-    }
+  public function notReady(): bool {
+    return $this->stream->notReady();
+  }
 
-    public function close() : void
-    {
-        $this->stream->close();
-    }
+  public function read(int $length = 4096): string {
+    return $this->stream->read($length);
+  }
+
+  public function close(): void {
+    $this->stream->close();
+  }
 
 }

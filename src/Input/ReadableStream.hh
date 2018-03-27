@@ -14,6 +14,4 @@ namespace HHPack\Process\Input;
 use HHPack\Process\Stream;
 use HHPack\Process\Readable;
 
-interface ReadableStream<T> extends Stream, Readable
-{
-}
+interface ReadableStream<T> extends Stream, Readable {}

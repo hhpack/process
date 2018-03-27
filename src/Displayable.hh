@@ -11,7 +11,6 @@
 
 namespace HHPack\Process;
 
-interface Displayable
-{
-    public function display() : void;
+interface Displayable {
+  public function display(): void;
 }

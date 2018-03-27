@@ -11,35 +11,28 @@
 
 namespace HHPack\Process;
 
-final class ProcessResult implements Displayable
-{
+final class ProcessResult implements Displayable {
 
-    public function __construct(
-        private ProcessStatus $status,
-        private OutputResult $output
-    )
-    {
-    }
+  public function __construct(
+    private ProcessStatus $status,
+    private OutputResult $output,
+  ) {}
 
-    public function exitCode() : int
-    {
-        return $this->status->exitCode();
-    }
+  public function exitCode(): int {
+    return $this->status->exitCode();
+  }
 
-    public function stdout() : Output
-    {
-        return $this->output->stdout();
-    }
+  public function stdout(): Output {
+    return $this->output->stdout();
+  }
 
-    public function stderr() : Output
-    {
-        return $this->output->stderr();
-    }
+  public function stderr(): Output {
+    return $this->output->stderr();
+  }
 
-    public function display() : void
-    {
-        $this->status->display();
-        $this->output->display();
-    }
+  public function display(): void {
+    $this->status->display();
+    $this->output->display();
+  }
 
 }

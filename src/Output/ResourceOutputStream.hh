@@ -11,66 +11,51 @@
 
 namespace HHPack\Process\Output;
 
-final class ResourceOutputStream implements WritableStream
-{
+final class ResourceOutputStream implements WritableStream {
 
-    public function __construct(
-        private resource $handle
-    )
-    {
-        stream_set_blocking($this->handle, 0);
+  public function __construct(private resource $handle) {
+    stream_set_blocking($this->handle, false);
+  }
+
+  public function isOpened(): bool {
+    return is_resource($this->handle);
+  }
+
+  public function isClosed(): bool {
+    return $this->isOpened() === false;
+  }
+
+  public function ready(): bool {
+    $read = [];
+    $write = [$this->handle];
+    $expect = null;
+
+    if ($this->isClosed()) {
+      return false;
     }
 
-    public function isOpened() : bool
-    {
-        return is_resource($this->handle);
+    $ng =
+      ($num = stream_select(&$read, &$write, &$expect, 0, 200000)) === false;
+
+    if ($ng || $num <= 0) {
+      return false;
     }
 
-    public function isClosed() : bool
-    {
-        return $this->isOpened() === false;
+    return true;
+  }
+
+  public function notReady(): bool {
+    return $this->ready() === false;
+  }
+
+  public function write(string $output): int {
+    return (int) fwrite($this->handle, $output);
+  }
+
+  public function close(): void {
+    if ($this->isClosed()) {
+      return;
     }
-
-    public function ready() : bool
-    {
-        $read = [];
-        $write = [ $this->handle ];
-        $expect = null;
-
-        if ($this->isClosed()) {
-            return false;
-        }
-
-        $ng = ($num = stream_select(&$read, &$write, &$expect, 0, 200000)) === false;
-
-        if ($ng || $num <= 0) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public function notReady() : bool
-    {
-        return $this->ready() === false;
-    }
-
-    public function write(string $output) : int
-    {
-        return (int) fwrite($this->handle, $output);
-    }
-
-    public function close() : void
-    {
-        fclose($this->handle);
-    }
-
-    public function __destruct()
-    {
-        if ($this->isClosed()) {
-            return;
-        }
-        $this->close();
-    }
-
+    fclose($this->handle);
+  }
 }

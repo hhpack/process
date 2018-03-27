@@ -11,98 +11,86 @@
 
 namespace HHPack\Process\Output;
 
-use HHPack\Process\Input\{ NullInputStream, StringInputStream, ReadableStream };
+use HHPack\Process\Input\{NullInputStream, StringInputStream, ReadableStream};
 use HHPack\Process\Output\BufferedOutputStream;
 use HHPack\Process\Stream\StreamType;
 
-final class ProcessWriteStream implements WritableStream
-{
+final class ProcessWriteStream implements WritableStream {
 
-    private ResourceOutputStream $stream;
-    private string $bufferedInput = '';
+  private ResourceOutputStream $stream;
+  private string $bufferedInput = '';
 
-    public function __construct(
-        private StreamType $type,
-        resource $handle,
-        private ReadableStream<int> $input = new NullInputStream()
-    )
-    {
-        $this->stream = new ResourceOutputStream($handle);
+  public function __construct(
+    private StreamType $type,
+    resource $handle,
+    private ReadableStream<int> $input = new NullInputStream(),
+  ) {
+    $this->stream = new ResourceOutputStream($handle);
+  }
+
+  public function isOpened(): bool {
+    return $this->stream->isOpened();
+  }
+
+  public function isClosed(): bool {
+    return $this->stream->isClosed();
+  }
+
+  public function ready(): bool {
+    return $this->stream->ready();
+  }
+
+  public function notReady(): bool {
+    return $this->stream->notReady();
+  }
+
+  public function flush(): void {
+    $this->readAll();
+    $this->writeAll();
+  }
+
+  public function write(string $output): int {
+    return $this->stream->write($output);
+  }
+
+  public function close(): void {
+    $this->stream->close();
+  }
+
+  private function readAll(): void {
+    if ($this->input->isClosed()) {
+      return;
     }
 
-    public function isOpened() : bool
-    {
-        return $this->stream->isOpened();
+    $chunk = $this->input->read();
+
+    if ($this->input->eof()) {
+      $this->input->close();
     }
 
-    public function isClosed() : bool
-    {
-        return $this->stream->isClosed();
+    $this->bufferedInput .= $chunk;
+  }
+
+  private function writeAll(): void {
+    if ($this->isClosed() || $this->notReady()) {
+      return;
     }
 
-    public function ready() : bool
-    {
-        return $this->stream->ready();
+    while (strlen($this->bufferedInput) > 0) {
+      $chunk = substr($this->bufferedInput, 0, 512);
+      $writedBytes = $this->write($chunk);
+
+      if ($writedBytes <= 0) {
+        break;
+      }
+      $this->bufferedInput = substr($this->bufferedInput, $writedBytes);
     }
 
-    public function notReady() : bool
-    {
-        return $this->stream->notReady();
+    if (strlen($this->bufferedInput) > 0 || $this->input->isOpened()) {
+      return;
     }
 
-    public function flush() : void
-    {
-        $this->readAll();
-        $this->writeAll();
-    }
-
-    public function write(string $output) : int
-    {
-        return $this->stream->write($output);
-    }
-
-    public function close() : void
-    {
-        $this->stream->close();
-    }
-
-    private function readAll() : void
-    {
-        if ($this->input->isClosed()) {
-            return;
-        }
-
-        $chunk = $this->input->read();
-
-        if ($this->input->eof()) {
-            $this->input->close();
-        }
-
-        $this->bufferedInput .= $chunk;
-    }
-
-    private function writeAll() : void
-    {
-        if ($this->isClosed() || $this->notReady()) {
-            return;
-        }
-
-        while (strlen($this->bufferedInput) > 0) {
-            $chunk = substr($this->bufferedInput, 0, 512);
-            $writedBytes = $this->write($chunk);
-
-            if ($writedBytes <= 0) {
-                break;
-            }
-            $this->bufferedInput = substr($this->bufferedInput, $writedBytes);
-        }
-
-        if (strlen($this->bufferedInput) > 0
-            || $this->input->isOpened()) {
-            return;
-        }
-
-        $this->close();
-    }
+    $this->close();
+  }
 
 }

@@ -11,7 +11,6 @@
 
 namespace HHPack\Process;
 
-interface Writable<T>
-{
-    public function write(string $output) : T;
+interface Writable<T> {
+  public function write(string $output): T;
 }

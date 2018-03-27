@@ -11,8 +11,7 @@
 
 namespace HHPack\Process;
 
-interface Readable
-{
-    public function eof() : bool;
-    public function read(int $length = 4096) : string;
+interface Readable {
+  public function eof(): bool;
+  public function read(int $length = 4096): string;
 }
