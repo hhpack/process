@@ -39,8 +39,7 @@
     }
   ],
   "scripts": {
-    "test": "vendor/bin/hackunit test",
-    "check": "./typecheck"
+    "test": "vendor/bin/hackunit test"
   },
   "config": {
     "preferred-install": "dist"
