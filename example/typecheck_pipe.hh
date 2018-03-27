@@ -10,17 +10,17 @@ use HHPack\Process\Output\{ Stdout, Stderr };
 
 async function pipe_example() : Awaitable<void>
 {
-    $options = new ProcessOptions();
-    $options->stdout(new Stdout());
-    $options->stderr(new Stderr());
+  $options = new ProcessOptions();
+  $options->stdout(new Stdout());
+  $options->stderr(new Stderr());
 
-    using ($p = Process\spawn('hh_client restart', [], $options)) {
-        await $p->wait();
-    }
+  using ($p = Process\spawn('hh_client restart', [], $options)) {
+    await $p->wait();
+  }
 
-    using ($p = Process\spawn('hh_client check --json', [], $options)) {
-        await $p->wait();
-    }
+  using ($p = Process\spawn('hh_client check --json', [], $options)) {
+    await $p->wait();
+  }
 }
 
 pipe_example();
