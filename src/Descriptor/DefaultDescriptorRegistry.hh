@@ -57,5 +57,4 @@ final class DefaultDescriptorRegistry implements DescriptorRegistry {
       $this->stderr->values(),
     ];
   }
-
 }

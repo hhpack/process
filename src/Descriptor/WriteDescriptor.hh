@@ -47,5 +47,4 @@ final class WriteDescriptor
   ): ProcessWriteStream {
     return new ProcessWriteStream($this->streamType, $handle, $this->input);
   }
-
 }
