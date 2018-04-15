@@ -8,9 +8,11 @@ use HackPack\HackUnit\Contract\Assert;
 
 final class NullInputStreamTest {
   <<Test>>
-  public function readFromStream(Assert $assert): void {
+  public async function readFromStream(Assert $assert): Awaitable<void> {
     $input = new NullInputStream();
-    $assert->string((string) $input->read())->is('');
+    $readContents = await $input->readAsync();
+
+    $assert->string($readContents)->is('');
   }
 
   <<Test>>

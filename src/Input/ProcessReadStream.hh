@@ -47,6 +47,7 @@ final class ProcessReadStream implements ReadableStream<int> {
     return $this->stream->notReady();
   }
 
+/*
   public function read(int $length = 4096): string {
     $chunk = $this->stream->read($length);
 
@@ -58,9 +59,18 @@ final class ProcessReadStream implements ReadableStream<int> {
 
     return $chunk;
   }
+*/
 
   public async function readAsync(int $length = 4096): Awaitable<string> {
-    return $this->read($length);
+    $chunk = await $this->stream->readAsync($length);
+
+    if ($chunk === '') {
+      return '';
+    }
+
+    await $this->output->writeAsync($chunk);
+
+    return $chunk;
   }
 
   public function getOutput(): Output {

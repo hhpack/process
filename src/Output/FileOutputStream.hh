@@ -44,13 +44,13 @@ final class FileOutputStream implements WritableStream {
   public function notReady(): bool {
     return $this->stream->notReady();
   }
-
+/*
   public function write(string $output): int {
     return $this->stream->write($output);
   }
-
+*/
   public async function writeAsync(string $output): Awaitable<int> {
-    return $this->write($output);
+    return await $this->stream->writeAsync($output);
   }
 
   public function close(): void {

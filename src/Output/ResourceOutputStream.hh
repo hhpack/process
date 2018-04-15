@@ -32,7 +32,7 @@ final class ResourceOutputStream implements WritableStream {
     $result = await stream_await($this->handle, STREAM_AWAIT_WRITE, 0.2);
 
     if ($result === STREAM_AWAIT_READY) {
-      return $this->write($output);
+      return (int) fwrite($this->handle, $output);
     }
 
     if ($result === STREAM_AWAIT_ERROR) {
@@ -65,11 +65,11 @@ final class ResourceOutputStream implements WritableStream {
   public function notReady(): bool {
     return $this->ready() === false;
   }
-
-  public function write(string $output): int {
+/*
+  private function write(string $output): int {
     return (int) fwrite($this->handle, $output);
   }
-
+*/
   public function close(): void {
     if ($this->isClosed()) {
       return;

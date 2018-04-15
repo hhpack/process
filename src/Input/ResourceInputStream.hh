@@ -59,7 +59,7 @@ final class ResourceInputStream implements ReadableStream<int> {
     $result = await stream_await($this->handle, STREAM_AWAIT_READ, 0.2);
 
     if ($result === STREAM_AWAIT_READY) {
-      return $this->read($length);
+      return $this->readBytes($length);
     }
 
     if ($result === STREAM_AWAIT_ERROR) {
@@ -70,10 +70,10 @@ final class ResourceInputStream implements ReadableStream<int> {
     return '';
   }
 
-  public function read(int $length = 4096): string {
-    if ($this->notReady()) {
-      return '';
-    }
+  private function readBytes(int $length = 4096): string {
+//    if ($this->notReady()) {
+  //    return '';
+    //}
 
     $bufferedOutput = '';
 

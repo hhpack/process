@@ -7,9 +7,9 @@ use HackPack\HackUnit\Contract\Assert;
 
 final class NullOutputStreamTest {
   <<Test>>
-  public function writeToBuffer(Assert $assert): void {
+  public async function writeToBuffer(Assert $assert): Awaitable<void> {
     $output = new NullOutputStream();
-    $bytes = $output->write('text');
+    $bytes = await $output->writeAsync('text');
 
     $assert->int($bytes)->eq(4);
   }

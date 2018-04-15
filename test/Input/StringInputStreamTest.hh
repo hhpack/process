@@ -8,16 +8,16 @@ use HackPack\HackUnit\Contract\Assert;
 
 final class StringInputStreamTest {
   <<Test>>
-  public function readFromStream(Assert $assert): void {
+  public async function readFromStream(Assert $assert): Awaitable<void> {
     $input = new StringInputStream('abcd');
 
     $assert->bool($input->eof())->is(false);
 
-    $firstContent = $input->read(1);
+    $firstContent = await $input->readAsync(1);
     $assert->bool($input->eof())->is(false);
     $assert->string($firstContent)->is('a');
 
-    $lastContent = $input->read(3);
+    $lastContent = await $input->readAsync(3);
     $assert->bool($input->eof())->is(true);
     $assert->string($lastContent)->is('bcd');
   }

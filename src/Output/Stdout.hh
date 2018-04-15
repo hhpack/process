@@ -33,13 +33,16 @@ final class Stdout implements WritableStream {
 
   public function close(): void {}
 
+/*
   public function write(string $output): int {
     fputs(STDOUT, $output);
     return strlen($output);
   }
+*/
 
   public async function writeAsync(string $output): Awaitable<int> {
-    return $this->write($output);
+    fputs(STDOUT, $output);
+    return strlen($output);
   }
 
 }

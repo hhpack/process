@@ -13,6 +13,5 @@ namespace HHPack\Process;
 
 interface Readable {
   public function eof(): bool;
-  public function read(int $length = 4096): string;
   public function readAsync(int $length = 4096): Awaitable<string>;
 }

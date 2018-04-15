@@ -12,6 +12,5 @@
 namespace HHPack\Process;
 
 interface Writable<T> {
-  public function write(string $output): T;
   public function writeAsync(string $output): Awaitable<T>;
 }
