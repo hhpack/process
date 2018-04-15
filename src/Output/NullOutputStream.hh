@@ -41,4 +41,7 @@ final class NullOutputStream implements WritableStream {
     return strlen($output);
   }
 
+  public async function writeAsync(string $output): Awaitable<int> {
+    return $this->write($output);
+  }
 }

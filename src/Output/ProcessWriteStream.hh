@@ -53,6 +53,10 @@ final class ProcessWriteStream implements WritableStream {
     return $this->stream->write($output);
   }
 
+  public async function writeAsync(string $output): Awaitable<int> {
+    return $this->write($output);
+  }
+
   public function close(): void {
     $this->stream->close();
   }

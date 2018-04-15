@@ -44,6 +44,10 @@ final class BufferedOutputStream implements WritableStream, Displayable {
     return strlen($output);
   }
 
+  public async function writeAsync(string $output): Awaitable<int> {
+    return $this->write($output);
+  }
+
   public function clear(): void {
     $this->output = '';
   }
