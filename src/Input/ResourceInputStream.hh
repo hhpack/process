@@ -48,14 +48,16 @@ final class ResourceInputStream implements ReadableStream<int> {
     return true;
   }
 
-  public function notReady(): bool {
-    return $this->ready() === false;
-  }
-
   /**
    * Read asynchronously from stream
    */
   public async function readAsync(int $length = 4096): Awaitable<string> {
+    if (!$this->ready()) {
+      return '';
+    }
+    return $this->readBytes($length);
+
+/*
     $result = await stream_await($this->handle, STREAM_AWAIT_READ, 0.2);
 
     if ($result === STREAM_AWAIT_READY) {
@@ -68,13 +70,10 @@ final class ResourceInputStream implements ReadableStream<int> {
 
     // STREAM_AWAIT_TIMEOUT or STREAM_AWAIT_CLOSED
     return '';
+  */
   }
 
   private function readBytes(int $length = 4096): string {
-//    if ($this->notReady()) {
-  //    return '';
-    //}
-
     $bufferedOutput = '';
 
     while (($chunk = fread($this->handle, 16384)) !== false) {

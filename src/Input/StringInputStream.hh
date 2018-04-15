@@ -31,20 +31,6 @@ final class StringInputStream implements ReadableStream<int> {
     return $this->isOpened() === false;
   }
 
-  public function ready(): bool {
-    return $this->eof() === false;
-  }
-
-  public function notReady(): bool {
-    return $this->ready() === false;
-  }
-/*
-  public function read(int $length = 4096): string {
-    $content = substr($this->input, 0, $length);
-    $this->input = substr($this->input, $length);
-    return $content;
-  }
-*/
   public async function readAsync(int $length = 4096): Awaitable<string> {
     $content = substr($this->input, 0, $length);
     $this->input = substr($this->input, $length);

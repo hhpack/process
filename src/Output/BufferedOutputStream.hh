@@ -27,23 +27,10 @@ final class BufferedOutputStream implements WritableStream, Displayable {
     return $this->isOpened() === false;
   }
 
-  public function ready(): bool {
-    return $this->isOpened();
-  }
-
-  public function notReady(): bool {
-    return $this->ready() === false;
-  }
-
   public function close(): void {
     $this->opened = false;
   }
-/*
-  public function write(string $output): int {
-    $this->output .= $output;
-    return strlen($output);
-  }
-*/
+
   public async function writeAsync(string $output): Awaitable<int> {
     $this->output .= $output;
     return strlen($output);

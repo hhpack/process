@@ -42,18 +42,6 @@ final class FileInputStream implements ReadableStream<int> {
     return $this->stream->isClosed();
   }
 
-  public function ready(): bool {
-    return $this->stream->ready();
-  }
-
-  public function notReady(): bool {
-    return $this->stream->notReady();
-  }
-/*
-  public function read(int $length = 4096): string {
-    return $this->stream->read($length);
-  }
-*/
   public async function readAsync(int $length = 4096): Awaitable<string> {
     return await $this->stream->readAsync($length);
   }

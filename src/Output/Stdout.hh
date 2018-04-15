@@ -23,22 +23,7 @@ final class Stdout implements WritableStream {
     return $this->isOpened() === false;
   }
 
-  public function ready(): bool {
-    return $this->isOpened();
-  }
-
-  public function notReady(): bool {
-    return $this->ready() === false;
-  }
-
   public function close(): void {}
-
-/*
-  public function write(string $output): int {
-    fputs(STDOUT, $output);
-    return strlen($output);
-  }
-*/
 
   public async function writeAsync(string $output): Awaitable<int> {
     fputs(STDOUT, $output);

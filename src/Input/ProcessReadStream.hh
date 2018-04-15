@@ -39,28 +39,6 @@ final class ProcessReadStream implements ReadableStream<int> {
     return $this->stream->isClosed();
   }
 
-  public function ready(): bool {
-    return $this->stream->ready();
-  }
-
-  public function notReady(): bool {
-    return $this->stream->notReady();
-  }
-
-/*
-  public function read(int $length = 4096): string {
-    $chunk = $this->stream->read($length);
-
-    if ($chunk === '') {
-      return '';
-    }
-
-    $this->output->write($chunk);
-
-    return $chunk;
-  }
-*/
-
   public async function readAsync(int $length = 4096): Awaitable<string> {
     $chunk = await $this->stream->readAsync($length);
 

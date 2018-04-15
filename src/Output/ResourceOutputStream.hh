@@ -43,33 +43,6 @@ final class ResourceOutputStream implements WritableStream {
     return 0;
   }
 
-  public function ready(): bool {
-    $read = [];
-    $write = [$this->handle];
-    $expect = null;
-
-    if ($this->isClosed()) {
-      return false;
-    }
-
-    $ng =
-      ($num = stream_select(&$read, &$write, &$expect, 0, 200000)) === false;
-
-    if ($ng || $num <= 0) {
-      return false;
-    }
-
-    return true;
-  }
-
-  public function notReady(): bool {
-    return $this->ready() === false;
-  }
-/*
-  private function write(string $output): int {
-    return (int) fwrite($this->handle, $output);
-  }
-*/
   public function close(): void {
     if ($this->isClosed()) {
       return;

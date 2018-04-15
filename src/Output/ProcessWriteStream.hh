@@ -36,22 +36,10 @@ final class ProcessWriteStream implements WritableStream {
     return $this->stream->isClosed();
   }
 
-  public function ready(): bool {
-    return $this->stream->ready();
-  }
-
-  public function notReady(): bool {
-    return $this->stream->notReady();
-  }
-
   public async function flush(): Awaitable<void> {
     await $this->readAll();
     await $this->writeAll();
   }
-/*
-  public function write(string $output): int {
-    return $this->stream->write($output);
-  }*/
 
   public async function writeAsync(string $output): Awaitable<int> {
     return await $this->stream->writeAsync($output);
@@ -75,8 +63,9 @@ final class ProcessWriteStream implements WritableStream {
     $this->bufferedInput .= $chunk;
   }
 
+  // XXX append ready?
   private async function writeAll(): Awaitable<void> {
-    if ($this->isClosed() || $this->notReady()) {
+    if ($this->isClosed()) {
       return;
     }
 

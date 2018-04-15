@@ -27,18 +27,6 @@ final class NullInputStream implements ReadableStream<int> {
     return $this->isOpened() === false;
   }
 
-  public function ready(): bool {
-    return $this->isOpened();
-  }
-
-  public function notReady(): bool {
-    return $this->ready() === false;
-  }
-/*
-  public function read(int $length = 4096): string {
-    return '';
-  }
-*/
   public async function readAsync(int $length = 4096): Awaitable<string> {
     return '';
   }
