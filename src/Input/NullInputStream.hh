@@ -39,6 +39,10 @@ final class NullInputStream implements ReadableStream<int> {
     return '';
   }
 
+  public async function readAsync(int $length = 4096): Awaitable<string> {
+    return $this->read($length);
+  }
+
   public function close(): void {
     $this->opened = false;
   }

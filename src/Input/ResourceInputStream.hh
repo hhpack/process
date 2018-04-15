@@ -52,6 +52,24 @@ final class ResourceInputStream implements ReadableStream<int> {
     return $this->ready() === false;
   }
 
+  /**
+   * Read asynchronously from stream
+   */
+  public async function readAsync(int $length = 4096): Awaitable<string> {
+    $result = await stream_await($this->handle, STREAM_AWAIT_READ, 0.2);
+
+    if ($result === STREAM_AWAIT_READY) {
+      return $this->read($length);
+    }
+
+    if ($result === STREAM_AWAIT_ERROR) {
+      throw new \RuntimeException("stream error");
+    }
+
+    // STREAM_AWAIT_TIMEOUT or STREAM_AWAIT_CLOSED
+    return '';
+  }
+
   public function read(int $length = 4096): string {
     if ($this->notReady()) {
       return '';

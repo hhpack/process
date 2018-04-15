@@ -54,6 +54,10 @@ final class FileInputStream implements ReadableStream<int> {
     return $this->stream->read($length);
   }
 
+  public async function readAsync(int $length = 4096): Awaitable<string> {
+    return $this->read($length);
+  }
+
   public function close(): void {
     $this->stream->close();
   }
