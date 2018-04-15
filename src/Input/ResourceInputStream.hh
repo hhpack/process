@@ -29,36 +29,11 @@ final class ResourceInputStream implements ReadableStream<int> {
     return $this->isOpened() === false;
   }
 
-  public function ready(): bool {
-    $read = [$this->handle];
-    $write = [];
-    $expect = null;
-
-    if ($this->isClosed()) {
-      return false;
-    }
-
-    $ng =
-      ($num = stream_select(&$read, &$write, &$expect, 0, 200000)) === false;
-
-    if ($ng || $num <= 0) {
-      return false;
-    }
-
-    return true;
-  }
-
   /**
    * Read asynchronously from stream
    */
   public async function readAsync(int $length = 4096): Awaitable<string> {
-    if (!$this->ready()) {
-      return '';
-    }
-    return $this->readBytes($length);
-
-/*
-    $result = await stream_await($this->handle, STREAM_AWAIT_READ, 0.2);
+    $result = \HH\Asio\join(stream_await($this->handle, STREAM_AWAIT_READ, 0.2));
 
     if ($result === STREAM_AWAIT_READY) {
       return $this->readBytes($length);
@@ -70,7 +45,6 @@ final class ResourceInputStream implements ReadableStream<int> {
 
     // STREAM_AWAIT_TIMEOUT or STREAM_AWAIT_CLOSED
     return '';
-  */
   }
 
   private function readBytes(int $length = 4096): string {
