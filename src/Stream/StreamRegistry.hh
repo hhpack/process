@@ -32,13 +32,13 @@ final class StreamRegistry implements StreamManager {
 
   public async function read(): Awaitable<void> {
     foreach ($this->readableStreams() as $stream) {
-      $stream->read();
+      await $stream->readAsync();
     }
   }
 
   public async function write(): Awaitable<void> {
     foreach ($this->writableStreams() as $stream) {
-      $stream->flush();
+      await $stream->flush();
     }
   }
 

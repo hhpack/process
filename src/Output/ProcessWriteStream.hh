@@ -44,9 +44,9 @@ final class ProcessWriteStream implements WritableStream {
     return $this->stream->notReady();
   }
 
-  public function flush(): void {
-    $this->readAll();
-    $this->writeAll();
+  public async function flush(): Awaitable<void> {
+    await $this->readAll();
+    await $this->writeAll();
   }
 
   public function write(string $output): int {
@@ -61,12 +61,12 @@ final class ProcessWriteStream implements WritableStream {
     $this->stream->close();
   }
 
-  private function readAll(): void {
+  private async function readAll(): Awaitable<void> {
     if ($this->input->isClosed()) {
       return;
     }
 
-    $chunk = $this->input->read();
+    $chunk = await $this->input->readAsync();
 
     if ($this->input->eof()) {
       $this->input->close();
@@ -75,14 +75,14 @@ final class ProcessWriteStream implements WritableStream {
     $this->bufferedInput .= $chunk;
   }
 
-  private function writeAll(): void {
+  private async function writeAll(): Awaitable<void> {
     if ($this->isClosed() || $this->notReady()) {
       return;
     }
 
     while (strlen($this->bufferedInput) > 0) {
       $chunk = substr($this->bufferedInput, 0, 512);
-      $writedBytes = $this->write($chunk);
+      $writedBytes = await $this->writeAsync($chunk);
 
       if ($writedBytes <= 0) {
         break;
