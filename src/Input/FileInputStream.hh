@@ -16,38 +16,53 @@ use RuntimeException;
 
 final class FileInputStream implements ReadableStream<int> {
 
-  private ResourceInputStream $stream;
+  private resource $handle;
 
   public function __construct(string $path) {
-    $handle = fopen($path, 'r');
+    $this->handle = fopen($path, 'r');
 
-    if (!is_resource($handle)) {
+    if (!is_resource($this->handle)) {
       throw new RuntimeException(
         sprintf('Failed to open the file %s', $path),
       );
     }
-
-    $this->stream = new ResourceInputStream($handle);
+    stream_set_blocking($this->handle, false);
   }
 
   public function eof(): bool {
-    return $this->stream->eof();
+    return feof($this->handle);
   }
 
   public function isOpened(): bool {
-    return $this->stream->isOpened();
+    return is_resource($this->handle);
   }
 
   public function isClosed(): bool {
-    return $this->stream->isClosed();
+    return $this->isOpened() === false;
   }
 
   public async function readAsync(int $length = 4096): Awaitable<string> {
-    return await $this->stream->readAsync($length);
+    $bufferedOutput = '';
+
+    while (($chunk = fread($this->handle, 16384)) !== false) {
+      if ((string) $chunk === '') {
+        break;
+      }
+      $bufferedOutput .= (string) $chunk;
+    }
+
+    if ($this->eof() && strlen($bufferedOutput) <= 0) {
+      $this->close();
+    }
+
+    return $bufferedOutput;
   }
 
   public function close(): void {
-    $this->stream->close();
+    if ($this->isClosed()) {
+      return;
+    }
+    fclose($this->handle);
   }
 
 }
