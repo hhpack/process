@@ -29,7 +29,8 @@ final class ResourceOutputStream implements WritableStream {
    * Write asynchronously from stream
    */
   public async function writeAsync(string $output): Awaitable<int> {
-    $result = \HH\Asio\join(stream_await($this->handle, STREAM_AWAIT_WRITE, 0.2));
+    $result =
+      \HH\Asio\join(stream_await($this->handle, STREAM_AWAIT_WRITE, 0.2));
 
     if ($result === STREAM_AWAIT_READY) {
       return (int) fwrite($this->handle, $output);

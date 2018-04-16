@@ -33,7 +33,8 @@ final class ResourceInputStream implements ReadableStream<int> {
    * Read asynchronously from stream
    */
   public async function readAsync(int $length = 4096): Awaitable<string> {
-    $result = \HH\Asio\join(stream_await($this->handle, STREAM_AWAIT_READ, 0.2));
+    $result =
+      \HH\Asio\join(stream_await($this->handle, STREAM_AWAIT_READ, 0.2));
 
     if ($result === STREAM_AWAIT_READY) {
       return $this->readBytes($length);
