@@ -11,7 +11,7 @@
 
 namespace HHPack\Process\Input;
 
-final class NullInputStream implements ReadableStream<int> {
+final class NullInputStream implements ReadableStream {
 
   private bool $opened = true;
 
@@ -27,15 +27,7 @@ final class NullInputStream implements ReadableStream<int> {
     return $this->isOpened() === false;
   }
 
-  public function ready(): bool {
-    return $this->isOpened();
-  }
-
-  public function notReady(): bool {
-    return $this->ready() === false;
-  }
-
-  public function read(int $length = 4096): string {
+  public async function readAsync(int $length = 4096): Awaitable<string> {
     return '';
   }
 

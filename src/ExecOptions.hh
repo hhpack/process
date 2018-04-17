@@ -15,7 +15,7 @@ use HHPack\Process\Input\{ReadableStream, NullInputStream};
 
 final class ExecOptions implements Options {
 
-  private ReadableStream<int> $input;
+  private ReadableStream $input;
 
   public function __construct(
     private string $cwd = (string) getcwd(),
@@ -34,7 +34,7 @@ final class ExecOptions implements Options {
     return $this;
   }
 
-  public function stdin(ReadableStream<int> $input): this {
+  public function stdin(ReadableStream $input): this {
     $this->input = $input;
     return $this;
   }

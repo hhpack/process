@@ -15,7 +15,7 @@ use HHPack\Process\Writable;
 use HHPack\Process\Output\BufferedOutputStream;
 use HHPack\Process\Stream\StreamType;
 
-final class ProcessReadStream implements ReadableStream<int> {
+final class ProcessReadStream implements ReadableStream {
 
   private ResourceInputStream $stream;
 
@@ -39,22 +39,14 @@ final class ProcessReadStream implements ReadableStream<int> {
     return $this->stream->isClosed();
   }
 
-  public function ready(): bool {
-    return $this->stream->ready();
-  }
-
-  public function notReady(): bool {
-    return $this->stream->notReady();
-  }
-
-  public function read(int $length = 4096): string {
-    $chunk = $this->stream->read($length);
+  public async function readAsync(int $length = 4096): Awaitable<string> {
+    $chunk = await $this->stream->readAsync($length);
 
     if ($chunk === '') {
       return '';
     }
 
-    $this->output->write($chunk);
+    await $this->output->writeAsync($chunk);
 
     return $chunk;
   }

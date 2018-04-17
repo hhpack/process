@@ -25,20 +25,11 @@ final class NullOutputStream implements WritableStream {
     return $this->isOpened() === false;
   }
 
-  public function ready(): bool {
-    return $this->isOpened();
-  }
-
-  public function notReady(): bool {
-    return $this->ready() === false;
-  }
-
   public function close(): void {
     $this->opened = false;
   }
 
-  public function write(string $output): int {
+  public async function writeAsync(string $output): Awaitable<int> {
     return strlen($output);
   }
-
 }

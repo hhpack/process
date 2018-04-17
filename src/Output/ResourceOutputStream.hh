@@ -25,31 +25,23 @@ final class ResourceOutputStream implements WritableStream {
     return $this->isOpened() === false;
   }
 
-  public function ready(): bool {
-    $read = [];
-    $write = [$this->handle];
-    $expect = null;
+  /**
+   * Write asynchronously from stream
+   */
+  public async function writeAsync(string $output): Awaitable<int> {
+    $result =
+      \HH\Asio\join(stream_await($this->handle, STREAM_AWAIT_WRITE, 0.2));
 
-    if ($this->isClosed()) {
-      return false;
+    if ($result === STREAM_AWAIT_READY) {
+      return (int) fwrite($this->handle, $output);
     }
 
-    $ng =
-      ($num = stream_select(&$read, &$write, &$expect, 0, 200000)) === false;
-
-    if ($ng || $num <= 0) {
-      return false;
+    if ($result === STREAM_AWAIT_ERROR) {
+      throw new \RuntimeException("stream error");
     }
 
-    return true;
-  }
-
-  public function notReady(): bool {
-    return $this->ready() === false;
-  }
-
-  public function write(string $output): int {
-    return (int) fwrite($this->handle, $output);
+    // STREAM_AWAIT_TIMEOUT or STREAM_AWAIT_CLOSED
+    return 0;
   }
 
   public function close(): void {

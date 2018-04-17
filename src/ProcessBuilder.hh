@@ -29,7 +29,7 @@ final class ProcessBuilder {
   private string $cwd;
   private Mode $mode;
   private ?environment $env;
-  private ReadableStream<int> $input;
+  private ReadableStream $input;
   private Output $output;
   private Output $errorOutput;
 
@@ -66,7 +66,7 @@ final class ProcessBuilder {
     return $this;
   }
 
-  public function stdin(ReadableStream<int> $input): this {
+  public function stdin(ReadableStream $input): this {
     $this->input = $input;
     return $this;
   }

@@ -11,7 +11,7 @@
 
 namespace HHPack\Process\Input;
 
-final class ResourceInputStream implements ReadableStream<int> {
+final class ResourceInputStream implements ReadableStream {
 
   public function __construct(private resource $handle) {
     stream_set_blocking($this->handle, false);
@@ -29,34 +29,26 @@ final class ResourceInputStream implements ReadableStream<int> {
     return $this->isOpened() === false;
   }
 
-  public function ready(): bool {
-    $read = [$this->handle];
-    $write = [];
-    $expect = null;
+  /**
+   * Read asynchronously from stream
+   */
+  public async function readAsync(int $length = 4096): Awaitable<string> {
+    $result =
+      \HH\Asio\join(stream_await($this->handle, STREAM_AWAIT_READ, 0.2));
 
-    if ($this->isClosed()) {
-      return false;
+    if ($result === STREAM_AWAIT_READY) {
+      return $this->readBytes($length);
     }
 
-    $ng =
-      ($num = stream_select(&$read, &$write, &$expect, 0, 200000)) === false;
-
-    if ($ng || $num <= 0) {
-      return false;
+    if ($result === STREAM_AWAIT_ERROR) {
+      throw new \RuntimeException("stream error");
     }
 
-    return true;
+    // STREAM_AWAIT_TIMEOUT or STREAM_AWAIT_CLOSED
+    return '';
   }
 
-  public function notReady(): bool {
-    return $this->ready() === false;
-  }
-
-  public function read(int $length = 4096): string {
-    if ($this->notReady()) {
-      return '';
-    }
-
+  private function readBytes(int $length = 4096): string {
     $bufferedOutput = '';
 
     while (($chunk = fread($this->handle, 16384)) !== false) {

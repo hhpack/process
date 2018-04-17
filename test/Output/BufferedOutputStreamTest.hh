@@ -7,9 +7,9 @@ use HackPack\HackUnit\Contract\Assert;
 
 final class BufferedOutputStreamTest {
   <<Test>>
-  public function writeToBuffer(Assert $assert): void {
+  public async function writeToBuffer(Assert $assert): Awaitable<void> {
     $output = new BufferedOutputStream();
-    $output->write('text');
+    await $output->writeAsync('text');
 
     $assert->string((string) $output)->is('text');
   }

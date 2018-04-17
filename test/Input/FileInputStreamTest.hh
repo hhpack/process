@@ -7,11 +7,13 @@ use HackPack\HackUnit\Contract\Assert;
 
 final class FileInputStreamTest {
   <<Test>>
-  public function readFromStream(Assert $assert): void {
+  public async function readFromStream(Assert $assert): Awaitable<void> {
     $path = __DIR__.'/../fixtures/input.txt';
     $input = new FileInputStream($path);
 
-    $assert->string($input->read())->is("1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n");
+    $readContents = await $input->readAsync();
+
+    $assert->string($readContents)->is("1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n");
   }
 
   <<Test>>

@@ -23,7 +23,7 @@ final class ProcessWriteStream implements WritableStream {
   public function __construct(
     private StreamType $type,
     resource $handle,
-    private ReadableStream<int> $input = new NullInputStream(),
+    private ReadableStream $input = new NullInputStream(),
   ) {
     $this->stream = new ResourceOutputStream($handle);
   }
@@ -36,33 +36,25 @@ final class ProcessWriteStream implements WritableStream {
     return $this->stream->isClosed();
   }
 
-  public function ready(): bool {
-    return $this->stream->ready();
+  public async function flush(): Awaitable<void> {
+    await $this->readAll();
+    await $this->writeAll();
   }
 
-  public function notReady(): bool {
-    return $this->stream->notReady();
-  }
-
-  public function flush(): void {
-    $this->readAll();
-    $this->writeAll();
-  }
-
-  public function write(string $output): int {
-    return $this->stream->write($output);
+  public async function writeAsync(string $output): Awaitable<int> {
+    return await $this->stream->writeAsync($output);
   }
 
   public function close(): void {
     $this->stream->close();
   }
 
-  private function readAll(): void {
+  private async function readAll(): Awaitable<void> {
     if ($this->input->isClosed()) {
       return;
     }
 
-    $chunk = $this->input->read();
+    $chunk = await $this->input->readAsync();
 
     if ($this->input->eof()) {
       $this->input->close();
@@ -71,14 +63,15 @@ final class ProcessWriteStream implements WritableStream {
     $this->bufferedInput .= $chunk;
   }
 
-  private function writeAll(): void {
-    if ($this->isClosed() || $this->notReady()) {
+  // XXX append ready?
+  private async function writeAll(): Awaitable<void> {
+    if ($this->isClosed()) {
       return;
     }
 
     while (strlen($this->bufferedInput) > 0) {
       $chunk = substr($this->bufferedInput, 0, 512);
-      $writedBytes = $this->write($chunk);
+      $writedBytes = await $this->writeAsync($chunk);
 
       if ($writedBytes <= 0) {
         break;
