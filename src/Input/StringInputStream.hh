@@ -13,7 +13,7 @@ namespace HHPack\Process\Input;
 
 use HHPack\Process\Writable;
 
-final class StringInputStream implements ReadableStream<int> {
+final class StringInputStream implements ReadableStream {
 
   private bool $opened = true;
 

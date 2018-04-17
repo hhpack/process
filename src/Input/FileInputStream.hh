@@ -14,7 +14,7 @@ namespace HHPack\Process\Input;
 use HHPack\Process\Writable;
 use RuntimeException;
 
-final class FileInputStream implements ReadableStream<int> {
+final class FileInputStream implements ReadableStream {
 
   private resource $handle;
 

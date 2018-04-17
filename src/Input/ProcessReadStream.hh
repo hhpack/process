@@ -15,7 +15,7 @@ use HHPack\Process\Writable;
 use HHPack\Process\Output\BufferedOutputStream;
 use HHPack\Process\Stream\StreamType;
 
-final class ProcessReadStream implements ReadableStream<int> {
+final class ProcessReadStream implements ReadableStream {
 
   private ResourceInputStream $stream;
 

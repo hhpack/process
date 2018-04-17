@@ -23,7 +23,7 @@ final class ProcessWriteStream implements WritableStream {
   public function __construct(
     private StreamType $type,
     resource $handle,
-    private ReadableStream<int> $input = new NullInputStream(),
+    private ReadableStream $input = new NullInputStream(),
   ) {
     $this->stream = new ResourceOutputStream($handle);
   }

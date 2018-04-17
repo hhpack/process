@@ -11,7 +11,7 @@
 
 namespace HHPack\Process\Input;
 
-final class NullInputStream implements ReadableStream<int> {
+final class NullInputStream implements ReadableStream {
 
   private bool $opened = true;
 

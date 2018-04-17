@@ -24,7 +24,7 @@ final class WriteDescriptor
   public function __construct(
     StreamType $streamType,
     private array<string> $streamValues,
-    private ReadableStream<int> $input = new NullInputStream(),
+    private ReadableStream $input = new NullInputStream(),
   ) {
     if ($streamType !== StreamType::Stdin) {
       throw new LogicException('Type of stream must be stdin');
