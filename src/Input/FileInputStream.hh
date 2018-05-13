@@ -19,22 +19,22 @@ final class FileInputStream implements ReadableStream {
   private resource $handle;
 
   public function __construct(string $path) {
-    $this->handle = fopen($path, 'r');
+    $this->handle = \fopen($path, 'r');
 
     if (!is_resource($this->handle)) {
       throw new RuntimeException(
-        sprintf('Failed to open the file %s', $path),
+        \sprintf('Failed to open the file %s', $path),
       );
     }
-    stream_set_blocking($this->handle, false);
+    \stream_set_blocking($this->handle, false);
   }
 
   public function eof(): bool {
-    return feof($this->handle);
+    return \feof($this->handle);
   }
 
   public function isOpened(): bool {
-    return is_resource($this->handle);
+    return \is_resource($this->handle);
   }
 
   public function isClosed(): bool {
@@ -44,14 +44,14 @@ final class FileInputStream implements ReadableStream {
   public async function readAsync(int $length = 4096): Awaitable<string> {
     $bufferedOutput = '';
 
-    while (($chunk = fread($this->handle, 16384)) !== false) {
+    while (($chunk = \fread($this->handle, 16384)) !== false) {
       if ((string) $chunk === '') {
         break;
       }
       $bufferedOutput .= (string) $chunk;
     }
 
-    if ($this->eof() && strlen($bufferedOutput) <= 0) {
+    if ($this->eof() && \strlen($bufferedOutput) <= 0) {
       $this->close();
     }
 
@@ -62,7 +62,7 @@ final class FileInputStream implements ReadableStream {
     if ($this->isClosed()) {
       return;
     }
-    fclose($this->handle);
+    \fclose($this->handle);
   }
 
 }

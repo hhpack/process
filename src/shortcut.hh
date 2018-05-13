@@ -31,15 +31,15 @@ async function execFile(
   ExecOptions $options = new ExecOptions()
 ) : Awaitable<ProcessResult>
 {
-  if (is_file($file) === false) {
-    throw new RuntimeException(sprintf('%s is not a file', $file));
+  if (\is_file($file) === false) {
+    throw new RuntimeException(\sprintf('%s is not a file', $file));
   }
 
   $arguments = ImmSet::fromItems($args)->map(($value) ==> {
-    return trim((string) $value);
+    return \trim((string) $value);
   })->toArray();
 
-  $command = sprintf('hhvm %s %s', trim($file), implode(' ', $arguments));
+  $command = \sprintf('hhvm %s %s', \trim($file), \implode(' ', $arguments));
 
   return await exec($command, $options);
 }
@@ -52,10 +52,10 @@ function fork(
 ) : ChildProcess
 {
   $arguments = ImmSet::fromItems($args)->map(($value) ==> {
-    return trim((string) $value);
+    return \trim((string) $value);
   })->toArray();
 
-  $command = sprintf('hhvm %s %s', trim($script), implode(' ', $arguments));
+  $command = \sprintf('hhvm %s %s', \trim($script), \implode(' ', $arguments));
   $builder = new ProcessBuilder($command, $options);
 
   return $builder->start();
@@ -69,10 +69,10 @@ function spawn(
 ) : ChildProcess
 {
   $arguments = ImmSet::fromItems($args)->map(($value) ==> {
-    return trim((string) $value);
+    return \trim((string) $value);
   })->toArray();
 
-  $command = sprintf('%s %s', trim($command), implode(' ', $arguments));
+  $command = \sprintf('%s %s', \trim($command), \implode(' ', $arguments));
   $builder = new ProcessBuilder($command, $options);
 
   return $builder->start();

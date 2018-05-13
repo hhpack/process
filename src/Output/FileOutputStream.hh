@@ -18,11 +18,11 @@ final class FileOutputStream implements WritableStream {
   private ResourceOutputStream $stream;
 
   public function __construct(string $path) {
-    $handle = fopen($path, 'w');
+    $handle = \fopen($path, 'w');
 
     if (!is_resource($handle)) {
       throw new RuntimeException(
-        sprintf('Failed to open the file %s', $path),
+        \sprintf('Failed to open the file %s', $path),
       );
     }
 

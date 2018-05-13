@@ -43,7 +43,7 @@ final class OutputResult implements Displayable {
     if (!($output instanceof Displayable)) {
       return;
     }
-    fwrite(STDOUT, $header);
+    \fwrite(\STDOUT, $header);
     $output->display();
   }
 

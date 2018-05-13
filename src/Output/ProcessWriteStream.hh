@@ -69,17 +69,17 @@ final class ProcessWriteStream implements WritableStream {
       return;
     }
 
-    while (strlen($this->bufferedInput) > 0) {
-      $chunk = substr($this->bufferedInput, 0, 512);
+    while (\strlen($this->bufferedInput) > 0) {
+      $chunk = \substr($this->bufferedInput, 0, 512);
       $writedBytes = await $this->writeAsync($chunk);
 
       if ($writedBytes <= 0) {
         break;
       }
-      $this->bufferedInput = substr($this->bufferedInput, $writedBytes);
+      $this->bufferedInput = \substr($this->bufferedInput, $writedBytes);
     }
 
-    if (strlen($this->bufferedInput) > 0 || $this->input->isOpened()) {
+    if (\strlen($this->bufferedInput) > 0 || $this->input->isOpened()) {
       return;
     }
 

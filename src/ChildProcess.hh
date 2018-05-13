@@ -37,7 +37,7 @@ final class ChildProcess implements \IDisposable {
       return $this->close();
     }
 
-    proc_terminate($this->process);
+    \proc_terminate($this->process);
 
     while ($this->isAlive()) {
       await \HH\Asio\usleep(1000);
@@ -67,7 +67,7 @@ final class ChildProcess implements \IDisposable {
 
   protected function close(): ProcessResult {
     $this->streamManager->close();
-    proc_close($this->process);
+    \proc_close($this->process);
 
     return new ProcessResult(
       $this->status,

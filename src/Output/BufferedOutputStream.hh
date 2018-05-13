@@ -33,7 +33,7 @@ final class BufferedOutputStream implements WritableStream, Displayable {
 
   public async function writeAsync(string $output): Awaitable<int> {
     $this->output .= $output;
-    return strlen($output);
+    return \strlen($output);
   }
 
   public function clear(): void {
@@ -41,7 +41,7 @@ final class BufferedOutputStream implements WritableStream, Displayable {
   }
 
   public function display(): void {
-    fwrite(STDOUT, (string) $this.PHP_EOL);
+    \fwrite(\STDOUT, (string) $this.\PHP_EOL);
   }
 
   public function __toString(): string {

@@ -16,7 +16,7 @@ use HHPack\Process\Writable;
 final class Stderr implements WritableStream {
 
   public function isOpened(): bool {
-    return is_resource(STDERR);
+    return is_resource(\STDERR);
   }
 
   public function isClosed(): bool {
@@ -26,8 +26,8 @@ final class Stderr implements WritableStream {
   public function close(): void {}
 
   public async function writeAsync(string $output): Awaitable<int> {
-    fputs(STDERR, $output);
-    return strlen($output);
+    \fputs(\STDERR, $output);
+    return \strlen($output);
   }
 
 }

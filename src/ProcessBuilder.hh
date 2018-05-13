@@ -37,7 +37,7 @@ final class ProcessBuilder {
     private string $command,
     Options $options = new ProcessOptions(),
   ) {
-    $this->cwd = (string) getcwd();
+    $this->cwd = (string) \getcwd();
     $this->mode = Mode::Normal;
     $this->env = null;
     $this->input = new NullInputStream();
@@ -86,7 +86,7 @@ final class ProcessBuilder {
     $streamHandles = [];
     $descriptors = $this->createDescriptors();
 
-    $process = proc_open(
+    $process = \proc_open(
       $this->command,
       $descriptors->toArray(),
       &$streamHandles,

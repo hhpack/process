@@ -30,6 +30,6 @@ final class NullOutputStream implements WritableStream {
   }
 
   public async function writeAsync(string $output): Awaitable<int> {
-    return strlen($output);
+    return \strlen($output);
   }
 }

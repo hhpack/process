@@ -20,7 +20,7 @@ final class StringInputStream implements ReadableStream {
   public function __construct(private string $input) {}
 
   public function eof(): bool {
-    return strlen($this->input) <= 0;
+    return \strlen($this->input) <= 0;
   }
 
   public function isOpened(): bool {
@@ -32,8 +32,8 @@ final class StringInputStream implements ReadableStream {
   }
 
   public async function readAsync(int $length = 4096): Awaitable<string> {
-    $content = substr($this->input, 0, $length);
-    $this->input = substr($this->input, $length);
+    $content = \substr($this->input, 0, $length);
+    $this->input = \substr($this->input, $length);
     return $content;
   }
 

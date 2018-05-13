@@ -14,11 +14,11 @@ namespace HHPack\Process\Input;
 final class ResourceInputStream implements ReadableStream {
 
   public function __construct(private resource $handle) {
-    stream_set_blocking($this->handle, false);
+    \stream_set_blocking($this->handle, false);
   }
 
   public function eof(): bool {
-    return feof($this->handle);
+    return \feof($this->handle);
   }
 
   public function isOpened(): bool {
@@ -34,13 +34,13 @@ final class ResourceInputStream implements ReadableStream {
    */
   public async function readAsync(int $length = 4096): Awaitable<string> {
     $result =
-      \HH\Asio\join(stream_await($this->handle, STREAM_AWAIT_READ, 0.2));
+      \HH\Asio\join(\stream_await($this->handle, \STREAM_AWAIT_READ, 0.2));
 
-    if ($result === STREAM_AWAIT_READY) {
+    if ($result === \STREAM_AWAIT_READY) {
       return $this->readBytes($length);
     }
 
-    if ($result === STREAM_AWAIT_ERROR) {
+    if ($result === \STREAM_AWAIT_ERROR) {
       throw new \RuntimeException("stream error");
     }
 
@@ -51,14 +51,14 @@ final class ResourceInputStream implements ReadableStream {
   private function readBytes(int $length = 4096): string {
     $bufferedOutput = '';
 
-    while (($chunk = fread($this->handle, 16384)) !== false) {
+    while (($chunk = \fread($this->handle, 16384)) !== false) {
       if ((string) $chunk === '') {
         break;
       }
       $bufferedOutput .= (string) $chunk;
     }
 
-    if ($this->eof() && strlen($bufferedOutput) <= 0) {
+    if ($this->eof() && \strlen($bufferedOutput) <= 0) {
       $this->close();
     }
 
@@ -69,6 +69,6 @@ final class ResourceInputStream implements ReadableStream {
     if ($this->isClosed()) {
       return;
     }
-    fclose($this->handle);
+    \fclose($this->handle);
   }
 }

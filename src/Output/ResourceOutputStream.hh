@@ -14,7 +14,7 @@ namespace HHPack\Process\Output;
 final class ResourceOutputStream implements WritableStream {
 
   public function __construct(private resource $handle) {
-    stream_set_blocking($this->handle, false);
+    \stream_set_blocking($this->handle, false);
   }
 
   public function isOpened(): bool {
@@ -30,13 +30,13 @@ final class ResourceOutputStream implements WritableStream {
    */
   public async function writeAsync(string $output): Awaitable<int> {
     $result =
-      \HH\Asio\join(stream_await($this->handle, STREAM_AWAIT_WRITE, 0.2));
+      \HH\Asio\join(\stream_await($this->handle, \STREAM_AWAIT_WRITE, 0.2));
 
-    if ($result === STREAM_AWAIT_READY) {
-      return (int) fwrite($this->handle, $output);
+    if ($result === \STREAM_AWAIT_READY) {
+      return (int) \fwrite($this->handle, $output);
     }
 
-    if ($result === STREAM_AWAIT_ERROR) {
+    if ($result === \STREAM_AWAIT_ERROR) {
       throw new \RuntimeException("stream error");
     }
 
@@ -48,6 +48,6 @@ final class ResourceOutputStream implements WritableStream {
     if ($this->isClosed()) {
       return;
     }
-    fclose($this->handle);
+    \fclose($this->handle);
   }
 }
