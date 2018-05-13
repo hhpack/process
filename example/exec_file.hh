@@ -4,7 +4,7 @@ namespace HHPack\Process\Example;
 
 require_once __DIR__.'/../vendor/autoload.php';
 
-use HHPack\Process;
+use HHPack\Process as process;
 use HHPack\Process\ExecOptions;
 use HHPack\Process\Input\FileInputStream;
 
