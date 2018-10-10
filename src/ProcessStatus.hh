@@ -46,7 +46,7 @@ final class ProcessStatus implements Displayable {
   }
 
   public function display(): void {
-    \fwrite(\STDOUT, 'code: '.(string) $this->exitcode.\PHP_EOL);
+    \fwrite(\STDOUT, 'code: '.(string)$this->exitcode.\PHP_EOL);
   }
 
   public static function fromCapturedStatus(

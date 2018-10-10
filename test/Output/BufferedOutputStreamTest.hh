@@ -3,14 +3,14 @@
 namespace HHPack\Process\Test;
 
 use HHPack\Process\Output\BufferedOutputStream;
-use HackPack\HackUnit\Contract\Assert;
+use type Facebook\HackTest\HackTest;
+use function Facebook\FBExpect\expect;
 
-final class BufferedOutputStreamTest {
-  <<Test>>
-  public async function writeToBuffer(Assert $assert): Awaitable<void> {
+final class BufferedOutputStreamTest extends HackTest {
+  public async function testWriteToBuffer(): Awaitable<void> {
     $output = new BufferedOutputStream();
     await $output->writeAsync('text');
 
-    $assert->string((string) $output)->is('text');
+    expect((string)$output)->toBeSame('text');
   }
 }

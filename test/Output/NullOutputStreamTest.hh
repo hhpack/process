@@ -3,26 +3,26 @@
 namespace HHPack\Process\Test;
 
 use HHPack\Process\Output\NullOutputStream;
-use HackPack\HackUnit\Contract\Assert;
+use type Facebook\HackTest\HackTest;
+use function Facebook\FBExpect\expect;
 
-final class NullOutputStreamTest {
-  <<Test>>
-  public async function writeToBuffer(Assert $assert): Awaitable<void> {
+final class NullOutputStreamTest extends HackTest {
+  public async function testWriteToBuffer(): Awaitable<void> {
     $output = new NullOutputStream();
     $bytes = await $output->writeAsync('text');
 
-    $assert->int($bytes)->eq(4);
+    expect($bytes)->toBeSame(4);
   }
 
-  <<Test>>
-  public function openState(Assert $assert): void {
+  public function testOpenState(): void {
     $output = new NullOutputStream();
-    $assert->bool($output->isOpened())->is(true);
-    $assert->bool($output->isClosed())->is(false);
+
+    expect($output->isOpened())->toBeTrue();
+    expect($output->isClosed())->toBeFalse();
 
     $output->close();
 
-    $assert->bool($output->isOpened())->is(false);
-    $assert->bool($output->isClosed())->is(true);
+    expect($output->isOpened())->toBeFalse();
+    expect($output->isClosed())->toBeTrue();
   }
 }

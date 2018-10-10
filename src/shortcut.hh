@@ -15,9 +15,8 @@ use RuntimeException;
 
 async function exec(
   string $command,
-  ExecOptions $options = new ExecOptions()
-) : Awaitable<ProcessResult>
-{
+  ExecOptions $options = new ExecOptions(),
+): Awaitable<ProcessResult> {
   $builder = new ProcessBuilder($command, $options);
 
   using ($cp = $builder->start()) {
@@ -28,16 +27,16 @@ async function exec(
 async function execFile(
   string $file,
   ?Traversable<mixed> $args = [],
-  ExecOptions $options = new ExecOptions()
-) : Awaitable<ProcessResult>
-{
+  ExecOptions $options = new ExecOptions(),
+): Awaitable<ProcessResult> {
   if (\is_file($file) === false) {
     throw new RuntimeException(\sprintf('%s is not a file', $file));
   }
 
   $arguments = ImmSet::fromItems($args)->map(($value) ==> {
-    return \trim((string) $value);
-  })->toArray();
+    return \trim((string)$value);
+  })
+    ->toArray();
 
   $command = \sprintf('hhvm %s %s', \trim($file), \implode(' ', $arguments));
 
@@ -48,12 +47,12 @@ async function execFile(
 function fork(
   string $script,
   ?Traversable<mixed> $args = [],
-  ProcessOptions $options = new ProcessOptions()
-) : ChildProcess
-{
+  ProcessOptions $options = new ProcessOptions(),
+): ChildProcess {
   $arguments = ImmSet::fromItems($args)->map(($value) ==> {
-    return \trim((string) $value);
-  })->toArray();
+    return \trim((string)$value);
+  })
+    ->toArray();
 
   $command = \sprintf('hhvm %s %s', \trim($script), \implode(' ', $arguments));
   $builder = new ProcessBuilder($command, $options);
@@ -65,12 +64,12 @@ function fork(
 function spawn(
   string $command,
   ?Traversable<mixed> $args = [],
-  ProcessOptions $options = new ProcessOptions()
-) : ChildProcess
-{
+  ProcessOptions $options = new ProcessOptions(),
+): ChildProcess {
   $arguments = ImmSet::fromItems($args)->map(($value) ==> {
-    return \trim((string) $value);
-  })->toArray();
+    return \trim((string)$value);
+  })
+    ->toArray();
 
   $command = \sprintf('%s %s', \trim($command), \implode(' ', $arguments));
   $builder = new ProcessBuilder($command, $options);

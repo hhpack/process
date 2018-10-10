@@ -4,27 +4,26 @@ namespace HHPack\Process\Test;
 
 use HHPack\Process\Input\NullInputStream;
 use HHPack\Process\Output\BufferedOutputStream;
-use HackPack\HackUnit\Contract\Assert;
+use type Facebook\HackTest\HackTest;
+use function Facebook\FBExpect\expect;
 
-final class NullInputStreamTest {
-  <<Test>>
-  public async function readFromStream(Assert $assert): Awaitable<void> {
+final class NullInputStreamTest extends HackTest {
+  public async function testReadFromStream(): Awaitable<void> {
     $input = new NullInputStream();
     $readContents = await $input->readAsync();
 
-    $assert->string($readContents)->is('');
+    expect($readContents)->toBeSame('');
   }
 
-  <<Test>>
-  public function openState(Assert $assert): void {
+  public function testOpenState(): void {
     $input = new NullInputStream();
 
-    $assert->bool($input->isOpened())->is(true);
-    $assert->bool($input->isClosed())->is(false);
+    expect($input->isOpened())->toBeTrue();
+    expect($input->isClosed())->toBeFalse();
 
     $input->close();
 
-    $assert->bool($input->isOpened())->is(false);
-    $assert->bool($input->isClosed())->is(true);
+    expect($input->isOpened())->toBeFalse();
+    expect($input->isClosed())->toBeTrue();
   }
 }

@@ -27,8 +27,9 @@ final class ReadDescriptor
     private array<string> $streamValues,
     private Writable<int> $output = new BufferedOutputStream(),
   ) {
-    $supportedType = ($streamType === StreamType::Stdout ||
-                      $streamType === StreamType::Stderr);
+    $supportedType = (
+      $streamType === StreamType::Stdout || $streamType === StreamType::Stderr
+    );
 
     if (!$supportedType) {
       throw new LogicException('Type of stream must be stdout or stderr');

@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+#
+# Reformat source code file
+#
+format() {
+  echo "Start formatting the source code."
+  FILES=`find src test example bin -name "*.hh"`
+
+  for FILE in $FILES
+  do
+    hackfmt $FILE -i
+    echo $FILE
+  done
+  echo "Source code formatting is complete"
+}
+
+#
+# Typecheck for hack lang code
+#
+check() {
+  if [ ! -e '.hhconfig' ]; then
+    touch .hhconfig
+  fi
+  hh_client check
+}
+
+case "$1" in
+  format)
+    format
+    ;;
+  check)
+    check
+    ;;
+  *)
+  echo "Development tool for Hack"
+  echo $"Usage: $0 {format|check}"
+  RETVAL=1
+esac
+
+exit $RETVAL

@@ -22,9 +22,7 @@ final class FileInputStream implements ReadableStream {
     $this->handle = \fopen($path, 'r');
 
     if (!is_resource($this->handle)) {
-      throw new RuntimeException(
-        \sprintf('Failed to open the file %s', $path),
-      );
+      throw new RuntimeException(\sprintf('Failed to open the file %s', $path));
     }
     \stream_set_blocking($this->handle, false);
   }
@@ -45,10 +43,10 @@ final class FileInputStream implements ReadableStream {
     $bufferedOutput = '';
 
     while (($chunk = \fread($this->handle, 16384)) !== false) {
-      if ((string) $chunk === '') {
+      if ((string)$chunk === '') {
         break;
       }
-      $bufferedOutput .= (string) $chunk;
+      $bufferedOutput .= (string)$chunk;
     }
 
     if ($this->eof() && \strlen($bufferedOutput) <= 0) {

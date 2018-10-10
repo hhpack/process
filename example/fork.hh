@@ -15,7 +15,9 @@ async function fork_example(): Awaitable<void> {
   $options->stdout(new Stdout());
   $options->stderr(new Stderr());
 
-  using ($p = process\fork(__DIR__.'/scripts/fork_script.hh', ['a', 'b'], $options)) {
+  using (
+    $p = process\fork(__DIR__.'/scripts/fork_script.hh', ['a', 'b'], $options)
+  ) {
     $result = await $p->wait();
     $result->display();
   }

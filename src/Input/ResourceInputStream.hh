@@ -52,10 +52,10 @@ final class ResourceInputStream implements ReadableStream {
     $bufferedOutput = '';
 
     while (($chunk = \fread($this->handle, 16384)) !== false) {
-      if ((string) $chunk === '') {
+      if ((string)$chunk === '') {
         break;
       }
-      $bufferedOutput .= (string) $chunk;
+      $bufferedOutput .= (string)$chunk;
     }
 
     if ($this->eof() && \strlen($bufferedOutput) <= 0) {
