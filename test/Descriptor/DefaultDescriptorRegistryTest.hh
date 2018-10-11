@@ -2,17 +2,17 @@
 
 namespace HHPack\Process\Test;
 
-use HHPack\Process\Stream\StreamType;
-use HHPack\Process\Descriptor\{
+use type HHPack\Process\Stream\StreamType;
+use type HHPack\Process\Descriptor\{
   WriteDescriptor,
   ReadDescriptor,
-  DefaultDescriptorRegistry
+  DefaultDescriptorRegistry,
 };
-use HackPack\HackUnit\Contract\Assert;
+use type Facebook\HackTest\HackTest;
+use function Facebook\FBExpect\expect;
 
-final class DefaultDescriptorRegistryTest {
-  <<Test>>
-  public function toArray(Assert $assert): void {
+final class DefaultDescriptorRegistryTest extends HackTest {
+  public function testToArray(): void {
     $registry = new DefaultDescriptorRegistry(
       new WriteDescriptor(StreamType::Stdin, ['pipe', 'r']),
       new ReadDescriptor(StreamType::Stdout, ['pipe', 'w']),
@@ -20,13 +20,13 @@ final class DefaultDescriptorRegistryTest {
     );
     $result = $registry->toArray();
 
-    $assert->string($result[0][0])->is('pipe');
-    $assert->string($result[0][1])->is('r');
+    expect($result[0][0])->toBeSame('pipe');
+    expect($result[0][1])->toBeSame('r');
 
-    $assert->string($result[1][0])->is('pipe');
-    $assert->string($result[1][1])->is('w');
+    expect($result[1][0])->toBeSame('pipe');
+    expect($result[1][1])->toBeSame('w');
 
-    $assert->string($result[2][0])->is('pipe');
-    $assert->string($result[2][1])->is('w');
+    expect($result[2][0])->toBeSame('pipe');
+    expect($result[2][1])->toBeSame('w');
   }
 }

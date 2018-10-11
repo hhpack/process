@@ -42,9 +42,7 @@ final class WriteDescriptor
     return $this->streamValues;
   }
 
-  public function createStreamFromHandle(
-    resource $handle,
-  ): ProcessWriteStream {
+  public function createStreamFromHandle(resource $handle): ProcessWriteStream {
     return new ProcessWriteStream($this->streamType, $handle, $this->input);
   }
 }

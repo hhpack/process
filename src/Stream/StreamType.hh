@@ -11,7 +11,7 @@
 
 namespace HHPack\Process\Stream;
 
-enum StreamType : int {
+enum StreamType: int {
   Stdin = 0;
   Stdout = 1;
   Stderr = 2;

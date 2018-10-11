@@ -33,7 +33,7 @@ final class ResourceOutputStream implements WritableStream {
       \HH\Asio\join(\stream_await($this->handle, \STREAM_AWAIT_WRITE, 0.2));
 
     if ($result === \STREAM_AWAIT_READY) {
-      return (int) \fwrite($this->handle, $output);
+      return (int)\fwrite($this->handle, $output);
     }
 
     if ($result === \STREAM_AWAIT_ERROR) {

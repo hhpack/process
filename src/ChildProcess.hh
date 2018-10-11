@@ -69,10 +69,8 @@ final class ChildProcess implements \IDisposable {
     $this->streamManager->close();
     \proc_close($this->process);
 
-    return new ProcessResult(
-      $this->status,
-      $this->streamManager->getOutputResult(),
-    );
+    return
+      new ProcessResult($this->status, $this->streamManager->getOutputResult());
   }
 
   private function captureStatus(): void {

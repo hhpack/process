@@ -22,10 +22,10 @@ final class ProcessOptions implements Options {
   private Output $errorOutput;
 
   public function __construct(
-    private string $cwd = (string) \getcwd(),
+    private string $cwd = (string)\getcwd(),
     private ?environment $env = null,
   ) {
-    $this->cwd = (string) \getcwd();
+    $this->cwd = (string)\getcwd();
     $this->input = new NullInputStream();
     $this->output = new BufferedOutputStream();
     $this->errorOutput = new BufferedOutputStream();

@@ -17,7 +17,7 @@ async function exec_file_example(): Awaitable<void> {
     [],
     $options,
   );
-  echo (string) $result->stdout();
+  echo (string)$result->stdout();
 }
 
 exec_file_example();

@@ -3,30 +3,29 @@
 namespace HHPack\Process\Test;
 
 use HHPack\Process\Input\FileInputStream;
-use HackPack\HackUnit\Contract\Assert;
+use type Facebook\HackTest\HackTest;
+use function Facebook\FBExpect\expect;
 
-final class FileInputStreamTest {
-  <<Test>>
-  public async function readFromStream(Assert $assert): Awaitable<void> {
+final class FileInputStreamTest extends HackTest {
+  public async function testReadFromStream(): Awaitable<void> {
     $path = __DIR__.'/../fixtures/input.txt';
     $input = new FileInputStream($path);
 
     $readContents = await $input->readAsync();
 
-    $assert->string($readContents)->is("1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n");
+    expect($readContents)->toBeSame("1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n");
   }
 
-  <<Test>>
-  public function openState(Assert $assert): void {
+  public function testOpenState(): void {
     $path = __DIR__.'/../fixtures/input.txt';
     $input = new FileInputStream($path);
 
-    $assert->bool($input->isOpened())->is(true);
-    $assert->bool($input->isClosed())->is(false);
+    expect($input->isOpened())->toBeTrue();
+    expect($input->isClosed())->toBeFalse();
 
     $input->close();
 
-    $assert->bool($input->isOpened())->is(false);
-    $assert->bool($input->isClosed())->is(true);
+    expect($input->isOpened())->toBeFalse();
+    expect($input->isClosed())->toBeTrue();
   }
 }

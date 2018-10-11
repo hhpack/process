@@ -2,14 +2,13 @@
 
 namespace HHPack\Process\Example;
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
 use HHPack\Process;
 use HHPack\Process\ProcessOptions;
-use HHPack\Process\Output\{ Stdout, Stderr };
+use HHPack\Process\Output\{Stdout, Stderr};
 
-async function pipe_example() : Awaitable<void>
-{
+async function pipe_example(): Awaitable<void> {
   $options = new ProcessOptions();
   $options->stdout(new Stdout());
   $options->stderr(new Stderr());

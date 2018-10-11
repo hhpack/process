@@ -41,7 +41,7 @@ final class BufferedOutputStream implements WritableStream, Displayable {
   }
 
   public function display(): void {
-    \fwrite(\STDOUT, (string) $this.\PHP_EOL);
+    \fwrite(\STDOUT, (string)$this.\PHP_EOL);
   }
 
   public function __toString(): string {

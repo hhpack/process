@@ -18,7 +18,7 @@ use HHPack\Process\Descriptor\{
   WriteDescriptor,
   DescriptorRegistry,
   DefaultDescriptorRegistry,
-  DescriptorSpecification
+  DescriptorSpecification,
 };
 use HHPack\Process\Input\{ReadableStream, NullInputStream};
 use HHPack\Process\Output\BufferedOutputStream;
@@ -37,7 +37,7 @@ final class ProcessBuilder {
     private string $command,
     Options $options = new ProcessOptions(),
   ) {
-    $this->cwd = (string) \getcwd();
+    $this->cwd = (string)\getcwd();
     $this->mode = Mode::Normal;
     $this->env = null;
     $this->input = new NullInputStream();
@@ -107,11 +107,7 @@ final class ProcessBuilder {
     return new DefaultDescriptorRegistry(
       new WriteDescriptor(StreamType::Stdin, ['pipe', 'r'], $this->input),
       new ReadDescriptor(StreamType::Stdout, ['pipe', 'w'], $this->output),
-      new ReadDescriptor(
-        StreamType::Stderr,
-        ['pipe', 'w'],
-        $this->errorOutput,
-      ),
+      new ReadDescriptor(StreamType::Stderr, ['pipe', 'w'], $this->errorOutput),
     );
   }
 

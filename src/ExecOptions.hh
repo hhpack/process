@@ -18,7 +18,7 @@ final class ExecOptions implements Options {
   private ReadableStream $input;
 
   public function __construct(
-    private string $cwd = (string) \getcwd(),
+    private string $cwd = (string)\getcwd(),
     private ?environment $env = null,
   ) {
     $this->input = new NullInputStream();

@@ -11,6 +11,6 @@
 
 namespace HHPack\Process;
 
-enum Mode : int {
+enum Mode: int {
   Normal = 1;
 }

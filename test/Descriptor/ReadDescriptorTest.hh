@@ -5,15 +5,13 @@ namespace HHPack\Process\Test;
 use HHPack\Process\Stream\StreamType;
 use HHPack\Process\Descriptor\ReadDescriptor;
 use LogicException;
-use HackPack\HackUnit\Contract\Assert;
+use type Facebook\HackTest\HackTest;
+use function Facebook\FBExpect\expect;
 
-final class ReadDescriptorTest {
-  <<Test>>
-  public function unsupportType(Assert $assert): void {
-    $assert->whenCalled(
-      () ==> {
-        $descriptor = new ReadDescriptor(StreamType::Stdin, ['pipe', 'r']);
-      },
-    )->willThrowClass(LogicException::class);
+final class ReadDescriptorTest extends HackTest {
+  public function testUnsupportType(): void {
+    expect(() ==> {
+      $descriptor = new ReadDescriptor(StreamType::Stdin, ['pipe', 'r']);
+    })->toThrow(LogicException::class);
   }
 }
