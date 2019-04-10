@@ -5,7 +5,7 @@
 #
 format() {
   echo "Start formatting the source code."
-  FILES=`find src test example bin -name "*.hh"`
+  FILES=`find src test example bin -name "*.hack"`
 
   for FILE in $FILES
   do

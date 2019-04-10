@@ -1,8 +1,0 @@
-disallow_destruct = true
-enable_experimental_tc_features = unpacking_check_arity, disallow_refs_in_array, disallow_untyped_lambda_as_non_function_type, disallow_refs_in_array
-enable_experimental_tc_features = shape_field_check, sealed_classes
-
-disallow_elvis_space=true
-disallow_non_arraykey_keys=true
-disallow_unsafe_comparisons=true
-decl_override_require_hint=true

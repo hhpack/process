@@ -1,12 +1,12 @@
-[src/**/*.hh]
+[src/**/*.hack]
 indent_style = space
 indent_size = 2
 
-[spec/**/*Spec.hh]
+[test/**/*.hack]
 indent_style = space
 indent_size = 2
 
-[example/**/*.hh]
+[example/**/*.hack]
 indent_style = space
 indent_size = 2
 
